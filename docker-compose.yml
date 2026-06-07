@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: ultimate-cbt-app
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      - HOST=0.0.0.0
+      - DATABASE_URL=postgres://postgres:postgres@postgres:5432/ultimate_cbt
+      - JWT_SECRET=your-super-secret-jwt-key-here
+      - ADMIN_EMAIL=admin@ultimatecbt.com
+      - ADMIN_PASSWORD=Admin123!
+    depends_on:
+      - postgres
+    networks:
+      - cbt-network
+
+  postgres:
+    image: postgres:15-alpine
+    restart: always
+    container_name: ultimate-cbt-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: ultimate_cbt
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - cbt-network
+
+volumes:
+  postgres-data:
+
+networks:
+  cbt-network:
+    driver: bridge

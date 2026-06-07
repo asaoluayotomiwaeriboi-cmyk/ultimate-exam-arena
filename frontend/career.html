@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ultimate Exam Arena</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#1d4ed8">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Ultimate Exam Arena">
+  <style>
+    .career-search { display: flex; gap: 12px; margin-bottom: 24px; }
+    .career-search input { flex: 1; padding: 12px 16px; border: 1px solid #dbe4ff; border-radius: 8px; }
+    .career-card { background: white; border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .career-title { font-size: 1.4rem; font-weight: 600; margin-bottom: 12px; color: #1243b0; }
+    .career-section { margin-top: 16px; }
+    .career-section-title { font-weight: 600; color: #333; margin-bottom: 8px; }
+    .career-text { color: #666; line-height: 1.6; }
+    .tag { display: inline-block; background: #f0f4ff; color: #1243b0; padding: 4px 12px; border-radius: 20px; margin-right: 8px; margin-bottom: 8px; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <header class="navbar">
+      <div class="logo">Ultimate Exam Arena</div>
+      <div class="toolbox">
+        <a href="dashboard.html" class="btn btn-secondary">Back to Dashboard</a>
+        <button class="btn btn-secondary logout-btn">Logout</button>
+      </div>
+    </header>
+
+    <section class="layout-dashboard">
+      <aside class="sidebar">
+        <h3>Career Guide</h3>
+        <p>Explore careers and professions to guide your academic choices.</p>
+        <div class="feature-card">
+          <h4>Plan Your Future</h4>
+          <p>Search for careers, see required subjects, and explore opportunities.</p>
+        </div>
+      </aside>
+
+      <section class="main-panel">
+        <div class="header">
+          <h2>Career Guide</h2>
+        </div>
+
+        <div class="career-search">
+          <input type="text" id="search-input" placeholder="Search for a career or profession...">
+          <button id="search-btn" class="btn btn-primary">Search</button>
+        </div>
+
+        <div id="careers-list"></div>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    const token = localStorage.getItem('cbt_token');
+    if (!token) window.location.href = '/login.html';
+
+    const request = async (path, options = {}) => {
+      const res = await fetch(path, { headers: { Authorization: `Bearer ${token}` }, ...options });
+      return await res.json();
+    };
+
+    const searchInput = document.getElementById('search-input');
+    const searchBtn = document.getElementById('search-btn');
+    const careersList = document.getElementById('careers-list');
+
+    searchBtn?.addEventListener('click', async () => {
+      const search = searchInput.value.trim();
+      if (!search) return alert('Please enter a career to search');
+
+      const data = await request(`/api/features/career-guides/search?search=${search}`);
+      if (data.success) {
+        careersList.innerHTML = data.data.map(career => `
+          <div class="career-card">
+            <div class="career-title">${career.profession}</div>
+            <div class="career-section">
+              <div class="career-section-title">Description</div>
+              <div class="career-text">${career.description}</div>
+            </div>
+            ${career.requiredSubjects ? `
+              <div class="career-section">
+                <div class="career-section-title">Required Subjects</div>
+                <div>${career.requiredSubjects.split(',').map(s => `<span class="tag">${s.trim()}</span>`).join('')}</div>
+              </div>
+            ` : ''}
+            ${career.institutions ? `
+              <div class="career-section">
+                <div class="career-section-title">Institutions Offering This</div>
+                <div class="career-text">${career.institutions}</div>
+              </div>
+            ` : ''}
+            ${career.salary ? `
+              <div class="career-section">
+                <div class="career-section-title">Salary Range</div>
+                <div class="career-text">${career.salary}</div>
+              </div>
+            ` : ''}
+            ${career.jobProspects ? `
+              <div class="career-section">
+                <div class="career-section-title">Job Prospects</div>
+                <div class="career-text">${career.jobProspects}</div>
+              </div>
+            ` : ''}
+          </div>
+        `).join('');
+      } else {
+        careersList.innerHTML = '<p>No careers found. Try another search.</p>';
+      }
+    });
+
+    // Logout handler
+    document.querySelectorAll('.logout-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        localStorage.removeItem('cbt_token');
+        window.location.href = '/login.html';
+      });
+    });
+  </script>
+</body>
+</html>

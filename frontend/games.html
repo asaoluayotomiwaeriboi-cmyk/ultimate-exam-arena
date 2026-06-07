@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ultimate Exam Arena</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#1d4ed8">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Ultimate Exam Arena">
+  <style>
+    .games-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 32px; }
+    .game-card { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s; cursor: pointer; }
+    .game-card:hover { transform: translateY(-4px); box-shadow: 0 8px 16px rgba(0,0,0,0.12); }
+    .game-icon { font-size: 3rem; margin-bottom: 12px; }
+    .game-name { font-size: 1.2rem; font-weight: 600; margin-bottom: 8px; }
+    .game-description { color: #666; margin-bottom: 16px; }
+    .game-stats { font-size: 0.9rem; color: #999; margin-bottom: 16px; }
+    .game-btn { width: 100%; padding: 12px; background: #1243b0; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; }
+    .game-btn:hover { background: #0d36a1; }
+
+    /* Millionaire Game Styles */
+    .millionaire-container { background: linear-gradient(135deg, #1243b0 0%, #0d36a1 100%); color: white; border-radius: 12px; padding: 32px; margin-top: 32px; }
+    .millionaire-question { font-size: 1.3rem; margin-bottom: 24px; font-weight: 600; }
+    .millionaire-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .option-btn { padding: 16px; background: rgba(255,255,255,0.1); border: 2px solid rgba(255,255,255,0.3); color: white; border-radius: 8px; cursor: pointer; transition: all 0.2s; text-align: left; }
+    .option-btn:hover { background: rgba(255,255,255,0.2); border-color: white; }
+    .option-btn.selected { background: rgba(255,215,0,0.3); border-color: gold; }
+    .option-btn.correct { background: rgba(76,175,80,0.3); border-color: #4caf50; }
+    .option-btn.wrong { background: rgba(244,67,54,0.3); border-color: #f44336; }
+    .prize-pool { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 32px; }
+    .prize { background: rgba(255,255,255,0.1); padding: 12px; border-radius: 6px; text-align: center; font-size: 0.9rem; }
+    .prize.current { background: gold; color: #333; font-weight: 600; }
+    .game-controls { display: flex; gap: 12px; margin-top: 24px; }
+    .game-controls button { flex: 1; padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; }
+    .next-btn { background: #4caf50; color: white; }
+    .quit-btn { background: #f44336; color: white; }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <header class="navbar">
+      <div class="logo">Ultimate Exam Arena</div>
+      <div class="toolbox">
+        <a href="dashboard.html" class="btn btn-secondary">Back to Dashboard</a>
+        <button class="btn btn-secondary logout-btn">Logout</button>
+      </div>
+    </header>
+
+    <section class="layout-dashboard">
+      <aside class="sidebar">
+        <h3>Educational Games</h3>
+        <p>Learn while having fun with interactive educational games.</p>
+        <div class="feature-card">
+          <h4>Game-Based Learning</h4>
+          <p>Improve your knowledge through engaging games.</p>
+        </div>
+      </aside>
+
+      <section class="main-panel">
+        <div class="header">
+          <h2>Educational Games</h2>
+          <p class="section-title">Test your knowledge with fun games</p>
+        </div>
+
+        <div class="games-grid" id="games-list"></div>
+
+        <div id="game-container" style="display: none;"></div>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    const token = localStorage.getItem('cbt_token');
+    if (!token) window.location.href = '/login.html';
+
+    const request = async (path, options = {}) => {
+      const res = await fetch(path, { headers: { Authorization: `Bearer ${token}` }, ...options });
+      return await res.json();
+    };
+
+    const gamesList = document.getElementById('games-list');
+    const gameContainer = document.getElementById('game-container');
+
+    const loadGames = async () => {
+      const data = await request('/api/features/games');
+      if (data.success && data.data.length > 0) {
+        gamesList.innerHTML = data.data.map(game => `
+          <div class="game-card" onclick="startGame('${game.id}', '${game.type}')">
+            <div class="game-icon">🎮</div>
+            <div class="game-name">${game.name}</div>
+            <div class="game-description">${game.description || 'Test your knowledge'}</div>
+            <div class="game-stats">Subject: ${game.subject} • Difficulty: ${game.difficulty}</div>
+            <button class="game-btn">Play Now</button>
+          </div>
+        `).join('');
+      } else {
+        gamesList.innerHTML = '<p>No games available yet. Check back soon!</p>';
+      }
+    };
+
+    window.startGame = (gameId, gameType) => {
+      if (gameType === 'millionaire') {
+        startMillionaireGame(gameId);
+      }
+    };
+
+    const startMillionaireGame = async (gameId) => {
+      const data = await request(`/api/features/games/${gameId}`);
+      if (data.success && data.data) {
+        const game = data.data;
+        const questions = game.questions || [];
+        
+        if (questions.length === 0) {
+          alert('No questions available for this game');
+          return;
+        }
+
+        let currentQuestion = 0;
+        let prize = 0;
+        const prizes = [1000, 2000, 5000, 10000, 25000, 50000, 100000, 250000, 500000, 1000000];
+
+        const displayQuestion = () => {
+          const question = questions[currentQuestion];
+          const prizeHTML = prizes.map((p, i) => `
+            <div class="prize ${i === currentQuestion ? 'current' : ''}">${p.toLocaleString()}</div>
+          `).join('');
+
+          gameContainer.innerHTML = `
+            <div class="millionaire-container">
+              <div class="millionaire-question">Question ${currentQuestion + 1}: ${question.questionText}</div>
+              <div class="millionaire-options">
+                ${question.choices.map((choice, idx) => `
+                  <button class="option-btn" onclick="selectAnswer('${choice}', '${question.answer}')">${choice}</button>
+                `).join('')}
+              </div>
+              <div class="prize-pool">${prizeHTML}</div>
+              <div class="game-controls">
+                <button class="next-btn" onclick="nextQuestion()">Next Question</button>
+                <button class="quit-btn" onclick="location.href='/dashboard.html'">Quit Game</button>
+              </div>
+            </div>
+          `;
+        };
+
+        window.selectAnswer = (selected, correct) => {
+          const options = document.querySelectorAll('.option-btn');
+          options.forEach(btn => {
+            if (btn.textContent === selected) {
+              if (selected === correct) {
+                btn.classList.add('correct');
+                prize = prizes[currentQuestion];
+              } else {
+                btn.classList.add('wrong');
+              }
+            }
+            btn.disabled = true;
+          });
+        };
+
+        window.nextQuestion = () => {
+          if (currentQuestion < questions.length - 1) {
+            currentQuestion++;
+            displayQuestion();
+          } else {
+            alert(`Congratulations! You won ${prize.toLocaleString()}!`);
+            location.href = '/dashboard.html';
+          }
+        };
+
+        gamesList.style.display = 'none';
+        gameContainer.style.display = 'block';
+        displayQuestion();
+      }
+    };
+
+    // Logout handler
+    document.querySelectorAll('.logout-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        localStorage.removeItem('cbt_token');
+        window.location.href = '/login.html';
+      });
+    });
+
+    loadGames();
+  </script>
+</body>
+</html>

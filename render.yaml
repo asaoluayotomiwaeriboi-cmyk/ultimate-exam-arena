@@ -1,0 +1,22 @@
+services:
+  - type: web_service
+    name: ultimate-cbt
+    env: docker
+    branch: main
+    autoDeploy: true
+    dockerfilePath: ./Dockerfile
+    plan: starter
+    envVars:
+      - key: HOST
+        value: 0.0.0.0
+      - key: PORT
+        value: "5000"
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase: ultimate-cbt-db
+
+databases:
+  - name: ultimate-cbt-db
+    plan: starter
+    databaseName: ultimate_cbt

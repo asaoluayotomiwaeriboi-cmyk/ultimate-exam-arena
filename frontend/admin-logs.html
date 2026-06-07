@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Ultimate Exam Arena</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#1d4ed8">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Ultimate Exam Arena">
+  <style>table{width:100%;border-collapse:collapse}th,td{padding:6px;border:1px solid #ddd;font-size:13px}</style>
+</head>
+<body>
+  <div class="container">
+    <h1>Password Verification Logs</h1>
+    <p>Shows recent attempts to verify the daily mock password.</p>
+    <div style="margin:8px 0">
+      <label>Limit: <input id="logLimit" type="number" value="200" style="width:80px"/></label>
+      <button id="refreshBtn">Refresh</button>
+      <button id="exportBtn">Export CSV</button>
+    </div>
+    <table id="logs-table">
+      <thead><tr><th>Time</th><th>User</th><th>Email</th><th>PasswordId</th><th>Correct</th><th>IP</th><th>User Agent</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <script src="js/admin-logs.js"></script>
+</body>
+</html>

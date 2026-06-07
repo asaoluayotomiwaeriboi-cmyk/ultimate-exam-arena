@@ -1,0 +1,132 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(uuid())
+  name          String
+  email         String   @unique
+  passwordHash  String
+  role          String   @default("student")
+  phone         String?
+  state         String?
+  googleId      String?
+  mfaEnabled    Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  examSessions  ExamSession[]
+  bookmarks     Bookmark[]
+  payments      Payment[]
+  leaderboard   Leaderboard[]
+}
+
+model Subject {
+  id           String     @id @default(uuid())
+  name         String
+  code         String     @unique
+  isCompulsory Boolean    @default(false)
+  duration     Int        @default(60)
+  questions    Question[]
+  topics       Topic[]
+}
+
+model Topic {
+  id        String     @id @default(uuid())
+  name      String
+  subjectId String
+  subject   Subject    @relation(fields: [subjectId], references: [id])
+  questions Question[]
+}
+
+model Question {
+  id            String    @id @default(uuid())
+  subjectId     String
+  topicId       String?
+  questionText  String
+  optionA       String
+  optionB       String
+  optionC       String
+  optionD       String
+  correctOption String
+  explanation   String?
+  year          Int?
+  difficulty    String    @default("medium")
+  isAiGenerated Boolean   @default(false)
+  imageUrl      String?
+  createdAt     DateTime  @default(now())
+  subject       Subject   @relation(fields: [subjectId], references: [id])
+  topic         Topic?    @relation(fields: [topicId], references: [id])
+  sessionAnswers SessionAnswer[]
+  bookmarks     Bookmark[]
+}
+
+model ExamSession {
+  id             String    @id @default(uuid())
+  userId         String
+  mode           String
+  score          Int?
+  totalQuestions Int
+  timeElapsed    Int?
+  subjectIds     String
+  startedAt      DateTime  @default(now())
+  endedAt        DateTime?
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  answers        SessionAnswer[]
+}
+
+model SessionAnswer {
+  id            String      @id @default(uuid())
+  sessionId     String
+  questionId    String
+  chosenOption  String?
+  isCorrect     Boolean     @default(false)
+  isFlagged     Boolean     @default(false)
+  session       ExamSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  question      Question    @relation(fields: [questionId], references: [id])
+}
+
+model DailyChallenge {
+  id        String   @id @default(uuid())
+  pin       String   @unique
+  expiresAt DateTime
+  usedCount Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model Bookmark {
+  id         String   @id @default(uuid())
+  userId     String
+  questionId String
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, questionId])
+}
+
+model Payment {
+  id          String   @id @default(uuid())
+  userId      String
+  plan        String
+  paystackRef String?
+  status      String   @default("pending")
+  paidAt      DateTime?
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Leaderboard {
+  id        String   @id @default(uuid())
+  userId    String
+  score     Int
+  subject   String?
+  period    String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}

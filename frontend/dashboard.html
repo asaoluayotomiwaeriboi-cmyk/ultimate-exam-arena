@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ultimate Exam Arena</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#1d4ed8">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Ultimate Exam Arena">
+</head>
+<body>
+  <main class="container">
+    <header class="navbar">
+      <div class="logo">Ultimate Exam Arena</div>
+      <div class="toolbox">
+        <button id="dark-toggle" class="btn btn-secondary">Toggle Dark Mode</button>
+        <button class="btn btn-secondary logout-btn">Logout</button>
+      </div>
+    </header>
+
+    <section class="layout-dashboard">
+      <aside class="sidebar">
+        <h3>Profile</h3>
+        <p id="profile-name">Student</p>
+        <p id="profile-email"></p>
+        <div class="feature-card">
+          <h4>Exam Ready</h4>
+          <p>Choose a subject and start a timed CBT session instantly.</p>
+        </div>
+      </aside>
+      <section class="main-panel">
+        <div class="card" style="background: linear-gradient(135deg, #1243b0 0%, #0d36a1 100%); color: white; margin-bottom: 24px;">
+          <h2 id="greeting-message" style="margin: 0; font-size: 1.8rem;">HELLO, Student!</h2>
+          <p style="margin: 8px 0 0 0; opacity: 0.9;">Welcome back to your exam preparation.</p>
+        </div>
+        <div class="header">
+          <div>
+            <h2>Available Exams</h2>
+            <p class="section-title">Select a subject to begin.</p>
+          </div>
+        </div>
+        <div id="subject-list" class="grid grid-2"></div>
+        
+        <section class="section">
+          <h2 class="section-title">Features & Tools</h2>
+          <div class="grid grid-2" style="margin-bottom: 32px;">
+            <a href="games.html" class="card" style="text-decoration: none; color: inherit;">
+              <h4>🎮 Educational Games</h4>
+              <p>Test your knowledge with Who Wants to Be a Millionaire and other games.</p>
+            </a>
+            <a href="dictionary.html" class="card" style="text-decoration: none; color: inherit;">
+              <h4>📚 Dictionary</h4>
+              <p>Look up words, see definitions, examples, and pronunciation.</p>
+            </a>
+            <a href="leaderboard.html" class="card" style="text-decoration: none; color: inherit;">
+              <h4>🏆 Leaderboard</h4>
+              <p>See your rank and compete with other students globally.</p>
+            </a>
+            <a href="performance.html" class="card" style="text-decoration: none; color: inherit;">
+              <h4>📊 Performance Analysis</h4>
+              <p>Get detailed analytics on your exam performance.</p>
+            </a>
+            <a href="career.html" class="card" style="text-decoration: none; color: inherit;">
+              <h4>🎯 Career Guide</h4>
+              <p>Explore careers and professions that match your interests.</p>
+            </a>
+            <a href="syllabus.html" class="card" style="text-decoration: none; color: inherit;">
+              <h4>📖 Exam Syllabus</h4>
+              <p>View official syllabuses from JAMB, WAEC, and NECO.</p>
+            </a>
+          </div>
+        </section>
+        
+        <section class="section">
+          <h2 class="section-title">Exam history</h2>
+          <div class="card">
+            <table class="table">
+              <thead>
+                <tr><th>Subject</th><th>Score</th><th>Status</th><th>Date</th></tr>
+              </thead>
+              <tbody id="history-list"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+    </section>
+  </main>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
