@@ -29,4 +29,11 @@ router.get('/daily-password/history', passwordController.getPasswordHistory);
 router.get('/daily-password/distribution/:passwordId', passwordController.getDistributionStatus);
 router.post('/daily-password/test-email', passwordController.testEmailConfiguration);
 
-module.exports = router;
+module.exports = router;router.get('/students', protect, adminOnly, async (req, res, next) => {
+  try {
+    const students = await User.find({ role: 'student' });
+    res.json({ success: true, students: students.map(s => s.toObject()) });
+  } catch (error) {
+    next(error);
+  }
+});

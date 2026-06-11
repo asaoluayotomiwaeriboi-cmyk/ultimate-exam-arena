@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ultimate Exam Arena</title>
+  <title>Ultimate Exam Arena - Admin</title>
   <link rel="stylesheet" href="css/styles.css">
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#1d4ed8">
@@ -11,36 +11,35 @@
   <meta name="apple-mobile-web-app-title" content="Ultimate Exam Arena">
   <style>
     .admin-header { padding: 16px; background: var(--surface); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-    .admin-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); background: var(--surface); }
-    .admin-tabs button { flex: 1; padding: 16px; border: none; background: transparent; color: var(--text-muted); cursor: pointer; border-bottom: 3px solid transparent; transition: all .2s; font-weight: 600; }
+    .admin-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); background: var(--surface); overflow-x: auto; }
+    .admin-tabs button { flex: 1; padding: 16px; border: none; background: transparent; color: var(--text-muted); cursor: pointer; border-bottom: 3px solid transparent; transition: all .2s; font-weight: 600; white-space: nowrap; }
     .admin-tabs button.active { color: var(--primary); border-bottom-color: var(--primary); }
     .admin-tabs button:hover { background: var(--surface-soft); }
-    .admin-section { display: none; }
+    .admin-section { display: none; padding: 24px; }
     .admin-section.active { display: block; }
     .subject-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; }
     .subject-card { background: var(--surface); border: 2px solid var(--border); border-radius: 16px; padding: 16px; cursor: pointer; transition: all .2s; text-align: center; }
     .subject-card:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 8px 16px rgba(29,78,216,.15); }
     .subject-card h4 { margin: 0 0 8px 0; color: var(--primary); }
     .subject-card .q-count { font-size: 0.85rem; color: var(--text-muted); }
-    .sidebar-admin { display: grid; grid-template-columns: 200px 1fr; gap: 24px; padding: 24px; }
-    .admin-sidebar-nav { background: var(--surface); border-radius: 16px; padding: 16px; height: fit-content; }
-    .admin-sidebar-nav a, .admin-sidebar-nav button { display: block; width: 100%; padding: 12px 16px; background: transparent; border: none; color: var(--text); text-align: left; cursor: pointer; margin-bottom: 8px; border-radius: 10px; transition: all .2s; }
-    .admin-sidebar-nav a:hover, .admin-sidebar-nav button:hover { background: var(--surface-soft); color: var(--primary); }
-    .admin-sidebar-nav button.active { background: var(--primary); color: #fff; }
-    .security-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px; margin-bottom: 16px; }
-    .security-card h4 { margin-top: 0; color: var(--primary); }
     .stat-box { background: var(--surface); border-radius: 16px; padding: 20px; text-align: center; }
     .stat-box .number { font-size: 2rem; font-weight: 800; color: var(--primary); }
     .stat-box .label { color: var(--text-muted); font-size: 0.9rem; }
-    .session-item { background: var(--surface-soft); border-radius: 12px; padding: 12px; margin-bottom: 8px; border-left: 4px solid var(--primary); }
-    .session-item .time { color: var(--text-muted); font-size: 0.85rem; }
+    .security-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px; margin-bottom: 16px; }
+    .security-card h4 { margin-top: 0; color: var(--primary); }
     .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 2000; align-items: center; justify-content: center; }
     .modal.active { display: flex; }
     .modal-content { background: var(--surface); border-radius: 20px; padding: 32px; max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto; }
     .modal-close { position: absolute; top: 16px; right: 16px; background: none; border: none; color: var(--text); cursor: pointer; font-size: 1.5rem; }
-    .question-item { background: var(--surface-soft); border-radius: 12px; padding: 16px; margin-bottom: 12px; border-left: 4px solid var(--accent); }
-    .question-item .q-text { font-weight: 600; color: var(--text); margin-bottom: 8px; }
-    .question-item .q-answer { font-size: 0.9rem; color: var(--text-muted); }
+    .students-table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+    .students-table th, .students-table td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border); }
+    .students-table th { background: var(--surface); color: var(--primary); font-weight: 600; }
+    .students-table tr:hover { background: var(--surface-soft); }
+    .student-search { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 12px; margin-bottom: 16px; }
+    .student-search input, .student-search select { padding: 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface-soft); color: var(--text); }
+    .badge-small { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+    .badge-active { background: rgba(16, 185, 129, 0.2); color: #10b981; }
+    .badge-inactive { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
   </style>
 </head>
 <body id="admin-body">
@@ -55,18 +54,19 @@
 
   <div class="admin-tabs">
     <button class="tab-btn active" data-tab="dashboard">Dashboard</button>
+    <button class="tab-btn" data-tab="students">👥 Students</button>
     <button class="tab-btn" data-tab="jamb">JAMB Exams</button>
     <button class="tab-btn" data-tab="waec">WAEC Exams</button>
     <button class="tab-btn" data-tab="settings">Settings</button>
   </div>
 
-  <main class="container" style="padding: 24px 0;">
+  <main class="container">
     <!-- Dashboard Tab -->
     <section class="admin-section active" id="dashboard-tab">
       <div class="grid grid-2" style="margin-bottom: 24px;">
         <div class="stat-box">
           <div class="number" id="stat-students">0</div>
-          <div class="label">Active Students</div>
+          <div class="label">Total Students</div>
         </div>
         <div class="stat-box">
           <div class="number" id="stat-questions">0</div>
@@ -90,14 +90,64 @@
       </div>
     </section>
 
+    <!-- STUDENTS TAB (NEW!) -->
+    <section class="admin-section" id="students-tab">
+      <h2>Student Management</h2>
+      
+      <div class="student-search">
+        <input type="text" id="search-name" placeholder="Search by name...">
+        <input type="text" id="search-email" placeholder="Search by email...">
+        <select id="filter-state">
+          <option value="">All States</option>
+          <option value="Lagos">Lagos</option>
+          <option value="Ogun">Ogun</option>
+          <option value="Oyo">Oyo</option>
+          <option value="Osun">Osun</option>
+          <option value="Ondo">Ondo</option>
+          <option value="Ekiti">Ekiti</option>
+          <option value="Kano">Kano</option>
+          <option value="Katsina">Katsina</option>
+          <option value="FCT">FCT</option>
+          <!-- Add all 36 states -->
+        </select>
+        <button class="btn btn-primary" id="search-btn">Search</button>
+      </div>
+
+      <table class="students-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>State</th>
+            <th>School</th>
+            <th>Target Course</th>
+            <th>Registered</th>
+            <th>Last Login</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="students-tbody">
+          <tr>
+            <td colspan="10" style="text-align: center; color: var(--text-muted);">Loading students...</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div id="pagination" style="margin-top: 16px; display: flex; gap: 8px; justify-content: center;">
+        <!-- Pagination buttons added here -->
+      </div>
+    </section>
+
     <!-- JAMB Tab -->
     <section class="admin-section" id="jamb-tab">
       <div style="display: grid; grid-template-columns: 200px 1fr; gap: 24px;">
-        <div class="admin-sidebar-nav">
-          <button data-action="manage-subjects" class="active">📚 Subjects</button>
-          <button data-action="manage-questions">❓ Questions</button>
-          <button data-action="manage-competitions">🏆 Competitions</button>
-          <button data-action="manage-passwords">🔐 Daily Password</button>
+        <div class="admin-sidebar-nav" style="background: var(--surface); border-radius: 16px; padding: 16px; height: fit-content;">
+          <button data-action="manage-subjects" class="active" style="display: block; width: 100%; padding: 12px 16px; background: transparent; border: none; color: var(--text); text-align: left; cursor: pointer; margin-bottom: 8px; border-radius: 10px; transition: all .2s;">📚 Subjects</button>
+          <button data-action="manage-questions" style="display: block; width: 100%; padding: 12px 16px; background: transparent; border: none; color: var(--text); text-align: left; cursor: pointer; margin-bottom: 8px; border-radius: 10px; transition: all .2s;">❓ Questions</button>
+          <button data-action="manage-competitions" style="display: block; width: 100%; padding: 12px 16px; background: transparent; border: none; color: var(--text); text-align: left; cursor: pointer; margin-bottom: 8px; border-radius: 10px; transition: all .2s;">🏆 Competitions</button>
+          <button data-action="manage-passwords" style="display: block; width: 100%; padding: 12px 16px; background: transparent; border: none; color: var(--text); text-align: left; cursor: pointer; margin-bottom: 8px; border-radius: 10px; transition: all .2s;">🔐 Daily Password</button>
         </div>
 
         <div>
@@ -210,5 +260,6 @@
   </div>
 
   <script src="js/admin-v2.js"></script>
+  <script src="js/admin-students.js"></script>
 </body>
 </html>
