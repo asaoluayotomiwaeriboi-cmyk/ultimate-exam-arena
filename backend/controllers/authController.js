@@ -23,18 +23,69 @@ const calculateThreatLevel = (user) => {
 
 exports.register = async (req, res, next) => {
   try {
-    const { name, email, password } = req.body;
-    if (!name || !email || !password) {
-      return res.status(400).json({ success: false, message: 'All fields are required' });
+    const { 
+      name, email, phone, dateOfBirth, address, city, state, lga, 
+      school, jambNumber, targetUniversity, targetCourse, password, confirmPassword 
+    } = req.body;
+
+    // Validate required fields
+    if (!name || !email || !phone || !dateOfBirth || !address || !city || !state || !lga || !school || !password) {
+      return res.status(400).json({ success: false, message: 'All required fields must be filled' });
     }
+
+    // Validate password match
+    if (password !== confirmPassword) {
+      return res.status(400).json({ success: false, message: 'Passwords do not match' });
+    }
+
+    // Validate password strength (min 8 chars)
+    if (password.length < 8) {
+      return res.status(400).json({ success: false, message: 'Password must be at least 8 characters' });
+    }
+
+    // Check if email already exists
     const existing = await User.findOne({ email });
     if (existing) {
       return res.status(409).json({ success: false, message: 'Email already registered' });
     }
+
+    // Hash password
     const hashed = await bcrypt.hash(password, 10);
-    const user = await User.create({ name, email, password: hashed });
+
+    // Create user with all details
+    const user = await User.create({
+      name,
+      email,
+      phone,
+      dateOfBirth,
+      address,
+      city,
+      state,
+      lga,
+      school,
+      jambNumber: jambNumber || null,
+      targetUniversity: targetUniversity || null,
+      targetCourse: targetCourse || null,
+      password: hashed,
+      role: 'student'
+    });
+
     const token = signToken(user.id);
-    res.json({ success: true, token, user: { id: user.id, name: user.name, email: user.email, role: user.role } });
+    
+    res.status(201).json({ 
+      success: true, 
+      message: 'Account created successfully',
+      token, 
+      user: { 
+        id: user.id, 
+        name: user.name, 
+        email: user.email,
+        phone: user.phone,
+        state: user.state,
+        school: user.school,
+        role: user.role 
+      } 
+    });
   } catch (error) {
     next(error);
   }

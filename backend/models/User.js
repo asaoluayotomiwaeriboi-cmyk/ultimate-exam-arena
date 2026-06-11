@@ -6,6 +6,16 @@ class User {
     this.id = data.id;
     this.name = data.name;
     this.email = data.email;
+    this.phone = data.phone;
+    this.dateOfBirth = data.dateOfBirth;
+    this.address = data.address;
+    this.city = data.city;
+    this.state = data.state;
+    this.lga = data.lga;
+    this.school = data.school;
+    this.jambNumber = data.jambNumber;
+    this.targetUniversity = data.targetUniversity;
+    this.targetCourse = data.targetCourse;
     this.password = data.password;
     this.role = data.role || 'student';
     this.profile = data.profile ? JSON.parse(data.profile) : {};
@@ -103,12 +113,22 @@ class User {
   static async create(data) {
     return new Promise((resolve, reject) => {
       const sql = `
-        INSERT INTO users (name, email, password, role, profile, mfaSecret, mfaEnabled, loginAttempts, lockedUntil, ipWhitelist, threatLevel, lastLogin, googleId, googleAccessToken, googleRefreshToken)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id
+        INSERT INTO users (name, email, phone, dateOfBirth, address, city, state, lga, school, jambNumber, targetUniversity, targetCourse, password, role, profile, mfaSecret, mfaEnabled, loginAttempts, lockedUntil, ipWhitelist, threatLevel, lastLogin, googleId, googleAccessToken, googleRefreshToken)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id
       `;
       const params = [
         data.name,
         data.email,
+        data.phone || null,
+        data.dateOfBirth || null,
+        data.address || null,
+        data.city || null,
+        data.state || null,
+        data.lga || null,
+        data.school || null,
+        data.jambNumber || null,
+        data.targetUniversity || null,
+        data.targetCourse || null,
         data.password,
         data.role || 'student',
         JSON.stringify(data.profile || {}),
@@ -137,7 +157,7 @@ class User {
     return new Promise((resolve, reject) => {
       const sql = `
         UPDATE users SET
-          name = ?, email = ?, password = ?, role = ?, profile = ?,
+          name = ?, email = ?, phone = ?, dateOfBirth = ?, address = ?, city = ?, state = ?, lga = ?, school = ?, jambNumber = ?, targetUniversity = ?, targetCourse = ?, password = ?, role = ?, profile = ?,
           mfaSecret = ?, mfaEnabled = ?, loginAttempts = ?, lockedUntil = ?,
           ipWhitelist = ?, threatLevel = ?, lastLogin = ?, googleId = ?, googleAccessToken = ?, googleRefreshToken = ?
         WHERE id = ?
@@ -145,6 +165,16 @@ class User {
       const params = [
         this.name,
         this.email,
+        this.phone,
+        this.dateOfBirth,
+        this.address,
+        this.city,
+        this.state,
+        this.lga,
+        this.school,
+        this.jambNumber,
+        this.targetUniversity,
+        this.targetCourse,
         this.password,
         this.role,
         JSON.stringify(this.profile),
@@ -173,7 +203,16 @@ class User {
       id: this.id,
       name: this.name,
       email: this.email,
-      password: this.password,
+      phone: this.phone,
+      dateOfBirth: this.dateOfBirth,
+      address: this.address,
+      city: this.city,
+      state: this.state,
+      lga: this.lga,
+      school: this.school,
+      jambNumber: this.jambNumber,
+      targetUniversity: this.targetUniversity,
+      targetCourse: this.targetCourse,
       role: this.role,
       profile: this.profile,
       mfaSecret: this.mfaSecret,
