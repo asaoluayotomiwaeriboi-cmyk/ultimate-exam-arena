@@ -1,0 +1,321 @@
+{
+  "metadata": {
+    "total_universities": 198,
+    "federal": 74,
+    "state": 54,
+    "private": 70,
+    "last_updated": "2026-06-19",
+    "data_source": "NUC 2026"
+  },
+  
+  "universities": [
+    {
+      "id": 1,
+      "name": "University of Lagos (UNILAG)",
+      "type": "Federal",
+      "location": "Lagos State",
+      "website": "https://www.unilag.edu.ng",
+      "jamb_cutoff": 200,
+      "popular_courses": [
+        {
+          "name": "Medicine",
+          "cutoff": 250,
+          "required_subjects": ["Use of English", "Biology", "Chemistry", "Physics"]
+        },
+        {
+          "name": "Law",
+          "cutoff": 240,
+          "required_subjects": ["Use of English", "Government", "Mathematics", "History"]
+        },
+        {
+          "name": "Engineering",
+          "cutoff": 220,
+          "required_subjects": ["Use of English", "Mathematics", "Physics", "Chemistry"]
+        },
+        {
+          "name": "Pharmacy",
+          "cutoff": 240,
+          "required_subjects": ["Use of English", "Biology", "Chemistry", "Physics"]
+        },
+        {
+          "name": "Computer Science",
+          "cutoff": 200,
+          "required_subjects": ["Use of English", "Mathematics", "Physics", "Chemistry"]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "University of Ibadan (UI)",
+      "type": "Federal",
+      "location": "Oyo State",
+      "website": "https://www.ui.edu.ng",
+      "jamb_cutoff": 200,
+      "popular_courses": [
+        {
+          "name": "Medicine",
+          "cutoff": 250,
+          "required_subjects": ["Use of English", "Biology", "Chemistry", "Physics"]
+        },
+        {
+          "name": "Law",
+          "cutoff": 240,
+          "required_subjects": ["Use of English", "Government", "Mathematics", "History"]
+        },
+        {
+          "name": "Engineering",
+          "cutoff": 220,
+          "required_subjects": ["Use of English", "Mathematics", "Physics", "Chemistry"]
+        },
+        {
+          "name": "Agriculture",
+          "cutoff": 200,
+          "required_subjects": ["Use of English", "Biology", "Chemistry", "Agriculture"]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Obafemi Awolowo University (OAU)",
+      "type": "Federal",
+      "location": "Osun State",
+      "website": "https://www.oau.edu.ng",
+      "jamb_cutoff": 200,
+      "popular_courses": [
+        {
+          "name": "Medicine",
+          "cutoff": 250,
+          "required_subjects": ["Use of English", "Biology", "Chemistry", "Physics"]
+        },
+        {
+          "name": "Law",
+          "cutoff": 240,
+          "required_subjects": ["Use of English", "Government", "Mathematics", "History"]
+        },
+        {
+          "name": "Engineering",
+          "cutoff": 220,
+          "required_subjects": ["Use of English", "Mathematics", "Physics", "Chemistry"]
+        },
+        {
+          "name": "Sciences",
+          "cutoff": 200,
+          "required_subjects": ["Use of English", "Mathematics", "Physics", "Chemistry"]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Ahmadu Bello University (ABU)",
+      "type": "Federal",
+      "location": "Kaduna State",
+      "website": "https://www.abu.edu.ng",
+      "jamb_cutoff": 180,
+      "popular_courses": [
+        {
+          "name": "Medicine",
+          "cutoff": 240,
+          "required_subjects": ["Use of English", "Biology", "Chemistry", "Physics"]
+        },
+        {
+          "name": "Law",
+          "cutoff": 230,
+          "required_subjects": ["Use of English", "Government", "Mathematics", "History"]
+        },
+        {
+          "name": "Engineering",
+          "cutoff": 200,
+          "required_subjects": ["Use of English", "Mathematics", "Physics", "Chemistry"]
+        },
+        {
+          "name": "Education",
+          "cutoff": 180,
+          "required_subjects": ["Use of English", "Mathematics", "Education", "Any other"]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "University of Nigeria (UNN)",
+      "type": "Federal",
+      "location": "Enugu State",
+      "website": "https://www.unn.edu.ng",
+      "jamb_cutoff": 200,
+      "popular_courses": [
+        {
+          "name": "Medicine",
+          "cutoff": 250,
+          "required_subjects": ["Use of English", "Biology", "Chemistry", "Physics"]
+        },
+        {
+          "name": "Pharmacy",
+          "cutoff": 240,
+          "required_subjects": ["Use of English", "Biology", "Chemistry", "Physics"]
+        },
+        {
+          "name": "Engineering",
+          "cutoff": 220,
+          "required_subjects": ["Use of English", "Mathematics", "Physics", "Chemistry"]
+        },
+        {
+          "name": "Law",
+          "cutoff": 240,
+          "required_subjects": ["Use of English", "Government", "Mathematics", "History"]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Covenant University",
+      "type": "Private",
+      "location": "Ogun State",
+      "website": "https://www.covenantuniversity.edu.ng",
+      "jamb_cutoff": 200,
+      "popular_courses": [
+        {
+          "name": "Medicine",
+          "cutoff": 240,
+          "required_subjects": ["Use of English", "Biology", "Chemistry", "Physics"]
+        },
+        {
+          "name": "Engineering",
+          "cutoff": 200,
+          "required_subjects": ["Use of English", "Mathematics", "Physics", "Chemistry"]
+        },
+        {
+          "name": "Law",
+          "cutoff": 220,
+          "required_subjects": ["Use of English", "Government", "Mathematics", "History"]
+        },
+        {
+          "name": "Computer Science",
+          "cutoff": 200,
+          "required_subjects": ["Use of English", "Mathematics", "Physics", "Chemistry"]
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Pan-Atlantic University",
+      "type": "Private",
+      "location": "Lagos State",
+      "website": "https://www.pau.edu.ng",
+      "jamb_cutoff": 220,
+      "popular_courses": [
+        {
+          "name": "Business Administration",
+          "cutoff": 220,
+          "required_subjects": ["Use of English", "Mathematics", "Economics", "Government"]
+        },
+        {
+          "name": "Law",
+          "cutoff": 240,
+          "required_subjects": ["Use of English", "Government", "Mathematics", "History"]
+        },
+        {
+          "name": "Computer Science",
+          "cutoff": 220,
+          "required_subjects": ["Use of English", "Mathematics", "Physics", "Chemistry"]
+        },
+        {
+          "name": "Engineering",
+          "cutoff": 220,
+          "required_subjects": ["Use of English", "Mathematics", "Physics", "Chemistry"]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Federal University of Technology Akure (FUTA)",
+      "type": "Federal",
+      "location": "Ondo State",
+      "website": "https://www.futa.edu.ng",
+      "jamb_cutoff": 180,
+      "popular_courses": [
+        {
+          "name": "Engineering",
+          "cutoff": 200,
+          "required_subjects": ["Use of English", "Mathematics", "Physics", "Chemistry"]
+        },
+        {
+          "name": "Technology",
+          "cutoff": 180,
+          "required_subjects": ["Use of English", "Mathematics", "Physics", "Chemistry"]
+        },
+        {
+          "name": "Sciences",
+          "cutoff": 180,
+          "required_subjects": ["Use of English", "Mathematics", "Physics", "Chemistry"]
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Lagos State University (LASU)",
+      "type": "State",
+      "location": "Lagos State",
+      "website": "https://www.lasu.edu.ng",
+      "jamb_cutoff": 195,
+      "popular_courses": [
+        {
+          "name": "Engineering",
+          "cutoff": 200,
+          "required_subjects": ["Use of English", "Mathematics", "Physics", "Chemistry"]
+        },
+        {
+          "name": "Medicine",
+          "cutoff": 230,
+          "required_subjects": ["Use of English", "Biology", "Chemistry", "Physics"]
+        },
+        {
+          "name": "Law",
+          "cutoff": 220,
+          "required_subjects": ["Use of English", "Government", "Mathematics", "History"]
+        },
+        {
+          "name": "Business",
+          "cutoff": 195,
+          "required_subjects": ["Use of English", "Mathematics", "Economics", "Government"]
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "name": "University of Benin (UNIBEN)",
+      "type": "Federal",
+      "location": "Edo State",
+      "website": "https://www.uniben.edu.ng",
+      "jamb_cutoff": 200,
+      "popular_courses": [
+        {
+          "name": "Medicine",
+          "cutoff": 240,
+          "required_subjects": ["Use of English", "Biology", "Chemistry", "Physics"]
+        },
+        {
+          "name": "Engineering",
+          "cutoff": 220,
+          "required_subjects": ["Use of English", "Mathematics", "Physics", "Chemistry"]
+        },
+        {
+          "name": "Law",
+          "cutoff": 230,
+          "required_subjects": ["Use of English", "Government", "Mathematics", "History"]
+        },
+        {
+          "name": "Sciences",
+          "cutoff": 200,
+          "required_subjects": ["Use of English", "Mathematics", "Physics", "Chemistry"]
+        }
+      ]
+    }
+  ],
+  
+  "notes": {
+    "tip1": "Medicine, Law, Pharmacy, and Engineering typically require higher cutoffs",
+    "tip2": "Most universities require Use of English plus 3 other subjects",
+    "tip3": "Science courses usually require: English, Mathematics, Physics, Chemistry",
+    "tip4": "Arts/Social courses usually require: English, Government, History, Economics/Literature",
+    "tip5": "Check official university websites for updated cutoffs and requirements"
+  }
+}

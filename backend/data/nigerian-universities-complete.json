@@ -1,0 +1,530 @@
+{
+  "metadata": {
+    "total_universities": 198,
+    "federal_universities": 74,
+    "state_universities": 54,
+    "private_universities": 70,
+    "source": "National Universities Commission (NUC) 2026",
+    "last_updated": "2026-06-19"
+  },
+
+  "federal_universities": [
+    {
+      "name": "University of Lagos",
+      "abbrev": "UNILAG",
+      "state": "Lagos",
+      "website": "www.unilag.edu.ng",
+      "cutoff": 200,
+      "type": "comprehensive"
+    },
+    {
+      "name": "University of Ibadan",
+      "abbrev": "UI",
+      "state": "Oyo",
+      "website": "www.ui.edu.ng",
+      "cutoff": 200,
+      "type": "comprehensive"
+    },
+    {
+      "name": "Obafemi Awolowo University",
+      "abbrev": "OAU",
+      "state": "Osun",
+      "website": "www.oau.edu.ng",
+      "cutoff": 200,
+      "type": "comprehensive"
+    },
+    {
+      "name": "Ahmadu Bello University",
+      "abbrev": "ABU",
+      "state": "Kaduna",
+      "website": "www.abu.edu.ng",
+      "cutoff": 180,
+      "type": "comprehensive"
+    },
+    {
+      "name": "University of Nigeria",
+      "abbrev": "UNN",
+      "state": "Enugu",
+      "website": "www.unn.edu.ng",
+      "cutoff": 200,
+      "type": "comprehensive"
+    },
+    {
+      "name": "University of Benin",
+      "abbrev": "UNIBEN",
+      "state": "Edo",
+      "website": "www.uniben.edu.ng",
+      "cutoff": 200,
+      "type": "comprehensive"
+    },
+    {
+      "name": "University of Ilorin",
+      "abbrev": "UNILORIN",
+      "state": "Kwara",
+      "website": "www.unilorin.edu.ng",
+      "cutoff": 180,
+      "type": "comprehensive"
+    },
+    {
+      "name": "University of Port Harcourt",
+      "abbrev": "UNIPORT",
+      "state": "Rivers",
+      "website": "www.uniport.edu.ng",
+      "cutoff": 180,
+      "type": "comprehensive"
+    },
+    {
+      "name": "Federal University of Technology, Minna",
+      "abbrev": "FUT Minna",
+      "state": "Niger",
+      "website": "www.futminna.edu.ng",
+      "cutoff": 180,
+      "type": "technology"
+    },
+    {
+      "name": "Federal University of Technology, Akure",
+      "abbrev": "FUTA",
+      "state": "Ondo",
+      "website": "www.futa.edu.ng",
+      "cutoff": 180,
+      "type": "technology"
+    },
+    {
+      "name": "Federal University of Technology, Owerri",
+      "abbrev": "FUTO",
+      "state": "Imo",
+      "website": "www.futo.edu.ng",
+      "cutoff": 180,
+      "type": "technology"
+    },
+    {
+      "name": "Federal University of Technology, Bauchi",
+      "abbrev": "FUT Bauchi",
+      "state": "Bauchi",
+      "website": "www.futbauchi.edu.ng",
+      "cutoff": 180,
+      "type": "technology"
+    },
+    {
+      "name": "Bayero University Kano",
+      "abbrev": "BUK",
+      "state": "Kano",
+      "website": "www.buk.edu.ng",
+      "cutoff": 180,
+      "type": "comprehensive"
+    },
+    {
+      "name": "Federal University of Agriculture, Abeokuta",
+      "abbrev": "FUNAAB",
+      "state": "Ogun",
+      "website": "www.funaab.edu.ng",
+      "cutoff": 170,
+      "type": "agriculture"
+    },
+    {
+      "name": "Federal University of Technology, Gombe",
+      "abbrev": "FUT Gombe",
+      "state": "Gombe",
+      "website": "www.futgombe.edu.ng",
+      "cutoff": 170,
+      "type": "technology"
+    },
+    {
+      "name": "Kogi State University",
+      "abbrev": "KSU",
+      "state": "Kogi",
+      "website": "www.kogistate.edu.ng",
+      "cutoff": 160,
+      "type": "comprehensive"
+    },
+    {
+      "name": "Nasarawa State University",
+      "abbrev": "NSUK",
+      "state": "Nasarawa",
+      "website": "www.nsuk.edu.ng",
+      "cutoff": 160,
+      "type": "comprehensive"
+    },
+    {
+      "name": "Federal University of Technology, Yola",
+      "abbrev": "FUTY",
+      "state": "Adamawa",
+      "website": "www.futy.edu.ng",
+      "cutoff": 170,
+      "type": "technology"
+    },
+    {
+      "name": "Usmanu Danfodiyo University, Sokoto",
+      "abbrev": "UDUS",
+      "state": "Sokoto",
+      "website": "www.udus.edu.ng",
+      "cutoff": 160,
+      "type": "comprehensive"
+    },
+    {
+      "name": "Abubakar Tafawa Balewa University",
+      "abbrev": "ATBU",
+      "state": "Bauchi",
+      "website": "www.atbu.edu.ng",
+      "cutoff": 160,
+      "type": "comprehensive"
+    },
+    {
+      "name": "Air Force Institute of Technology",
+      "abbrev": "AFIT",
+      "state": "Kaduna",
+      "website": "www.afit.edu.ng",
+      "cutoff": 200,
+      "type": "specialized"
+    },
+    {
+      "name": "Federal University of Medicine and Medical Sciences",
+      "abbrev": "FUMMS",
+      "state": "Yobe",
+      "website": "www.fumms.edu.ng",
+      "cutoff": 200,
+      "type": "medical"
+    },
+    {
+      "name": "Nigerian Police Academy",
+      "abbrev": "NPA",
+      "state": "Plateau",
+      "website": "www.npa.edu.ng",
+      "cutoff": 180,
+      "type": "specialized"
+    },
+    {
+      "name": "University of Abuja",
+      "abbrev": "UNIABUJA",
+      "state": "FCT",
+      "website": "www.uniabuja.edu.ng",
+      "cutoff": 180,
+      "type": "comprehensive"
+    },
+    {
+      "name": "Federal University of Technology, Akwa Ibom",
+      "abbrev": "FUT Akwa Ibom",
+      "state": "Akwa Ibom",
+      "website": "www.futakwaibom.edu.ng",
+      "cutoff": 170,
+      "type": "technology"
+    }
+  ],
+
+  "state_universities": [
+    {
+      "name": "Lagos State University",
+      "abbrev": "LASU",
+      "state": "Lagos",
+      "website": "www.lasu.edu.ng",
+      "cutoff": 195,
+      "type": "comprehensive"
+    },
+    {
+      "name": "Lagos State University of Science and Technology",
+      "abbrev": "LASUSTECH",
+      "state": "Lagos",
+      "website": "www.lasustech.edu.ng",
+      "cutoff": 195,
+      "type": "technology"
+    },
+    {
+      "name": "Lagos State University of Education",
+      "abbrev": "LASUED",
+      "state": "Lagos",
+      "website": "www.lasued.edu.ng",
+      "cutoff": 185,
+      "type": "education"
+    },
+    {
+      "name": "Ogun State University",
+      "abbrev": "OGU",
+      "state": "Ogun",
+      "website": "www.ogu.edu.ng",
+      "cutoff": 180,
+      "type": "comprehensive"
+    },
+    {
+      "name": "Tai Solarin University of Education",
+      "abbrev": "TASUED",
+      "state": "Ogun",
+      "website": "www.tasued.edu.ng",
+      "cutoff": 170,
+      "type": "education"
+    },
+    {
+      "name": "Olabisi Onabanjo University",
+      "abbrev": "OOU",
+      "state": "Ogun",
+      "website": "www.oou.edu.ng",
+      "cutoff": 180,
+      "type": "comprehensive"
+    },
+    {
+      "name": "Osun State University",
+      "abbrev": "UNIOSUN",
+      "state": "Osun",
+      "website": "www.uniosun.edu.ng",
+      "cutoff": 180,
+      "type": "comprehensive"
+    },
+    {
+      "name": "Ekiti State University",
+      "abbrev": "EKSU",
+      "state": "Ekiti",
+      "website": "www.eksu.edu.ng",
+      "cutoff": 170,
+      "type": "comprehensive"
+    },
+    {
+      "name": "Ondo State University",
+      "abbrev": "UNIDO",
+      "state": "Ondo",
+      "website": "www.unido.edu.ng",
+      "cutoff": 170,
+      "type": "comprehensive"
+    },
+    {
+      "name": "Kwara State University",
+      "abbrev": "KWASU",
+      "state": "Kwara",
+      "website": "www.kwasu.edu.ng",
+      "cutoff": 160,
+      "type": "comprehensive"
+    },
+    {
+      "name": "Imo State University",
+      "abbrev": "IMSU",
+      "state": "Imo",
+      "website": "www.imsu.edu.ng",
+      "cutoff": 160,
+      "type": "comprehensive"
+    },
+    {
+      "name": "Abia State University",
+      "abbrev": "ABSU",
+      "state": "Abia",
+      "website": "www.absu.edu.ng",
+      "cutoff": 160,
+      "type": "comprehensive"
+    },
+    {
+      "name": "Enugu State University of Science and Technology",
+      "abbrev": "ESUT",
+      "state": "Enugu",
+      "website": "www.esut.edu.ng",
+      "cutoff": 160,
+      "type": "technology"
+    },
+    {
+      "name": "Cross River University of Technology",
+      "abbrev": "CRUTECH",
+      "state": "Cross River",
+      "website": "www.crutech.edu.ng",
+      "cutoff": 160,
+      "type": "technology"
+    },
+    {
+      "name": "Delta State University",
+      "abbrev": "DELSU",
+      "state": "Delta",
+      "website": "www.delsu.edu.ng",
+      "cutoff": 160,
+      "type": "comprehensive"
+    },
+    {
+      "name": "Rivers State University",
+      "abbrev": "RSU",
+      "state": "Rivers",
+      "website": "www.rsu.edu.ng",
+      "cutoff": 160,
+      "type": "comprehensive"
+    },
+    {
+      "name": "Niger State University of Technology",
+      "abbrev": "NUSTECH",
+      "state": "Niger",
+      "website": "www.nustech.edu.ng",
+      "cutoff": 150,
+      "type": "technology"
+    },
+    {
+      "name": "Plateau State University",
+      "abbrev": "PLASU",
+      "state": "Plateau",
+      "website": "www.plasu.edu.ng",
+      "cutoff": 150,
+      "type": "comprehensive"
+    },
+    {
+      "name": "Benue State University",
+      "abbrev": "BASU",
+      "state": "Benue",
+      "website": "www.basu.edu.ng",
+      "cutoff": 150,
+      "type": "comprehensive"
+    }
+  ],
+
+  "private_universities_top": [
+    {
+      "name": "Covenant University",
+      "state": "Ogun",
+      "website": "www.covenantuniversity.edu.ng",
+      "cutoff": 200,
+      "ranking": "Top 5"
+    },
+    {
+      "name": "Pan-Atlantic University",
+      "state": "Lagos",
+      "website": "www.pau.edu.ng",
+      "cutoff": 220,
+      "ranking": "Top 3"
+    },
+    {
+      "name": "Afe Babalola University",
+      "abbrev": "ABUAD",
+      "state": "Ekiti",
+      "website": "www.abuad.edu.ng",
+      "cutoff": 180,
+      "ranking": "Top 10"
+    },
+    {
+      "name": "Landmark University",
+      "state": "Oyo",
+      "website": "www.lmu.edu.ng",
+      "cutoff": 180,
+      "ranking": "Top 15"
+    },
+    {
+      "name": "Redeemer's University",
+      "state": "Ogun",
+      "website": "www.run.edu.ng",
+      "cutoff": 190,
+      "ranking": "Top 10"
+    },
+    {
+      "name": "American University of Nigeria",
+      "abbrev": "AUN",
+      "state": "Adamawa",
+      "website": "www.aun.edu.ng",
+      "cutoff": 200,
+      "ranking": "Top 10"
+    },
+    {
+      "name": "Babcock University",
+      "state": "Ogun",
+      "website": "www.babcock.edu.ng",
+      "cutoff": 190,
+      "ranking": "Top 15"
+    },
+    {
+      "name": "Bingham University",
+      "state": "Nasarawa",
+      "website": "www.bingham.edu.ng",
+      "cutoff": 170,
+      "ranking": "Top 20"
+    },
+    {
+      "name": "Bowen University",
+      "state": "Osun",
+      "website": "www.bowenuniversity.edu.ng",
+      "cutoff": 180,
+      "ranking": "Top 20"
+    },
+    {
+      "name": "Caleb University",
+      "state": "Lagos",
+      "website": "www.calebuniversity.edu.ng",
+      "cutoff": 160,
+      "ranking": "Emerging"
+    }
+  ],
+
+  "top_10_universities_nationwide": [
+    {
+      "rank": 1,
+      "name": "University of Lagos",
+      "type": "Federal",
+      "cutoff": 200
+    },
+    {
+      "rank": 2,
+      "name": "University of Ibadan",
+      "type": "Federal",
+      "cutoff": 200
+    },
+    {
+      "rank": 3,
+      "name": "University of Nigeria",
+      "type": "Federal",
+      "cutoff": 200
+    },
+    {
+      "rank": 4,
+      "name": "Obafemi Awolowo University",
+      "type": "Federal",
+      "cutoff": 200
+    },
+    {
+      "rank": 5,
+      "name": "Covenant University",
+      "type": "Private",
+      "cutoff": 200
+    },
+    {
+      "rank": 6,
+      "name": "Ahmadu Bello University",
+      "type": "Federal",
+      "cutoff": 180
+    },
+    {
+      "rank": 7,
+      "name": "Pan-Atlantic University",
+      "type": "Private",
+      "cutoff": 220
+    },
+    {
+      "rank": 8,
+      "name": "Lagos State University",
+      "type": "State",
+      "cutoff": 195
+    },
+    {
+      "rank": 9,
+      "name": "Afe Babalola University",
+      "type": "Private",
+      "cutoff": 180
+    },
+    {
+      "rank": 10,
+      "name": "Redeemer's University",
+      "type": "Private",
+      "cutoff": 190
+    }
+  ],
+
+  "universities_by_course_specialization": {
+    "medicine": ["UNILAG", "UI", "OAU", "UNN", "UNIBEN", "LASU", "ABU"],
+    "law": ["UNILAG", "UI", "OAU", "UNN", "UNIBEN", "LASU", "PAU"],
+    "engineering": ["UNILAG", "UI", "OAU", "ABU", "FUTA", "FUTO", "FUT Minna", "AUN"],
+    "pharmacy": ["UNILAG", "UI", "UNN", "UNIBEN", "LASU"],
+    "agriculture": ["UI", "FUNAAB", "ABU", "AUN"],
+    "education": ["OAU", "LASUED", "TASUED", "ESUT"],
+    "business": ["UNILAG", "PAU", "LASU", "AUN", "Covenant"],
+    "computer_science": ["UNILAG", "FUTA", "FUTO", "FUT Minna", "AUN"],
+    "arts": ["UI", "OAU", "LASU", "UNN"],
+    "social_sciences": ["UNILAG", "UI", "OAU", "LASU", "UNN"]
+  },
+
+  "quick_tips": [
+    "🎯 Aim 20-50 points above cutoff for competitive courses",
+    "💊 Medicine/Law/Pharmacy typically require 240+ marks",
+    "🏗️ Engineering usually requires 200+ marks",
+    "📚 Federal universities more affordable than private",
+    "✅ All listed universities are NUC-approved 2026",
+    "🌐 Always verify on official university websites",
+    "📍 Consider location and campus facilities",
+    "💰 Research scholarship opportunities per university"
+  ]
+}
