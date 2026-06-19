@@ -13,7 +13,14 @@ router.get('/profile', protect, profile);
 
 // OAuth2 - Google
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/api/auth/login' }), googleCallback);
+
+router.get('/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/login' }), 
+  (req, res) => {
+    const token = signToken(req.user.id);
+    res.redirect(`/dashboard.html?token=${token}`);
+  }
+);
 
 // Logout
 router.post('/logout', logout);
