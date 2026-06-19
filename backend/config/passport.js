@@ -46,7 +46,7 @@ passport.deserializeUser(async (id, done) => {
 });
 
 // Register strategies when available
-if (googleStrategy) {
+if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
   passport.use(googleStrategy);
 }
 
