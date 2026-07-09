@@ -1,6 +1,34 @@
 const passport = require('passport');
 const User = require('../models/User');
-const googleStrategy = require('./oauth');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+
+passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: process.env.NODE_ENV === 'production' 
+      ? "https://ultimate-qvditcso9-ultimateexamarena-s-projects.vercel.app/api/auth/google/callback"
+      : "http://localhost:3000/api/auth/google/callback"
+  },
+  async (accessToken, refreshToken, profile, done) => {
+    try {
+      let user = await User.findOne({ googleId: profile.id });
+      
+      if (!user) {
+        user = await User.create({
+          googleId: profile.id,
+          name: profile.displayName,
+          email: profile.emails[0].value,
+          password: 'google-oauth', // dummy password
+          role: 'student'
+        });
+      }
+      
+      return done(null, user);
+    } catch (error) {
+      return done(error);
+    }
+  }
+));
 
 // Serialize user for session
 passport.serializeUser((user, done) => {
@@ -18,8 +46,7 @@ passport.deserializeUser(async (id, done) => {
 });
 
 // Register strategies when available
-if (googleStrategy) {
-  passport.use(googleStrategy);
+if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
 }
 
 module.exports = passport;
