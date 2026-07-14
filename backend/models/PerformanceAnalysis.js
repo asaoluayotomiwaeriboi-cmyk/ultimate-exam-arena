@@ -34,27 +34,31 @@ class PerformanceAnalysis {
           userId,
           examsTaken: results.length,
           totalScore: results.reduce((sum, r) => sum + r.score, 0),
-          averageScore: results.length > 0 ? Math.round(results.reduce((sum, r) => sum + r.score, 0) / results.length) : 0,
+          averageScore:
+            results.length > 0
+              ? Math.round(results.reduce((sum, r) => sum + r.score, 0) / results.length)
+              : 0,
           subjectPerformance: {},
           improvementRate: 0,
           completionRate: 0,
-          timeManagement: 0
+          timeManagement: 0,
         };
 
         // Calculate subject performance
-        results.forEach(result => {
+        results.forEach((result) => {
           if (!analysis.subjectPerformance[result.subject]) {
             analysis.subjectPerformance[result.subject] = {
               attempts: 0,
               totalScore: 0,
               averageScore: 0,
-              percentage: 0
+              percentage: 0,
             };
           }
           analysis.subjectPerformance[result.subject].attempts += 1;
           analysis.subjectPerformance[result.subject].totalScore += result.score;
           analysis.subjectPerformance[result.subject].averageScore = Math.round(
-            analysis.subjectPerformance[result.subject].totalScore / analysis.subjectPerformance[result.subject].attempts
+            analysis.subjectPerformance[result.subject].totalScore /
+              analysis.subjectPerformance[result.subject].attempts
           );
           analysis.subjectPerformance[result.subject].percentage = Math.round(
             (analysis.subjectPerformance[result.subject].averageScore / result.totalQuestions) * 100
@@ -64,18 +68,22 @@ class PerformanceAnalysis {
         // Find best and weakest subjects
         const subjects = Object.entries(analysis.subjectPerformance);
         if (subjects.length > 0) {
-          analysis.bestSubject = subjects.reduce((best, current) => 
+          analysis.bestSubject = subjects.reduce((best, current) =>
             current[1].averageScore > best[1].averageScore ? current : best
           )[0];
-          analysis.weakestSubject = subjects.reduce((worst, current) => 
+          analysis.weakestSubject = subjects.reduce((worst, current) =>
             current[1].averageScore < worst[1].averageScore ? current : worst
           )[0];
         }
 
         // Calculate improvement rate (comparing first half vs second half)
         if (results.length >= 2) {
-          const firstHalf = results.slice(Math.ceil(results.length / 2)).reduce((sum, r) => sum + r.score, 0) / Math.ceil(results.length / 2);
-          const secondHalf = results.slice(0, Math.ceil(results.length / 2)).reduce((sum, r) => sum + r.score, 0) / Math.ceil(results.length / 2);
+          const firstHalf =
+            results.slice(Math.ceil(results.length / 2)).reduce((sum, r) => sum + r.score, 0) /
+            Math.ceil(results.length / 2);
+          const secondHalf =
+            results.slice(0, Math.ceil(results.length / 2)).reduce((sum, r) => sum + r.score, 0) /
+            Math.ceil(results.length / 2);
           analysis.improvementRate = Math.round(((secondHalf - firstHalf) / firstHalf) * 100);
         }
 

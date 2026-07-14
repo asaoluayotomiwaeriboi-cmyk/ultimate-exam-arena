@@ -8,14 +8,14 @@ let transporter;
 // Initialize email transporter based on service
 function initializeTransporter() {
   const emailService = process.env.EMAIL_SERVICE || 'gmail';
-  
+
   if (emailService === 'gmail') {
     transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASSWORD, // Use app-specific password for Gmail
-      }
+      },
     });
   } else if (emailService === 'outlook') {
     transporter = nodemailer.createTransport({
@@ -25,7 +25,7 @@ function initializeTransporter() {
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASSWORD,
-      }
+      },
     });
   } else if (emailService === 'sendgrid') {
     transporter = nodemailer.createTransport({
@@ -34,7 +34,7 @@ function initializeTransporter() {
       auth: {
         user: 'apikey',
         pass: process.env.SENDGRID_API_KEY,
-      }
+      },
     });
   } else {
     // Default to Gmail
@@ -43,7 +43,7 @@ function initializeTransporter() {
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASSWORD,
-      }
+      },
     });
   }
 }
@@ -61,26 +61,26 @@ async function sendPasswordEmail(recipientEmail, recipientName, password, expiry
     }
 
     const htmlContent = generatePasswordEmailHTML(recipientName, password, expiryTime);
-    
+
     const mailOptions = {
       from: `${process.env.EMAIL_FROM_NAME || 'ULTIMATE CBT'} <${process.env.EMAIL_USER}>`,
       to: recipientEmail,
       subject: 'Your UTME Competitive Exam Daily Access Password',
       html: htmlContent,
-      text: `Your UTME Competitive Exam Password: ${password}\n\nExpires at: ${expiryTime}\n\nDo not share this password with anyone.`
+      text: `Your UTME Competitive Exam Password: ${password}\n\nExpires at: ${expiryTime}\n\nDo not share this password with anyone.`,
     };
 
     const result = await transporter.sendMail(mailOptions);
     return {
       success: true,
       messageId: result.messageId,
-      response: result.response
+      response: result.response,
     };
   } catch (error) {
     console.error('Email send error:', error);
     return {
       success: false,
-      error: error.message
+      error: error.message,
     };
   }
 }
@@ -274,29 +274,24 @@ function generatePasswordEmailHTML(name, password, expiryTime) {
 async function sendBulkPasswordEmails(recipients, password, expiryTime) {
   try {
     const results = [];
-    
+
     for (const recipient of recipients) {
-      const result = await sendPasswordEmail(
-        recipient.email,
-        recipient.name,
-        password,
-        expiryTime
-      );
+      const result = await sendPasswordEmail(recipient.email, recipient.name, password, expiryTime);
       results.push({
         email: recipient.email,
-        ...result
+        ...result,
       });
-      
+
       // Small delay between emails to avoid rate limiting
-      await new Promise(resolve => setTimeout(resolve, 100));
+      await new Promise((resolve) => setTimeout(resolve, 100));
     }
-    
+
     return results;
   } catch (error) {
     console.error('Bulk email error:', error);
     return {
       success: false,
-      error: error.message
+      error: error.message,
     };
   }
 }
@@ -309,20 +304,20 @@ async function testEmailConfiguration() {
     if (!transporter) {
       return {
         success: false,
-        error: 'Email transporter not initialized'
+        error: 'Email transporter not initialized',
       };
     }
 
     const result = await transporter.verify();
     return {
       success: result,
-      message: result ? 'Email configuration is valid' : 'Email configuration failed verification'
+      message: result ? 'Email configuration is valid' : 'Email configuration failed verification',
     };
   } catch (error) {
     console.error('Email config test error:', error);
     return {
       success: false,
-      error: error.message
+      error: error.message,
     };
   }
 }
@@ -331,5 +326,5 @@ module.exports = {
   sendPasswordEmail,
   sendBulkPasswordEmails,
   testEmailConfiguration,
-  getTransporter: () => transporter
+  getTransporter: () => transporter,
 };

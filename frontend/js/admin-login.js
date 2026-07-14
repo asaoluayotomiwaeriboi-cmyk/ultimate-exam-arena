@@ -31,7 +31,7 @@ async function handleAdminLogin(e) {
     const response = await fetch('/api/auth/admin-login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password, accessCode })
+      body: JSON.stringify({ email, password, accessCode }),
     });
 
     const data = await response.json();

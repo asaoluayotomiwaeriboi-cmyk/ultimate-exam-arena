@@ -1,115 +1,240 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ultimate Exam Arena</title>
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#1d4ed8">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Ultimate Exam Arena">
-  <style>
-    .subject-picker { max-width: 800px; margin: 40px auto; }
-    .picker-header { text-align: center; margin-bottom: 32px; }
-    .picker-header h1 { margin: 0 0 8px 0; color: var(--primary); }
-    .picker-header p { color: var(--text-muted); margin: 0; }
-    .picker-section { margin-bottom: 40px; }
-    .picker-section h3 { margin-top: 0; color: var(--primary); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
-    .compulsory-tag { display: inline-block; background: var(--danger); color: #fff; font-size: 0.7rem; padding: 4px 8px; border-radius: 4px; font-weight: 700; }
-    .subjects-list { display: grid; gap: 12px; }
-    .subject-option { 
-      background: var(--surface); border: 2px solid var(--border); border-radius: 14px; padding: 16px; 
-      cursor: pointer; transition: all .2s; display: flex; align-items: center; gap: 12px; 
-    }
-    .subject-option:hover { border-color: var(--primary); background: var(--surface-soft); }
-    .subject-option input[type="checkbox"] { width: 20px; height: 20px; cursor: pointer; accent-color: var(--primary); }
-    .subject-option input[type="checkbox"]:disabled { cursor: not-allowed; opacity: 0.5; }
-    .subject-option.selected { background: rgba(29,78,216,.1); border-color: var(--primary); }
-    .subject-option .subject-info { flex: 1; }
-    .subject-option .subject-name { color: var(--text); font-weight: 600; margin: 0; }
-    .subject-option .subject-code { color: var(--text-muted); font-size: 0.85rem; margin: 0; }
-    .subject-option .disabled-msg { color: var(--text-muted); font-size: 0.85rem; font-style: italic; }
-    .selected-count { text-align: center; padding: 16px; background: var(--surface); border-radius: 12px; color: var(--text-muted); margin-bottom: 24px; }
-    .selected-count strong { color: var(--primary); }
-    .actions { display: flex; gap: 12px; }
-    .actions button { flex: 1; padding: 16px; border-radius: 12px; border: none; cursor: pointer; font-weight: 600; transition: all .2s; }
-    .actions .btn-primary { background: var(--primary); color: #fff; }
-    .actions .btn-primary:hover:not(:disabled) { background: var(--primary-hover); }
-    .actions .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
-    .actions .btn-secondary { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
-    .actions .btn-secondary:hover { background: var(--surface-soft); }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <header class="navbar" style="margin-bottom: 32px;">
-      <a class="logo" href="/dashboard.html">← Back to Dashboard</a>
-    </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ultimate Exam Arena</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1d4ed8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Ultimate Exam Arena" />
+    <style>
+      .subject-picker {
+        max-width: 800px;
+        margin: 40px auto;
+      }
+      .picker-header {
+        text-align: center;
+        margin-bottom: 32px;
+      }
+      .picker-header h1 {
+        margin: 0 0 8px 0;
+        color: var(--primary);
+      }
+      .picker-header p {
+        color: var(--text-muted);
+        margin: 0;
+      }
+      .picker-section {
+        margin-bottom: 40px;
+      }
+      .picker-section h3 {
+        margin-top: 0;
+        color: var(--primary);
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .compulsory-tag {
+        display: inline-block;
+        background: var(--danger);
+        color: #fff;
+        font-size: 0.7rem;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-weight: 700;
+      }
+      .subjects-list {
+        display: grid;
+        gap: 12px;
+      }
+      .subject-option {
+        background: var(--surface);
+        border: 2px solid var(--border);
+        border-radius: 14px;
+        padding: 16px;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .subject-option:hover {
+        border-color: var(--primary);
+        background: var(--surface-soft);
+      }
+      .subject-option input[type='checkbox'] {
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        accent-color: var(--primary);
+      }
+      .subject-option input[type='checkbox']:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+      }
+      .subject-option.selected {
+        background: rgba(29, 78, 216, 0.1);
+        border-color: var(--primary);
+      }
+      .subject-option .subject-info {
+        flex: 1;
+      }
+      .subject-option .subject-name {
+        color: var(--text);
+        font-weight: 600;
+        margin: 0;
+      }
+      .subject-option .subject-code {
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        margin: 0;
+      }
+      .subject-option .disabled-msg {
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        font-style: italic;
+      }
+      .selected-count {
+        text-align: center;
+        padding: 16px;
+        background: var(--surface);
+        border-radius: 12px;
+        color: var(--text-muted);
+        margin-bottom: 24px;
+      }
+      .selected-count strong {
+        color: var(--primary);
+      }
+      .actions {
+        display: flex;
+        gap: 12px;
+      }
+      .actions button {
+        flex: 1;
+        padding: 16px;
+        border-radius: 12px;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.2s;
+      }
+      .actions .btn-primary {
+        background: var(--primary);
+        color: #fff;
+      }
+      .actions .btn-primary:hover:not(:disabled) {
+        background: var(--primary-hover);
+      }
+      .actions .btn-primary:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      .actions .btn-secondary {
+        background: var(--surface);
+        color: var(--text);
+        border: 1px solid var(--border);
+      }
+      .actions .btn-secondary:hover {
+        background: var(--surface-soft);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header class="navbar" style="margin-bottom: 32px">
+        <a class="logo" href="/dashboard.html">← Back to Dashboard</a>
+      </header>
 
-    <div class="subject-picker">
-      <div class="picker-header">
-        <h1>📚 Select Your Exam Subjects</h1>
-        <p>Choose 3 optional subjects. Use of English is compulsory.</p>
-      </div>
+      <div class="subject-picker">
+        <div class="picker-header">
+          <h1>📚 Select Your Exam Subjects</h1>
+          <p>Choose 3 optional subjects. Use of English is compulsory.</p>
+        </div>
 
-      <div class="selected-count">
-        <strong id="selected-num">0</strong> of <strong>3</strong> optional subjects selected
-      </div>
+        <div class="selected-count">
+          <strong id="selected-num">0</strong> of <strong>3</strong> optional subjects selected
+        </div>
 
-      <!-- Compulsory Subject -->
-      <div class="picker-section">
-        <h3>✅ Compulsory Subject</h3>
-        <div class="subjects-list">
-          <div class="subject-option selected" id="use-of-english">
-            <input type="checkbox" id="english-checkbox" checked disabled>
-            <div class="subject-info">
-              <p class="subject-name">Use of English</p>
-              <p class="subject-code">Mandatory for all JAMB candidates</p>
+        <!-- Compulsory Subject -->
+        <div class="picker-section">
+          <h3>✅ Compulsory Subject</h3>
+          <div class="subjects-list">
+            <div class="subject-option selected" id="use-of-english">
+              <input type="checkbox" id="english-checkbox" checked disabled />
+              <div class="subject-info">
+                <p class="subject-name">Use of English</p>
+                <p class="subject-code">Mandatory for all JAMB candidates</p>
+              </div>
+              <span class="compulsory-tag">Required</span>
             </div>
-            <span class="compulsory-tag">Required</span>
           </div>
         </div>
-      </div>
 
-      <!-- Optional Subjects -->
-      <div class="picker-section">
-        <h3>📖 Select 3 Optional Subjects</h3>
-        <div class="subjects-list" id="optional-subjects">
-          <!-- Dynamically populated -->
+        <!-- Optional Subjects -->
+        <div class="picker-section">
+          <h3>📖 Select 3 Optional Subjects</h3>
+          <div class="subjects-list" id="optional-subjects">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="actions">
+          <button class="btn-secondary" onclick="history.back()">Cancel</button>
+          <button class="btn-primary" id="start-exam-btn" disabled>Start Exam</button>
         </div>
       </div>
-
-      <!-- Actions -->
-      <div class="actions">
-        <button class="btn-secondary" onclick="history.back()">Cancel</button>
-        <button class="btn-primary" id="start-exam-btn" disabled>Start Exam</button>
-      </div>
     </div>
-  </div>
 
-  <script>
-    const API_BASE = '/api';
-    let token = localStorage.getItem('token');
-    let selectedSubjects = ['USE_OF_ENGLISH']; // Always include compulsory subject
-    const MAX_OPTIONAL = 3;
+    <script>
+      const API_BASE = '/api';
+      let token = localStorage.getItem('token');
+      let selectedSubjects = ['USE_OF_ENGLISH']; // Always include compulsory subject
+      const MAX_OPTIONAL = 3;
 
-    if (!token) window.location.href = '/login.html';
+      if (!token) window.location.href = '/login.html';
 
-    async function loadSubjects() {
-      try {
-        const res = await fetch(`${API_BASE}/exams/subjects`, { 
-          headers: { Authorization: `Bearer ${token}` } 
-        });
-        const data = await res.json();
-        if (data.success) {
-          // Filter to JAMB subjects (exclude USE_OF_ENGLISH since it's already shown)
-          const jamb_subjects = data.subjects.filter(s => 
-            s.code !== 'USE_OF_ENGLISH' && 
-            ['MATH', 'PHY', 'CHEM', 'BIO', 'FURTHER_MATH', 'ECO', 'GOV', 'HIST', 'GEO', 'LIT', 'COM', 'ACC', 'AGR', 'CSC', 'POM', 'CRK', 'IRS', 'YOR', 'HAU', 'IGB'].includes(s.code)
-          );
-          
-          const html = jamb_subjects.map(s => `
+      async function loadSubjects() {
+        try {
+          const res = await fetch(`${API_BASE}/exams/subjects`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          const data = await res.json();
+          if (data.success) {
+            // Filter to JAMB subjects (exclude USE_OF_ENGLISH since it's already shown)
+            const jamb_subjects = data.subjects.filter(
+              (s) =>
+                s.code !== 'USE_OF_ENGLISH' &&
+                [
+                  'MATH',
+                  'PHY',
+                  'CHEM',
+                  'BIO',
+                  'FURTHER_MATH',
+                  'ECO',
+                  'GOV',
+                  'HIST',
+                  'GEO',
+                  'LIT',
+                  'COM',
+                  'ACC',
+                  'AGR',
+                  'CSC',
+                  'POM',
+                  'CRK',
+                  'IRS',
+                  'YOR',
+                  'HAU',
+                  'IGB',
+                ].includes(s.code)
+            );
+
+            const html = jamb_subjects
+              .map(
+                (s) => `
             <div class="subject-option" id="subject-${s.id}" data-code="${s.code}">
               <input type="checkbox" class="subject-checkbox" data-code="${s.code}" data-id="${s.id}">
               <div class="subject-info">
@@ -117,74 +242,80 @@
                 <p class="subject-code">${s.code}</p>
               </div>
             </div>
-          `).join('');
-          
-          document.getElementById('optional-subjects').innerHTML = html;
+          `
+              )
+              .join('');
 
-          // Add event listeners
-          document.querySelectorAll('.subject-checkbox').forEach(checkbox => {
-            checkbox.addEventListener('change', (e) => {
-              const code = e.target.dataset.code;
-              const card = document.getElementById(`subject-${e.target.dataset.id}`);
-              
-              if (e.target.checked) {
-                if (selectedSubjects.length >= MAX_OPTIONAL + 1) { // +1 for compulsory
-                  e.target.checked = false;
-                  alert(`You can only select ${MAX_OPTIONAL} optional subjects.`);
-                  return;
+            document.getElementById('optional-subjects').innerHTML = html;
+
+            // Add event listeners
+            document.querySelectorAll('.subject-checkbox').forEach((checkbox) => {
+              checkbox.addEventListener('change', (e) => {
+                const code = e.target.dataset.code;
+                const card = document.getElementById(`subject-${e.target.dataset.id}`);
+
+                if (e.target.checked) {
+                  if (selectedSubjects.length >= MAX_OPTIONAL + 1) {
+                    // +1 for compulsory
+                    e.target.checked = false;
+                    alert(`You can only select ${MAX_OPTIONAL} optional subjects.`);
+                    return;
+                  }
+                  selectedSubjects.push(code);
+                  card.classList.add('selected');
+                } else {
+                  selectedSubjects = selectedSubjects.filter((s) => s !== code);
+                  card.classList.remove('selected');
                 }
-                selectedSubjects.push(code);
-                card.classList.add('selected');
-              } else {
-                selectedSubjects = selectedSubjects.filter(s => s !== code);
-                card.classList.remove('selected');
-              }
-              
-              updateUI();
+
+                updateUI();
+              });
             });
+          }
+        } catch (err) {
+          console.error('Error loading subjects:', err);
+          alert('Failed to load subjects. Please refresh the page.');
+        }
+      }
+
+      function updateUI() {
+        const count = selectedSubjects.length - 1; // -1 for compulsory
+        document.getElementById('selected-num').textContent = count;
+        document.getElementById('start-exam-btn').disabled = count < MAX_OPTIONAL;
+      }
+
+      document.getElementById('start-exam-btn')?.addEventListener('click', async () => {
+        if (selectedSubjects.length < 4) {
+          alert('Please select 3 optional subjects.');
+          return;
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const mode = urlParams.get('mode');
+
+        try {
+          const res = await fetch(`${API_BASE}/exams/start`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+            body: JSON.stringify({
+              subjectCodes: selectedSubjects,
+              mode: mode === 'mock' ? 'mock' : undefined,
+            }),
           });
+          const data = await res.json();
+          if (data.success) {
+            localStorage.setItem('currentSessionId', data.sessionId);
+            window.location.href = '/exam.html';
+          } else {
+            alert('Error: ' + (data.message || 'Failed to start exam'));
+          }
+        } catch (err) {
+          console.error('Error starting exam:', err);
+          alert('Failed to start exam. Please try again.');
         }
-      } catch (err) {
-        console.error('Error loading subjects:', err);
-        alert('Failed to load subjects. Please refresh the page.');
-      }
-    }
+      });
 
-    function updateUI() {
-      const count = selectedSubjects.length - 1; // -1 for compulsory
-      document.getElementById('selected-num').textContent = count;
-      document.getElementById('start-exam-btn').disabled = count < MAX_OPTIONAL;
-    }
-
-    document.getElementById('start-exam-btn')?.addEventListener('click', async () => {
-      if (selectedSubjects.length < 4) {
-        alert('Please select 3 optional subjects.');
-        return;
-      }
-
-      const urlParams = new URLSearchParams(window.location.search);
-      const mode = urlParams.get('mode');
-
-      try {
-        const res = await fetch(`${API_BASE}/exams/start`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-          body: JSON.stringify({ subjectCodes: selectedSubjects, mode: mode === 'mock' ? 'mock' : undefined })
-        });
-        const data = await res.json();
-        if (data.success) {
-          localStorage.setItem('currentSessionId', data.sessionId);
-          window.location.href = '/exam.html';
-        } else {
-          alert('Error: ' + (data.message || 'Failed to start exam'));
-        }
-      } catch (err) {
-        console.error('Error starting exam:', err);
-        alert('Failed to start exam. Please try again.');
-      }
-    });
-
-    loadSubjects();
-  </script>
-</body>
+      loadSubjects();
+    </script>
+  </body>
 </html>

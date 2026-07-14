@@ -25,7 +25,7 @@ class Leaderboard {
         GROUP BY u.id
         ORDER BY totalScore DESC, averageScore DESC
       `;
-      
+
       const params = [];
 
       if (query.limit) {
@@ -44,7 +44,7 @@ class Leaderboard {
             totalScore: row.totalScore || 0,
             examsTaken: row.examsTaken || 0,
             averageScore: row.averageScore || 0,
-            rank: index + 1
+            rank: index + 1,
           }));
           resolve(results);
         }
@@ -102,7 +102,7 @@ class Leaderboard {
             totalScore: row.totalScore || 0,
             examsTaken: row.examsTaken || 0,
             averageScore: row.averageScore || 0,
-            rank: index + 1
+            rank: index + 1,
           }));
           resolve(results);
         }

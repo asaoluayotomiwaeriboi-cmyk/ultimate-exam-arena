@@ -27,52 +27,74 @@ exports.startExam = async (req, res, next) => {
         const s = await Subject.findOne({ code, active: true });
         if (s) subjectsToUse.push(s);
       }
-      if (!subjectsToUse.length) return res.status(404).json({ success: false, message: 'No valid subjects found for provided codes' });
+      if (!subjectsToUse.length)
+        return res
+          .status(404)
+          .json({ success: false, message: 'No valid subjects found for provided codes' });
     } else if (subjectCode) {
       const subject = await Subject.findOne({ code: subjectCode, active: true });
       if (!subject) return res.status(404).json({ success: false, message: 'Subject not found' });
       subjectsToUse = [subject];
     } else {
-      return res.status(400).json({ success: false, message: 'subjectCode or subjectCodes is required' });
+      return res
+        .status(400)
+        .json({ success: false, message: 'subjectCode or subjectCodes is required' });
     }
 
     // Check for active personal exam lock (use first selected subject as key)
     const examLock = await ExamLock.findActive(req.user.id, subjectsToUse[0].id);
     if (examLock) {
-      return res.status(403).json({ 
-        success: false, 
-        message: 'You have an active exam lock for this subject. Please wait before attempting again.',
-        expiresAt: examLock.expiresAt
+      return res.status(403).json({
+        success: false,
+        message:
+          'You have an active exam lock for this subject. Please wait before attempting again.',
+        expiresAt: examLock.expiresAt,
       });
     }
 
     // If this request is for a mock/competitive session, require password verification
-    const isMock = req.body.mode === 'mock' || req.body.mock === true || req.body.examType === 'UTME';
+    const isMock =
+      req.body.mode === 'mock' || req.body.mock === true || req.body.examType === 'UTME';
     if (isMock) {
       const db = require('../config/db');
       const now = Math.floor(Date.now() / 1000);
       // find active daily password
       const currentPwd = await new Promise((resolve) => {
-        db.get(`SELECT * FROM daily_exam_passwords WHERE examType = 'UTME' AND isActive = 1 AND expiresAt > ? ORDER BY createdAt DESC LIMIT 1`, [now], (err, row) => {
-          if (err) return resolve(null);
-          resolve(row || null);
-        });
+        db.get(
+          `SELECT * FROM daily_exam_passwords WHERE examType = 'UTME' AND isActive = 1 AND expiresAt > ? ORDER BY createdAt DESC LIMIT 1`,
+          [now],
+          (err, row) => {
+            if (err) return resolve(null);
+            resolve(row || null);
+          }
+        );
       });
 
       if (!currentPwd) {
-        return res.status(403).json({ success: false, message: 'Mock access is not available at this time.' });
+        return res
+          .status(403)
+          .json({ success: false, message: 'Mock access is not available at this time.' });
       }
 
       // Ensure user has a successful verification log for this password
       const verified = await new Promise((resolve) => {
-        db.get(`SELECT COUNT(*) as c FROM password_verification_logs WHERE userId = ? AND passwordId = ? AND isCorrect = 1`, [req.user.id, currentPwd.id], (err, row) => {
-          if (err) return resolve(false);
-          resolve(row && row.c > 0);
-        });
+        db.get(
+          `SELECT COUNT(*) as c FROM password_verification_logs WHERE userId = ? AND passwordId = ? AND isCorrect = 1`,
+          [req.user.id, currentPwd.id],
+          (err, row) => {
+            if (err) return resolve(false);
+            resolve(row && row.c > 0);
+          }
+        );
       });
 
       if (!verified) {
-        return res.status(403).json({ success: false, message: 'You must verify today\'s mock password before starting this exam.' });
+        return res
+          .status(403)
+          .json({
+            success: false,
+            message: "You must verify today's mock password before starting this exam.",
+          });
       }
     }
 
@@ -84,7 +106,9 @@ exports.startExam = async (req, res, next) => {
     // For JAMB-style exams, ensure USE OF ENGLISH is included once.
     const questionsToFetch = new Set();
     for (const s of subjectsToUse) questionsToFetch.add(s.name);
-    const isJambStyle = subjectsToUse.some(s => s.code === 'UTME' || (s.code && s.code.includes('JAMB')));
+    const isJambStyle = subjectsToUse.some(
+      (s) => s.code === 'UTME' || (s.code && s.code.includes('JAMB'))
+    );
     if (isJambStyle) {
       questionsToFetch.add('USE OF ENGLISH');
     }
@@ -95,7 +119,7 @@ exports.startExam = async (req, res, next) => {
       const ids = await new Promise((resolve) => {
         db.all('SELECT id FROM questions WHERE subject = ?', [subjectName], (err, rows) => {
           if (err) return resolve([]);
-          resolve(rows.map(r => r.id));
+          resolve(rows.map((r) => r.id));
         });
       });
       questionIdsBySubject.set(subjectName, shuffleArray(ids));
@@ -106,7 +130,9 @@ exports.startExam = async (req, res, next) => {
     const subjectNames = Array.from(questionIdsBySubject.keys());
 
     if (!subjectNames.length) {
-      return res.status(404).json({ success: false, message: 'No questions available for this exam.' });
+      return res
+        .status(404)
+        .json({ success: false, message: 'No questions available for this exam.' });
     }
 
     const quota = {};
@@ -114,18 +140,23 @@ exports.startExam = async (req, res, next) => {
       quota['USE OF ENGLISH'] = 10;
       const remainingSubjects = subjectNames.filter((name) => name !== 'USE OF ENGLISH');
       const remainingCount = totalQuestionsWanted - quota['USE OF ENGLISH'];
-      const perSubject = Math.max(1, Math.floor(remainingCount / Math.max(1, remainingSubjects.length)));
+      const perSubject = Math.max(
+        1,
+        Math.floor(remainingCount / Math.max(1, remainingSubjects.length))
+      );
       remainingSubjects.forEach((name, index) => {
-        quota[name] = index === remainingSubjects.length - 1
-          ? remainingCount - perSubject * (remainingSubjects.length - 1)
-          : perSubject;
+        quota[name] =
+          index === remainingSubjects.length - 1
+            ? remainingCount - perSubject * (remainingSubjects.length - 1)
+            : perSubject;
       });
     } else {
       const perSubject = Math.max(1, Math.floor(totalQuestionsWanted / subjectNames.length));
       subjectNames.forEach((name, index) => {
-        quota[name] = index === subjectNames.length - 1
-          ? totalQuestionsWanted - perSubject * (subjectNames.length - 1)
-          : perSubject;
+        quota[name] =
+          index === subjectNames.length - 1
+            ? totalQuestionsWanted - perSubject * (subjectNames.length - 1)
+            : perSubject;
       });
     }
 
@@ -147,7 +178,9 @@ exports.startExam = async (req, res, next) => {
     }
 
     if (!selectedIds.length) {
-      return res.status(404).json({ success: false, message: 'No questions available for this exam.' });
+      return res
+        .status(404)
+        .json({ success: false, message: 'No questions available for this exam.' });
     }
 
     const questionSet = await Question.findByIds(selectedIds);
@@ -157,7 +190,7 @@ exports.startExam = async (req, res, next) => {
       // Use the first subject's duration as default lock duration
       const baseDuration = subjectsToUse[0].duration || 60;
       const lockDuration = baseDuration + 30; // buffer
-      const lockExpiresAt = Math.floor(Date.now() / 1000) + (lockDuration * 60);
+      const lockExpiresAt = Math.floor(Date.now() / 1000) + lockDuration * 60;
 
       await ExamLock.create({
         userId: req.user.id,
@@ -167,15 +200,19 @@ exports.startExam = async (req, res, next) => {
         expiresAt: lockExpiresAt,
         ipAddress: req.ip,
         userAgent: req.headers['user-agent'],
-        isActive: 1
+        isActive: 1,
       });
     }
 
     // If joining a global competition, use the competition's display name and
     // align the session expiry with the global lock expiry so all participants
     // share the same timer.
-    const sessionSubject = globalLock ? globalLock.subject : (subjectsToUse.map(s=>s.name).join(' + '));
-    const sessionExpiresAt = globalLock ? new Date(globalLock.expiresAt * 1000) : new Date(Date.now() + (subjectsToUse[0].duration || 60) * 60000);
+    const sessionSubject = globalLock
+      ? globalLock.subject
+      : subjectsToUse.map((s) => s.name).join(' + ');
+    const sessionExpiresAt = globalLock
+      ? new Date(globalLock.expiresAt * 1000)
+      : new Date(Date.now() + (subjectsToUse[0].duration || 60) * 60000);
 
     const session = await ExamSession.create({
       student: req.user.id,
@@ -184,15 +221,23 @@ exports.startExam = async (req, res, next) => {
       expiresAt: sessionExpiresAt,
     });
 
-    const durationMinutes = Math.max(1, Math.round((sessionExpiresAt.getTime() - Date.now()) / 60000));
+    const durationMinutes = Math.max(
+      1,
+      Math.round((sessionExpiresAt.getTime() - Date.now()) / 60000)
+    );
 
-    res.json({ 
-      success: true, 
-      sessionId: session.id, 
-      subjects: subjectsToUse.map(s => ({ id: s.id, name: s.name, code: s.code, duration: s.duration })),
+    res.json({
+      success: true,
+      sessionId: session.id,
+      subjects: subjectsToUse.map((s) => ({
+        id: s.id,
+        name: s.name,
+        code: s.code,
+        duration: s.duration,
+      })),
       duration: durationMinutes,
       expiresAt: sessionExpiresAt.toISOString(),
-      message: 'Exam started successfully'
+      message: 'Exam started successfully',
     });
   } catch (error) {
     next(error);
@@ -258,7 +303,8 @@ exports.finishExam = async (req, res, next) => {
     session.answers.forEach((item) => {
       const question = questionMap.get(String(item.questionId));
       if (!question) return;
-      perSubjectCorrect[question.subject] = (perSubjectCorrect[question.subject] || 0) + (item.answer === question.answer ? 1 : 0);
+      perSubjectCorrect[question.subject] =
+        (perSubjectCorrect[question.subject] || 0) + (item.answer === question.answer ? 1 : 0);
     });
 
     // Build per-subject breakdown

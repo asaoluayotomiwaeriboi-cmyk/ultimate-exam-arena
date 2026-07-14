@@ -72,6 +72,7 @@ Copy the generated public URL and use it to access the app from any device.
 This application now uses PostgreSQL, which gives much higher write throughput and concurrency than SQLite. For larger classes or serious production use, keep using Postgres, run multiple Node.js instances behind a load balancer, and use a managed database service when possible.
 
 Key capacity considerations:
+
 - PostgreSQL scales much better than SQLite for multiple users.
 - Use a separate Postgres server or managed DB instance for real traffic.
 - Use a process manager such as PM2 or Docker Compose to keep the app running permanently.
@@ -116,22 +117,25 @@ npm run docker:down
 For a true website setup, deploy this Docker stack to a host that is always online:
 
 This project is already container-ready, so the easiest path is:
+
 1. Install Docker on the host
 2. Copy this project there
 3. Create a production environment file from `.env.prod.example` and set your `DOMAIN` and `LETSENCRYPT_EMAIL`.
 4. Run the production compose stack and expose ports 80/443:
-4. Point the host's public domain or IP to port `4000`
+5. Point the host's public domain or IP to port `4000`
+
 ```bash
 cp .env.prod.example .env.prod
 docker compose -f docker-compose.prod.yml --env-file .env.prod up -d --build
 ```
 
 5. Point your domain's A record to the host public IP and wait for DNS to propagate. Traefik will request TLS automatically using Let's Encrypt.
-If you want, I can also add a simple `docker-compose.prod.yml` and a documented production deployment checklist.
+   If you want, I can also add a simple `docker-compose.prod.yml` and a documented production deployment checklist.
 
 For production deployment with Docker:
 
 1. Build and run with Docker Compose:
+
    ```bash
    docker-compose up --build
    ```
@@ -143,11 +147,13 @@ For production deployment with Docker:
    ```
 
 The Docker setup includes:
+
 - Node.js 18 Alpine image for smaller size
 - Non-root user for security
 - Health check endpoint
 - PostgreSQL database connectivity via `DATABASE_URL`
 - Persistent data volume for the application
+
 ## Notes
 
 - Admin login uses the seeded admin user from `.env`

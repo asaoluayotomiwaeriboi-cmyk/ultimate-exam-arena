@@ -7,7 +7,8 @@ const fs = require('fs');
 dotenv.config();
 
 const connectionString = process.env.DATABASE_URL;
-const databasePath = process.env.DATABASE_PATH || path.join(__dirname, '..', 'database', 'ultimate-exam-arena.db');
+const databasePath =
+  process.env.DATABASE_PATH || path.join(__dirname, '..', 'database', 'ultimate-exam-arena.db');
 
 // Validate DATABASE_URL early to avoid pg throwing an uncaught ERR_INVALID_URL during Pool usage.
 let usePostgres = Boolean(connectionString);
@@ -66,12 +67,16 @@ const setupSqliteFallback = async () => {
     fs.mkdirSync(dir, { recursive: true });
   }
 
-  const sqliteDb = new sqlite3.Database(databasePath, sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
-    if (err) {
-      console.error('SQLite connection error:', err);
-      process.exit(1);
+  const sqliteDb = new sqlite3.Database(
+    databasePath,
+    sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE,
+    (err) => {
+      if (err) {
+        console.error('SQLite connection error:', err);
+        process.exit(1);
+      }
     }
-  });
+  );
 
   sqliteDb.run('PRAGMA foreign_keys = ON;');
 
@@ -123,20 +128,32 @@ const setupSqliteFallback = async () => {
         finalize(cb) {
           if (typeof cb === 'function') cb(null);
           return Promise.resolve();
-        }
+        },
       };
-    }
+    },
   };
 
   initDb = async () => {
     try {
       await sqliteRun(sqliteDb, `PRAGMA foreign_keys = ON;`);
 
-      await sqliteRun(sqliteDb, `
+      await sqliteRun(
+        sqliteDb,
+        `
         CREATE TABLE IF NOT EXISTS users (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           name TEXT NOT NULL,
           email TEXT UNIQUE NOT NULL,
+          phone TEXT,
+          dateOfBirth TEXT,
+          address TEXT,
+          city TEXT,
+          state TEXT,
+          lga TEXT,
+          school TEXT,
+          jambNumber TEXT,
+          targetUniversity TEXT,
+          targetCourse TEXT,
           password TEXT,
           role TEXT DEFAULT 'student',
           profile TEXT,
@@ -150,33 +167,42 @@ const setupSqliteFallback = async () => {
           googleId TEXT UNIQUE,
           googleAccessToken TEXT,
           googleRefreshToken TEXT,
-          createdAt INTEGER DEFAULT (strftime('%s','now'))
+          createdAt INTEGER DEFAULT (strftime('%s','now') * 1000)
         )
-      `);
+      `
+      );
 
-      await sqliteRun(sqliteDb, `
+      await sqliteRun(
+        sqliteDb,
+        `
         CREATE TABLE IF NOT EXISTS subjects (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           name TEXT NOT NULL,
           code TEXT UNIQUE NOT NULL,
           duration INTEGER NOT NULL,
           active INTEGER DEFAULT 1,
-          createdAt INTEGER DEFAULT (strftime('%s','now'))
+          createdAt INTEGER DEFAULT (strftime('%s','now') * 1000)
         )
-      `);
+      `
+      );
 
-      await sqliteRun(sqliteDb, `
+      await sqliteRun(
+        sqliteDb,
+        `
         CREATE TABLE IF NOT EXISTS questions (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           subject TEXT NOT NULL,
           questionText TEXT NOT NULL,
           choices TEXT NOT NULL,
           answer TEXT NOT NULL,
-          createdAt INTEGER DEFAULT (strftime('%s','now'))
+          createdAt INTEGER DEFAULT (strftime('%s','now') * 1000)
         )
-      `);
+      `
+      );
 
-      await sqliteRun(sqliteDb, `
+      await sqliteRun(
+        sqliteDb,
+        `
         CREATE TABLE IF NOT EXISTS exam_sessions (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           student INTEGER NOT NULL,
@@ -189,12 +215,15 @@ const setupSqliteFallback = async () => {
           finished INTEGER DEFAULT 0,
           score INTEGER DEFAULT 0,
           warnings INTEGER DEFAULT 0,
-          createdAt INTEGER DEFAULT (strftime('%s','now')),
+          createdAt INTEGER DEFAULT (strftime('%s','now') * 1000),
           FOREIGN KEY (student) REFERENCES users (id)
         )
-      `);
+      `
+      );
 
-      await sqliteRun(sqliteDb, `
+      await sqliteRun(
+        sqliteDb,
+        `
         CREATE TABLE IF NOT EXISTS results (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           student INTEGER NOT NULL,
@@ -207,9 +236,12 @@ const setupSqliteFallback = async () => {
           createdAt INTEGER DEFAULT (strftime('%s','now')),
           FOREIGN KEY (student) REFERENCES users (id)
         )
-      `);
+      `
+      );
 
-      await sqliteRun(sqliteDb, `
+      await sqliteRun(
+        sqliteDb,
+        `
         CREATE TABLE IF NOT EXISTS daily_exam_passwords (
           id TEXT PRIMARY KEY,
           examType TEXT NOT NULL DEFAULT 'UTME',
@@ -221,9 +253,12 @@ const setupSqliteFallback = async () => {
           generatedBy INTEGER,
           FOREIGN KEY (generatedBy) REFERENCES users (id)
         )
-      `);
+      `
+      );
 
-      await sqliteRun(sqliteDb, `
+      await sqliteRun(
+        sqliteDb,
+        `
         CREATE TABLE IF NOT EXISTS password_distributions (
           id TEXT PRIMARY KEY,
           userId INTEGER NOT NULL,
@@ -239,9 +274,12 @@ const setupSqliteFallback = async () => {
           FOREIGN KEY (userId) REFERENCES users (id),
           FOREIGN KEY (passwordId) REFERENCES daily_exam_passwords (id)
         )
-      `);
+      `
+      );
 
-      await sqliteRun(sqliteDb, `
+      await sqliteRun(
+        sqliteDb,
+        `
         CREATE TABLE IF NOT EXISTS password_verification_logs (
           id TEXT PRIMARY KEY,
           userId INTEGER NOT NULL,
@@ -254,9 +292,12 @@ const setupSqliteFallback = async () => {
           FOREIGN KEY (userId) REFERENCES users (id),
           FOREIGN KEY (passwordId) REFERENCES daily_exam_passwords (id)
         )
-      `);
+      `
+      );
 
-      await sqliteRun(sqliteDb, `
+      await sqliteRun(
+        sqliteDb,
+        `
         CREATE TABLE IF NOT EXISTS games (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           name TEXT NOT NULL,
@@ -268,9 +309,12 @@ const setupSqliteFallback = async () => {
           createdAt INTEGER DEFAULT (strftime('%s','now')),
           FOREIGN KEY (createdBy) REFERENCES users (id)
         )
-      `);
+      `
+      );
 
-      await sqliteRun(sqliteDb, `
+      await sqliteRun(
+        sqliteDb,
+        `
         CREATE TABLE IF NOT EXISTS dictionary (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           word TEXT UNIQUE NOT NULL,
@@ -280,11 +324,14 @@ const setupSqliteFallback = async () => {
           example TEXT,
           synonyms TEXT,
           audioUrl TEXT,
-          createdAt INTEGER DEFAULT (strftime('%s','now'))
+          createdAt INTEGER DEFAULT (strftime('%s','now') * 1000)
         )
-      `);
+      `
+      );
 
-      await sqliteRun(sqliteDb, `
+      await sqliteRun(
+        sqliteDb,
+        `
         CREATE TABLE IF NOT EXISTS syllabuses (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           subject TEXT NOT NULL,
@@ -295,9 +342,12 @@ const setupSqliteFallback = async () => {
           createdAt INTEGER DEFAULT (strftime('%s','now')),
           FOREIGN KEY (createdBy) REFERENCES users (id)
         )
-      `);
+      `
+      );
 
-      await sqliteRun(sqliteDb, `
+      await sqliteRun(
+        sqliteDb,
+        `
         CREATE TABLE IF NOT EXISTS career_guides (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           profession TEXT UNIQUE NOT NULL,
@@ -307,11 +357,14 @@ const setupSqliteFallback = async () => {
           jobProspects TEXT,
           salary TEXT,
           skills TEXT,
-          createdAt INTEGER DEFAULT (strftime('%s','now'))
+          createdAt INTEGER DEFAULT (strftime('%s','now') * 1000)
         )
-      `);
+      `
+      );
 
-      await sqliteRun(sqliteDb, `
+      await sqliteRun(
+        sqliteDb,
+        `
         CREATE TABLE IF NOT EXISTS exam_locks (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           userId INTEGER NOT NULL,
@@ -325,9 +378,12 @@ const setupSqliteFallback = async () => {
           createdAt INTEGER DEFAULT (strftime('%s','now')),
           FOREIGN KEY (userId) REFERENCES users (id)
         )
-      `);
+      `
+      );
 
-      await sqliteRun(sqliteDb, `
+      await sqliteRun(
+        sqliteDb,
+        `
         CREATE TABLE IF NOT EXISTS question_shuffles (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           userId INTEGER NOT NULL,
@@ -336,7 +392,8 @@ const setupSqliteFallback = async () => {
           createdAt INTEGER DEFAULT (strftime('%s','now')),
           FOREIGN KEY (userId) REFERENCES users (id)
         )
-      `);
+      `
+      );
 
       console.log(`SQLite connected and schema initialized at ${databasePath}`);
     } catch (error) {
@@ -399,9 +456,9 @@ if (usePostgres) {
         finalize(cb) {
           if (typeof cb === 'function') cb(null);
           return Promise.resolve();
-        }
+        },
       };
-    }
+    },
   };
 
   initDb = async () => {
@@ -412,6 +469,16 @@ if (usePostgres) {
           id SERIAL PRIMARY KEY,
           name TEXT NOT NULL,
           email TEXT UNIQUE NOT NULL,
+          phone TEXT,
+          dateOfBirth TEXT,
+          address TEXT,
+          city TEXT,
+          state TEXT,
+          lga TEXT,
+          school TEXT,
+          jambNumber TEXT,
+          targetUniversity TEXT,
+          targetCourse TEXT,
           password TEXT,
           role TEXT DEFAULT 'student',
           profile TEXT,
@@ -428,6 +495,44 @@ if (usePostgres) {
           createdAt INTEGER DEFAULT FLOOR(EXTRACT(EPOCH FROM NOW()))::INTEGER
         )
       `);
+
+      // Ensure timestamp-like columns use BIGINT so millisecond epoch values fit
+      const timestampCols = [
+        { table: 'users', column: 'createdAt' },
+        { table: 'users', column: 'lastLogin' },
+        { table: 'users', column: 'lockedUntil' }
+      ];
+      for (const t of timestampCols) {
+        try {
+          await pool.query(`ALTER TABLE ${t.table} ALTER COLUMN ${t.column} TYPE BIGINT USING (${t.column}::bigint)`);
+        } catch (err) {
+          // Non-fatal; may already be BIGINT or column may not exist yet
+          // console.warn(`Could not alter column ${t.table}.${t.column}:`, err.message);
+        }
+      }
+
+      // Ensure legacy deployments get the new columns if they are missing
+      const alterCols = [
+        "phone TEXT",
+        "dateOfBirth TEXT",
+        "address TEXT",
+        "city TEXT",
+        "state TEXT",
+        "lga TEXT",
+        "school TEXT",
+        "jambNumber TEXT",
+        "targetUniversity TEXT",
+        "targetCourse TEXT"
+      ];
+      for (const col of alterCols) {
+        const colName = col.split(' ')[0];
+        try {
+          await pool.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS ${col}`);
+        } catch (err) {
+          // Non-fatal: continue
+          console.warn(`Could not add column ${colName} to users:`, err.message);
+        }
+      }
 
       await pool.query(`
         CREATE TABLE IF NOT EXISTS subjects (
@@ -636,12 +741,16 @@ if (usePostgres) {
     fs.mkdirSync(dir, { recursive: true });
   }
 
-  const sqliteDb = new sqlite3.Database(databasePath, sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
-    if (err) {
-      console.error('SQLite connection error:', err);
-      process.exit(1);
+  const sqliteDb = new sqlite3.Database(
+    databasePath,
+    sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE,
+    (err) => {
+      if (err) {
+        console.error('SQLite connection error:', err);
+        process.exit(1);
+      }
     }
-  });
+  );
 
   sqliteDb.run('PRAGMA foreign_keys = ON;');
 
@@ -693,16 +802,18 @@ if (usePostgres) {
         finalize(cb) {
           if (typeof cb === 'function') cb(null);
           return Promise.resolve();
-        }
+        },
       };
-    }
+    },
   };
 
   initDb = async () => {
     try {
       await sqliteRun(sqliteDb, `PRAGMA foreign_keys = ON;`);
 
-      await sqliteRun(sqliteDb, `
+      await sqliteRun(
+        sqliteDb,
+        `
         CREATE TABLE IF NOT EXISTS users (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           name TEXT NOT NULL,
@@ -720,22 +831,28 @@ if (usePostgres) {
           googleId TEXT UNIQUE,
           googleAccessToken TEXT,
           googleRefreshToken TEXT,
-          createdAt INTEGER DEFAULT (strftime('%s','now'))
+          createdAt INTEGER DEFAULT (strftime('%s','now') * 1000)
         )
-      `);
+      `
+      );
 
-      await sqliteRun(sqliteDb, `
+      await sqliteRun(
+        sqliteDb,
+        `
         CREATE TABLE IF NOT EXISTS subjects (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           name TEXT NOT NULL,
           code TEXT UNIQUE NOT NULL,
           duration INTEGER NOT NULL,
           active INTEGER DEFAULT 1,
-          createdAt INTEGER DEFAULT (strftime('%s','now'))
+          createdAt INTEGER DEFAULT (strftime('%s','now') * 1000)
         )
-      `);
+      `
+      );
 
-      await sqliteRun(sqliteDb, `
+      await sqliteRun(
+        sqliteDb,
+        `
         CREATE TABLE IF NOT EXISTS questions (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           subject TEXT NOT NULL,
@@ -744,9 +861,12 @@ if (usePostgres) {
           answer TEXT NOT NULL,
           createdAt INTEGER DEFAULT (strftime('%s','now'))
         )
-      `);
+      `
+      );
 
-      await sqliteRun(sqliteDb, `
+      await sqliteRun(
+        sqliteDb,
+        `
         CREATE TABLE IF NOT EXISTS exam_sessions (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           student INTEGER NOT NULL,
@@ -762,9 +882,12 @@ if (usePostgres) {
           createdAt INTEGER DEFAULT (strftime('%s','now')),
           FOREIGN KEY (student) REFERENCES users (id)
         )
-      `);
+      `
+      );
 
-      await sqliteRun(sqliteDb, `
+      await sqliteRun(
+        sqliteDb,
+        `
         CREATE TABLE IF NOT EXISTS results (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           student INTEGER NOT NULL,
@@ -777,9 +900,12 @@ if (usePostgres) {
           createdAt INTEGER DEFAULT (strftime('%s','now')),
           FOREIGN KEY (student) REFERENCES users (id)
         )
-      `);
+      `
+      );
 
-      await sqliteRun(sqliteDb, `
+      await sqliteRun(
+        sqliteDb,
+        `
         CREATE TABLE IF NOT EXISTS daily_exam_passwords (
           id TEXT PRIMARY KEY,
           examType TEXT NOT NULL DEFAULT 'UTME',
@@ -791,9 +917,12 @@ if (usePostgres) {
           generatedBy INTEGER,
           FOREIGN KEY (generatedBy) REFERENCES users (id)
         )
-      `);
+      `
+      );
 
-      await sqliteRun(sqliteDb, `
+      await sqliteRun(
+        sqliteDb,
+        `
         CREATE TABLE IF NOT EXISTS password_distributions (
           id TEXT PRIMARY KEY,
           userId INTEGER NOT NULL,
@@ -809,9 +938,12 @@ if (usePostgres) {
           FOREIGN KEY (userId) REFERENCES users (id),
           FOREIGN KEY (passwordId) REFERENCES daily_exam_passwords (id)
         )
-      `);
+      `
+      );
 
-      await sqliteRun(sqliteDb, `
+      await sqliteRun(
+        sqliteDb,
+        `
         CREATE TABLE IF NOT EXISTS password_verification_logs (
           id TEXT PRIMARY KEY,
           userId INTEGER NOT NULL,
@@ -824,9 +956,12 @@ if (usePostgres) {
           FOREIGN KEY (userId) REFERENCES users (id),
           FOREIGN KEY (passwordId) REFERENCES daily_exam_passwords (id)
         )
-      `);
+      `
+      );
 
-      await sqliteRun(sqliteDb, `
+      await sqliteRun(
+        sqliteDb,
+        `
         CREATE TABLE IF NOT EXISTS games (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           name TEXT NOT NULL,
@@ -838,9 +973,12 @@ if (usePostgres) {
           createdAt INTEGER DEFAULT (strftime('%s','now')),
           FOREIGN KEY (createdBy) REFERENCES users (id)
         )
-      `);
+      `
+      );
 
-      await sqliteRun(sqliteDb, `
+      await sqliteRun(
+        sqliteDb,
+        `
         CREATE TABLE IF NOT EXISTS dictionary (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           word TEXT UNIQUE NOT NULL,
@@ -852,9 +990,12 @@ if (usePostgres) {
           audioUrl TEXT,
           createdAt INTEGER DEFAULT (strftime('%s','now'))
         )
-      `);
+      `
+      );
 
-      await sqliteRun(sqliteDb, `
+      await sqliteRun(
+        sqliteDb,
+        `
         CREATE TABLE IF NOT EXISTS syllabuses (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           subject TEXT NOT NULL,
@@ -865,9 +1006,12 @@ if (usePostgres) {
           createdAt INTEGER DEFAULT (strftime('%s','now')),
           FOREIGN KEY (createdBy) REFERENCES users (id)
         )
-      `);
+      `
+      );
 
-      await sqliteRun(sqliteDb, `
+      await sqliteRun(
+        sqliteDb,
+        `
         CREATE TABLE IF NOT EXISTS career_guides (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           profession TEXT UNIQUE NOT NULL,
@@ -879,9 +1023,12 @@ if (usePostgres) {
           skills TEXT,
           createdAt INTEGER DEFAULT (strftime('%s','now'))
         )
-      `);
+      `
+      );
 
-      await sqliteRun(sqliteDb, `
+      await sqliteRun(
+        sqliteDb,
+        `
         CREATE TABLE IF NOT EXISTS exam_locks (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           userId INTEGER NOT NULL,
@@ -895,9 +1042,12 @@ if (usePostgres) {
           createdAt INTEGER DEFAULT (strftime('%s','now')),
           FOREIGN KEY (userId) REFERENCES users (id)
         )
-      `);
+      `
+      );
 
-      await sqliteRun(sqliteDb, `
+      await sqliteRun(
+        sqliteDb,
+        `
         CREATE TABLE IF NOT EXISTS question_shuffles (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           userId INTEGER NOT NULL,
@@ -906,7 +1056,8 @@ if (usePostgres) {
           createdAt INTEGER DEFAULT (strftime('%s','now')),
           FOREIGN KEY (userId) REFERENCES users (id)
         )
-      `);
+      `
+      );
 
       console.log(`SQLite connected and schema initialized at ${databasePath}`);
     } catch (error) {

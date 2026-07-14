@@ -1,85 +1,109 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ultimate Exam Arena</title>
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#1d4ed8">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Ultimate Exam Arena">
-</head>
-<body>
-  <main class="container">
-    <div class="topbar">
-      <div>
-        <h2>Exam session</h2>
-        <p class="timer">Time left: <span id="timer-label">00:00</span></p>
-      </div>
-      <div class="toolbox">
-        <button id="fullscreen-btn" class="btn btn-secondary">Fullscreen</button>
-        <button id="calc-toggle" class="btn btn-secondary">Calculator</button>
-      </div>
-    </div>
-
-    <div class="exam-frame layout-dashboard">
-      <aside class="sidebar">
-        <div class="card">
-          <h4>Question navigator</h4>
-          <div id="question-palette"></div>
-          <p id="score-tracker">0 / 0 answered</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ultimate Exam Arena</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1d4ed8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Ultimate Exam Arena" />
+  </head>
+  <body>
+    <main class="container">
+      <div class="topbar">
+        <div>
+          <h2>Exam session</h2>
+          <p class="timer">Time left: <span id="timer-label">00:00</span></p>
         </div>
-      </aside>
-      <section class="main-panel">
-        <div class="question-text" id="question-title"></div>
-        <div class="options" id="options-container"></div>
-        <div class="toolbox" style="margin-top:24px;">
-          <button id="prev-btn" class="btn btn-secondary">Previous (P)</button>
-          <button id="next-btn" class="btn btn-secondary">Next (N)</button>
-          <button id="quit-btn" class="btn btn-danger">Quit Exam (Q)</button>
-          <button id="finish-btn" class="btn btn-primary">Submit Exam (S)</button>
+        <div class="toolbox">
+          <button id="fullscreen-btn" class="btn btn-secondary">Fullscreen</button>
+          <button id="calc-toggle" class="btn btn-secondary">Calculator</button>
         </div>
-      </section>
-    </div>
-  </main>
+      </div>
 
-  <div id="warning-banner" class="overlay hidden"><div class="popup"><p>Tab warning: Stay focused during the exam.</p></div></div>
-  <div id="calculator-popup" class="overlay hidden"><div class="popup">
-    <h3>Exam Calculator</h3>
-    <input id="calc-display" type="text" placeholder="0" readonly style="width:100%;padding:14px 16px;margin-bottom:14px;border-radius:14px;border:1px solid #dbe4ff;">
-    <div class="grid" style="grid-template-columns: repeat(4, 1fr); gap:10px;">
-      <button class="btn btn-secondary" type="button" onclick="calcInput('7')">7</button>
-      <button class="btn btn-secondary" type="button" onclick="calcInput('8')">8</button>
-      <button class="btn btn-secondary" type="button" onclick="calcInput('9')">9</button>
-      <button class="btn btn-secondary" type="button" onclick="calcInput('/')">/</button>
-      <button class="btn btn-secondary" type="button" onclick="calcInput('4')">4</button>
-      <button class="btn btn-secondary" type="button" onclick="calcInput('5')">5</button>
-      <button class="btn btn-secondary" type="button" onclick="calcInput('6')">6</button>
-      <button class="btn btn-secondary" type="button" onclick="calcInput('*')">*</button>
-      <button class="btn btn-secondary" type="button" onclick="calcInput('1')">1</button>
-      <button class="btn btn-secondary" type="button" onclick="calcInput('2')">2</button>
-      <button class="btn btn-secondary" type="button" onclick="calcInput('3')">3</button>
-      <button class="btn btn-secondary" type="button" onclick="calcInput('-')">-</button>
-      <button class="btn btn-secondary" type="button" onclick="calcInput('0')">0</button>
-      <button class="btn btn-secondary" type="button" onclick="calcInput('.')">.</button>
-      <button class="btn btn-secondary" type="button" onclick="calcInput('=')">=</button>
-      <button class="btn btn-secondary" type="button" onclick="calcInput('+')">+</button>
-    </div>
-    <button id="calc-close" class="btn btn-primary" style="margin-top:16px;">Close</button>
-  </div></div>
+      <div class="exam-frame layout-dashboard">
+        <aside class="sidebar">
+          <div class="card">
+            <h4>Question navigator</h4>
+            <div id="question-palette"></div>
+            <p id="score-tracker">0 / 0 answered</p>
+          </div>
+        </aside>
+        <section class="main-panel">
+          <div class="question-text" id="question-title"></div>
+          <div class="options" id="options-container"></div>
+          <div class="toolbox" style="margin-top: 24px">
+            <button id="prev-btn" class="btn btn-secondary">Previous (P)</button>
+            <button id="next-btn" class="btn btn-secondary">Next (N)</button>
+            <button id="quit-btn" class="btn btn-danger">Quit Exam (Q)</button>
+            <button id="finish-btn" class="btn btn-primary">Submit Exam (S)</button>
+          </div>
+        </section>
+      </div>
+    </main>
 
-  <script>
-    const calcDisplay = document.getElementById('calc-display');
-    window.calcInput = (value) => {
-      if (value === '=') {
-        try { calcDisplay.value = String(eval(calcDisplay.value || '0')); }
-        catch { calcDisplay.value = 'Error'; }
-        return;
-      }
-      calcDisplay.value = (calcDisplay.value === '0' && value !== '.') ? value : calcDisplay.value + value;
-    };
-  </script>
-  <script src="js/exam.js"></script>
-</body>
+    <div id="warning-banner" class="overlay hidden">
+      <div class="popup"><p>Tab warning: Stay focused during the exam.</p></div>
+    </div>
+    <div id="calculator-popup" class="overlay hidden">
+      <div class="popup">
+        <h3>Exam Calculator</h3>
+        <input
+          id="calc-display"
+          type="text"
+          placeholder="0"
+          readonly
+          style="
+            width: 100%;
+            padding: 14px 16px;
+            margin-bottom: 14px;
+            border-radius: 14px;
+            border: 1px solid #dbe4ff;
+          "
+        />
+        <div class="grid" style="grid-template-columns: repeat(4, 1fr); gap: 10px">
+          <button class="btn btn-secondary" type="button" onclick="calcInput('7')">7</button>
+          <button class="btn btn-secondary" type="button" onclick="calcInput('8')">8</button>
+          <button class="btn btn-secondary" type="button" onclick="calcInput('9')">9</button>
+          <button class="btn btn-secondary" type="button" onclick="calcInput('/')">/</button>
+          <button class="btn btn-secondary" type="button" onclick="calcInput('4')">4</button>
+          <button class="btn btn-secondary" type="button" onclick="calcInput('5')">5</button>
+          <button class="btn btn-secondary" type="button" onclick="calcInput('6')">6</button>
+          <button class="btn btn-secondary" type="button" onclick="calcInput('*')">*</button>
+          <button class="btn btn-secondary" type="button" onclick="calcInput('1')">1</button>
+          <button class="btn btn-secondary" type="button" onclick="calcInput('2')">2</button>
+          <button class="btn btn-secondary" type="button" onclick="calcInput('3')">3</button>
+          <button class="btn btn-secondary" type="button" onclick="calcInput('-')">-</button>
+          <button class="btn btn-secondary" type="button" onclick="calcInput('0')">0</button>
+          <button class="btn btn-secondary" type="button" onclick="calcInput('.')">.</button>
+          <button class="btn btn-secondary" type="button" onclick="calcInput('=')">=</button>
+          <button class="btn btn-secondary" type="button" onclick="calcInput('+')">+</button>
+        </div>
+        <button id="calc-close" class="btn btn-primary" style="margin-top: 16px">Close</button>
+      </div>
+    </div>
+
+    <script src="js/escape.js"></script>
+    <script>
+      const calcDisplay = document.getElementById('calc-display');
+      window.calcInput = (value) => {
+        if (value === '=') {
+          try {
+            const expr = (calcDisplay.value || '0').trim();
+            if (!/^[0-9+\-*/().\s]+$/.test(expr)) throw new Error('Invalid expression');
+            const result = Function('"use strict"; return (' + expr + ')')();
+            calcDisplay.value = String(result);
+          } catch {
+            calcDisplay.value = 'Error';
+          }
+          return;
+        }
+        calcDisplay.value =
+          calcDisplay.value === '0' && value !== '.' ? value : calcDisplay.value + value;
+      };
+    </script>
+    <script src="js/exam.js"></script>
+  </body>
 </html>

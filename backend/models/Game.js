@@ -31,7 +31,7 @@ class Game {
 
       db.all(sql, params, (err, rows) => {
         if (err) reject(err);
-        else resolve(rows.map(row => new Game(row)));
+        else resolve(rows.map((row) => new Game(row)));
       });
     });
   }
@@ -72,7 +72,7 @@ class Game {
         data.subject,
         data.difficulty,
         JSON.stringify(data.questions || []),
-        data.createdBy
+        data.createdBy,
       ];
 
       db.run(`${sql} RETURNING id`, params)

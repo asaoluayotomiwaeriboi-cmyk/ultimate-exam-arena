@@ -88,7 +88,7 @@ class User {
 
       db.all(sql, params, (err, rows) => {
         if (err) reject(err);
-        else resolve(rows.map(row => new User(row)));
+        else resolve(rows.map((row) => new User(row)));
       });
     });
   }
@@ -141,7 +141,7 @@ class User {
         data.lastLogin || null,
         data.googleId || null,
         data.googleAccessToken || null,
-        data.googleRefreshToken || null
+        data.googleRefreshToken || null,
       ];
 
       db.run(sql, params)
@@ -188,7 +188,7 @@ class User {
         this.googleId,
         this.googleAccessToken,
         this.googleRefreshToken,
-        this.id
+        this.id,
       ];
 
       db.run(sql, params, (err) => {
@@ -223,7 +223,7 @@ class User {
       threatLevel: this.threatLevel,
       lastLogin: this.lastLogin,
       googleId: this.googleId,
-      createdAt: this.createdAt
+      createdAt: this.createdAt,
     };
   }
 }

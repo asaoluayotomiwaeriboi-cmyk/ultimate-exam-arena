@@ -18,7 +18,9 @@ class ExamSession {
     this.id = data.id;
     this.student = data.student;
     this.subject = data.subject;
-    this.questions = Array.isArray(data.questions) ? data.questions : JSON.parse(data.questions || '[]');
+    this.questions = Array.isArray(data.questions)
+      ? data.questions
+      : JSON.parse(data.questions || '[]');
     this.answers = Array.isArray(data.answers) ? data.answers : JSON.parse(data.answers || '[]');
     this.currentIndex = data.currentIndex || 0;
     this.startedAt = data.startedAt;
@@ -51,22 +53,26 @@ class ExamSession {
         expiresAt,
         data.finished ? 1 : 0,
         data.score || 0,
-        data.warnings || 0
+        data.warnings || 0,
       ];
 
       db.run(`${sql} RETURNING id`, params)
-        .then((result) => resolve(new ExamSession({
-          id: result.rows[0].id,
-          ...data,
-          questions: data.questions || [],
-          answers: data.answers || [],
-          currentIndex: data.currentIndex || 0,
-          startedAt,
-          expiresAt,
-          finished: data.finished ? 1 : 0,
-          score: data.score || 0,
-          warnings: data.warnings || 0
-        })))
+        .then((result) =>
+          resolve(
+            new ExamSession({
+              id: result.rows[0].id,
+              ...data,
+              questions: data.questions || [],
+              answers: data.answers || [],
+              currentIndex: data.currentIndex || 0,
+              startedAt,
+              expiresAt,
+              finished: data.finished ? 1 : 0,
+              score: data.score || 0,
+              warnings: data.warnings || 0,
+            })
+          )
+        )
         .catch(reject);
     });
   }
@@ -107,14 +113,14 @@ class ExamSession {
 
       db.all(sql, params, (err, rows) => {
         if (err) reject(err);
-        else resolve(rows.map(row => new ExamSession(row)));
+        else resolve(rows.map((row) => new ExamSession(row)));
       });
     });
   }
 
   async save() {
     return new Promise((resolve, reject) => {
-      const startedAt = this.startedAt ? toSeconds(this.startedAt) : null;
+      const startedAt = this.startedAt ? toSeconds(this.startedAt) : Math.floor(Date.now() / 1000);
       const expiresAt = this.expiresAt ? toSeconds(this.expiresAt) : null;
       const sql = `
         UPDATE exam_sessions SET
@@ -141,10 +147,12 @@ class ExamSession {
         this.finished ? 1 : 0,
         this.score,
         this.warnings,
-        this.id
+        this.id,
       ];
 
-      db.run(sql, params, function(err) {
+      console.log('ExamSession.save params:', params);
+
+      db.run(sql, params, function (err) {
         if (err) reject(err);
         else resolve(this);
       });
@@ -169,7 +177,7 @@ class ExamSession {
       `;
       db.all(sql, [], (err, rows) => {
         if (err) reject(err);
-        else resolve(rows.map(row => new ExamSession(row)));
+        else resolve(rows.map((row) => new ExamSession(row)));
       });
     });
   }

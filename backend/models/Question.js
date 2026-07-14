@@ -44,7 +44,7 @@ class Question {
 
       db.all(sql, params, (err, rows) => {
         if (err) reject(err);
-        else resolve(rows.map(row => new Question(row)));
+        else resolve(rows.map((row) => new Question(row)));
       });
     });
   }
@@ -65,8 +65,8 @@ class Question {
       db.all(`SELECT * FROM questions WHERE id IN (${placeholders})`, ids, (err, rows) => {
         if (err) reject(err);
         else {
-          const rowMap = new Map(rows.map(row => [row.id, new Question(row)]));
-          resolve(ids.filter(id => rowMap.has(id)).map(id => rowMap.get(id)));
+          const rowMap = new Map(rows.map((row) => [row.id, new Question(row)]));
+          resolve(ids.filter((id) => rowMap.has(id)).map((id) => rowMap.get(id)));
         }
       });
     });
@@ -74,16 +74,19 @@ class Question {
 
   static async create(data) {
     return new Promise((resolve, reject) => {
-      const sql = 'INSERT INTO questions (subject, questionText, choices, answer) VALUES (?, ?, ?, ?) RETURNING id';
+      const sql =
+        'INSERT INTO questions (subject, questionText, choices, answer) VALUES (?, ?, ?, ?) RETURNING id';
       const params = [
         data.subject,
         data.questionText,
         JSON.stringify(data.choices || []),
-        data.answer
+        data.answer,
       ];
 
       db.run(sql, params)
-        .then((result) => resolve(new Question({ id: result.rows[0].id, ...data, choices: data.choices })))
+        .then((result) =>
+          resolve(new Question({ id: result.rows[0].id, ...data, choices: data.choices }))
+        )
         .catch(reject);
     });
   }
@@ -103,10 +106,10 @@ class Question {
         data.questionText,
         JSON.stringify(data.choices || []),
         data.answer,
-        id
+        id,
       ];
 
-      db.run(sql, params, async function(err) {
+      db.run(sql, params, async function (err) {
         if (err) reject(err);
         else resolve(await Question.findById(id));
       });
@@ -115,7 +118,7 @@ class Question {
 
   static async findByIdAndDelete(id) {
     return new Promise((resolve, reject) => {
-      db.run('DELETE FROM questions WHERE id = ?', [id], function(err) {
+      db.run('DELETE FROM questions WHERE id = ?', [id], function (err) {
         if (err) reject(err);
         else resolve({ deleted: this.changes });
       });
@@ -141,10 +144,17 @@ class Question {
 
   static async insertMany(questions) {
     return new Promise((resolve, reject) => {
-      const stmt = db.prepare('INSERT INTO questions (subject, questionText, choices, answer) VALUES (?, ?, ?, ?)');
+      const stmt = db.prepare(
+        'INSERT INTO questions (subject, questionText, choices, answer) VALUES (?, ?, ?, ?)'
+      );
 
       for (const question of questions) {
-        stmt.run(question.subject, question.questionText, JSON.stringify(question.choices), question.answer);
+        stmt.run(
+          question.subject,
+          question.questionText,
+          JSON.stringify(question.choices),
+          question.answer
+        );
       }
 
       stmt.finalize((err) => {

@@ -9,138 +9,134 @@ This document provides code examples for integrating Google OAuth2 into the fron
 ```html
 <!DOCTYPE html>
 <html>
-<head>
-  <title>CBT Login</title>
-  <style>
-    .auth-container {
-      max-width: 400px;
-      margin: 50px auto;
-      padding: 20px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
-    
-    .auth-form {
-      margin-bottom: 20px;
-    }
-    
-    .form-group {
-      margin-bottom: 15px;
-    }
-    
-    input {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      box-sizing: border-box;
-    }
-    
-    button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    
-    .login-btn {
-      background-color: #007bff;
-      color: white;
-    }
-    
-    .oauth-btn {
-      background-color: #4285F4;
-      color: white;
-      text-decoration: none;
-      display: block;
-      text-align: center;
-    }
-    
-    .oauth-btn:hover {
-      background-color: #1f73e7;
-    }
-    
-    .divider {
-      text-align: center;
-      margin: 20px 0;
-      position: relative;
-    }
-    
-    .divider::before {
-      content: "or";
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      background: white;
-      padding: 0 10px;
-    }
-  </style>
-</head>
-<body>
-  <div class="auth-container">
-    <h2>Login to CBT Platform</h2>
-    
-    <!-- Traditional Login -->
-    <div class="auth-form">
-      <h3>Email & Password</h3>
-      <div class="form-group">
-        <input type="email" id="email" placeholder="Email" />
-      </div>
-      <div class="form-group">
-        <input type="password" id="password" placeholder="Password" />
-      </div>
-      <button class="login-btn" onclick="handleTraditionalLogin()">
-        Sign In
-      </button>
-    </div>
-    
-    <div class="divider"></div>
-    
-    <!-- OAuth Login -->
-    <a href="http://localhost:4000/api/auth/google" class="oauth-btn">
-      Sign in with Google
-    </a>
-  </div>
+  <head>
+    <title>CBT Login</title>
+    <style>
+      .auth-container {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+      }
 
-  <script>
-    async function handleTraditionalLogin() {
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-      
-      try {
-        const response = await fetch('http://localhost:4000/api/auth/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password })
-        });
-        
-        const data = await response.json();
-        
-        if (data.success) {
-          localStorage.setItem('token', data.token);
-          window.location.href = '/dashboard';
-        } else {
-          alert('Login failed: ' + data.message);
+      .auth-form {
+        margin-bottom: 20px;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+      }
+
+      input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+
+      button {
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      .login-btn {
+        background-color: #007bff;
+        color: white;
+      }
+
+      .oauth-btn {
+        background-color: #4285f4;
+        color: white;
+        text-decoration: none;
+        display: block;
+        text-align: center;
+      }
+
+      .oauth-btn:hover {
+        background-color: #1f73e7;
+      }
+
+      .divider {
+        text-align: center;
+        margin: 20px 0;
+        position: relative;
+      }
+
+      .divider::before {
+        content: 'or';
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        background: white;
+        padding: 0 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="auth-container">
+      <h2>Login to CBT Platform</h2>
+
+      <!-- Traditional Login -->
+      <div class="auth-form">
+        <h3>Email & Password</h3>
+        <div class="form-group">
+          <input type="email" id="email" placeholder="Email" />
+        </div>
+        <div class="form-group">
+          <input type="password" id="password" placeholder="Password" />
+        </div>
+        <button class="login-btn" onclick="handleTraditionalLogin()">Sign In</button>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- OAuth Login -->
+      <a href="http://localhost:4000/api/auth/google" class="oauth-btn"> Sign in with Google </a>
+    </div>
+
+    <script>
+      async function handleTraditionalLogin() {
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        try {
+          const response = await fetch('http://localhost:4000/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password }),
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            localStorage.setItem('token', data.token);
+            window.location.href = '/dashboard';
+          } else {
+            alert('Login failed: ' + data.message);
+          }
+        } catch (error) {
+          alert('Error: ' + error.message);
         }
-      } catch (error) {
-        alert('Error: ' + error.message);
       }
-    }
-    
-    // Handle OAuth callback
-    window.addEventListener('load', () => {
-      const token = new URLSearchParams(window.location.search).get('token');
-      if (token) {
-        localStorage.setItem('token', token);
-        window.history.replaceState({}, document.title, window.location.pathname);
-        window.location.href = '/dashboard';
-      }
-    });
-  </script>
-</body>
+
+      // Handle OAuth callback
+      window.addEventListener('load', () => {
+        const token = new URLSearchParams(window.location.search).get('token');
+        if (token) {
+          localStorage.setItem('token', token);
+          window.history.replaceState({}, document.title, window.location.pathname);
+          window.location.href = '/dashboard';
+        }
+      });
+    </script>
+  </body>
 </html>
 ```
 
@@ -179,7 +175,7 @@ export default function Login() {
       const response = await fetch('http://localhost:4000/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ email, password }),
       });
 
       const data = await response.json();
@@ -205,7 +201,7 @@ export default function Login() {
     <div className="login-container">
       <div className="login-card">
         <h1>CBT Platform</h1>
-        
+
         {error && <div className="error-message">{error}</div>}
 
         {/* Traditional Login */}
@@ -233,10 +229,7 @@ export default function Login() {
         <div className="divider">or</div>
 
         {/* OAuth Login */}
-        <button
-          className="oauth-button"
-          onClick={handleGoogleLogin}
-        >
+        <button className="oauth-button" onClick={handleGoogleLogin}>
           <img src="google-logo.png" alt="Google" />
           Sign in with Google
         </button>
@@ -264,7 +257,7 @@ export default function ProtectedRoute({ children }) {
   useEffect(() => {
     const verifyToken = async () => {
       const token = localStorage.getItem('token');
-      
+
       if (!token) {
         navigate('/login');
         return;
@@ -272,7 +265,7 @@ export default function ProtectedRoute({ children }) {
 
       try {
         const response = await fetch('http://localhost:4000/api/auth/profile', {
-          headers: { 'Authorization': `Bearer ${token}` }
+          headers: { Authorization: `Bearer ${token}` },
         });
 
         if (response.ok) {
@@ -310,7 +303,7 @@ export function useAPI() {
     const token = localStorage.getItem('token');
     return {
       'Content-Type': 'application/json',
-      ...(token && { 'Authorization': `Bearer ${token}` })
+      ...(token && { Authorization: `Bearer ${token}` }),
     };
   };
 
@@ -319,8 +312,8 @@ export function useAPI() {
       ...options,
       headers: {
         ...getAuthHeaders(),
-        ...options.headers
-      }
+        ...options.headers,
+      },
     });
 
     if (response.status === 401) {
@@ -332,16 +325,22 @@ export function useAPI() {
     return response.json();
   }, []);
 
-  const get = useCallback((url) => {
-    return request(url);
-  }, [request]);
+  const get = useCallback(
+    (url) => {
+      return request(url);
+    },
+    [request]
+  );
 
-  const post = useCallback((url, data) => {
-    return request(url, {
-      method: 'POST',
-      body: JSON.stringify(data)
-    });
-  }, [request]);
+  const post = useCallback(
+    (url, data) => {
+      return request(url, {
+        method: 'POST',
+        body: JSON.stringify(data),
+      });
+    },
+    [request]
+  );
 
   return { request, get, post };
 }
@@ -381,8 +380,8 @@ export function LogoutButton() {
       await fetch('http://localhost:4000/api/auth/logout', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
       });
     } catch (error) {
       console.error('Logout error:', error);
@@ -469,20 +468,20 @@ export function LogoutButton() {
   cursor: not-allowed;
 }
 
-button[type="submit"] {
+button[type='submit'] {
   background-color: #667eea;
   color: white;
   margin-top: 10px;
 }
 
-button[type="submit"]:hover:not(:disabled) {
+button[type='submit']:hover:not(:disabled) {
   background-color: #5568d3;
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
 }
 
 .oauth-button {
-  background-color: #4285F4;
+  background-color: #4285f4;
   color: white;
   display: flex;
   align-items: center;
@@ -509,7 +508,7 @@ button[type="submit"]:hover:not(:disabled) {
 }
 
 .divider::before {
-  content: "";
+  content: '';
   position: absolute;
   left: 0;
   top: 50%;
@@ -628,9 +627,10 @@ REACT_APP_GOOGLE_CLIENT_ID=your_prod_client_id.apps.googleusercontent.com
 ## Troubleshooting
 
 ### Token Not Persisting
+
 ```javascript
 // Check if localStorage is available
-if (typeof(Storage) !== "undefined") {
+if (typeof Storage !== 'undefined') {
   localStorage.setItem('token', token);
 } else {
   // Use sessionStorage or alternative
@@ -639,16 +639,20 @@ if (typeof(Storage) !== "undefined") {
 ```
 
 ### CORS Issues
+
 ```javascript
 // If frontend runs on different port:
 // Update backend server.js CORS:
-app.use(cors({
-  origin: 'http://localhost:3000', // Frontend URL
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: 'http://localhost:3000', // Frontend URL
+    credentials: true,
+  })
+);
 ```
 
 ### OAuth Redirect Loop
+
 ```javascript
 // Ensure callback URL is exact match:
 GOOGLE_CALLBACK_URL=http://localhost:4000/api/auth/google/callback

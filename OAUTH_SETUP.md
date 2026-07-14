@@ -1,11 +1,13 @@
 # Google OAuth2 Implementation Guide
 
 ## Overview
+
 This document explains the Google OAuth2 authentication implementation for the CBT platform. The system now supports both traditional JWT-based authentication and modern OAuth2 flow with Google.
 
 ## Architecture
 
 ### Components Added
+
 1. **Passport Strategies** (`backend/config/passport.js`) - Handles user serialization and deserialization
 2. **OAuth Configuration** (`backend/config/oauth.js`) - Google OAuth2 strategy setup
 3. **OAuth Endpoints** (in `backend/routes/auth.js`):
@@ -16,6 +18,7 @@ This document explains the Google OAuth2 authentication implementation for the C
 6. **Database Schema Update** - OAuth fields added to users table
 
 ### Key Features
+
 - ✅ Backward compatible with existing JWT authentication
 - ✅ Password-based login continues to work
 - ✅ OAuth users automatically create accounts on first login
@@ -53,11 +56,13 @@ NODE_ENV=development
 ### 3. Install Dependencies
 
 Dependencies have been added to `package.json`:
+
 - `passport` - Authentication middleware
 - `passport-google-oauth20` - Google OAuth strategy
 - `express-session` - Session management
 
 If not installed, run:
+
 ```bash
 npm install
 ```
@@ -65,6 +70,7 @@ npm install
 ### 4. Database Migration
 
 The database schema has been automatically updated with OAuth fields when the server starts:
+
 - `googleId` - Google unique identifier
 - `googleAccessToken` - OAuth access token
 - `googleRefreshToken` - OAuth refresh token
@@ -77,17 +83,22 @@ Existing users' tables will be preserved.
 ### OAuth Flow
 
 **Start OAuth Login**
+
 ```
 GET /api/auth/google
 ```
+
 Redirects to Google login page.
 
 **OAuth Callback** (handled automatically)
+
 ```
 GET /api/auth/google/callback
 ```
+
 After user authorizes, redirected here with auth code.
 Creates JWT token and redirects to frontend with token in query param:
+
 ```
 http://localhost:3000?token=eyJhbGc...
 ```
@@ -95,6 +106,7 @@ http://localhost:3000?token=eyJhbGc...
 ### Traditional Authentication (Still Works)
 
 **Register**
+
 ```
 POST /api/auth/signup
 Content-Type: application/json
@@ -107,6 +119,7 @@ Content-Type: application/json
 ```
 
 **Login**
+
 ```
 POST /api/auth/login
 Content-Type: application/json
@@ -118,6 +131,7 @@ Content-Type: application/json
 ```
 
 Response:
+
 ```json
 {
   "success": true,
@@ -136,12 +150,14 @@ Response:
 All existing protected routes work with both JWT and OAuth:
 
 **Get Profile**
+
 ```
 GET /api/auth/profile
 Authorization: Bearer {JWT_TOKEN}
 ```
 
 **Logout**
+
 ```
 POST /api/auth/logout
 or
@@ -156,16 +172,16 @@ Add this to your frontend (HTML/React):
 
 ```html
 <!-- Simple Link -->
-<a href="http://localhost:4000/api/auth/google" class="oauth-btn">
-  Sign in with Google
-</a>
+<a href="http://localhost:4000/api/auth/google" class="oauth-btn"> Sign in with Google </a>
 ```
 
 ```jsx
 // React Component
-<button onClick={() => {
-  window.location.href = 'http://localhost:4000/api/auth/google';
-}}>
+<button
+  onClick={() => {
+    window.location.href = 'http://localhost:4000/api/auth/google';
+  }}
+>
   Sign in with Google
 </button>
 ```
@@ -179,7 +195,7 @@ After OAuth callback, the frontend receives token in URL:
 useEffect(() => {
   const params = new URLSearchParams(window.location.search);
   const token = params.get('token');
-  
+
   if (token) {
     // Store token in localStorage
     localStorage.setItem('token', token);
@@ -196,18 +212,19 @@ useEffect(() => {
 ```javascript
 // Using stored JWT token
 const headers = {
-  'Authorization': `Bearer ${localStorage.getItem('token')}`,
-  'Content-Type': 'application/json'
+  Authorization: `Bearer ${localStorage.getItem('token')}`,
+  'Content-Type': 'application/json',
 };
 
 fetch('/api/auth/profile', { headers })
-  .then(r => r.json())
-  .then(data => console.log(data));
+  .then((r) => r.json())
+  .then((data) => console.log(data));
 ```
 
 ## User Data Flow
 
 ### First-time OAuth User
+
 1. User clicks "Sign in with Google"
 2. Redirected to Google login
 3. User authorizes app
@@ -218,6 +235,7 @@ fetch('/api/auth/profile', { headers })
 8. Frontend receives token and can access protected routes
 
 ### Existing User Linking
+
 1. User with account logs in via OAuth using same email
 2. Backend finds existing user by email
 3. **Links Google account** to existing user
@@ -226,6 +244,7 @@ fetch('/api/auth/profile', { headers })
 6. User seamlessly continues with their existing account
 
 ### Returning OAuth User
+
 1. User logs in with Google
 2. Backend finds user by googleId
 3. Updates last login
@@ -235,6 +254,7 @@ fetch('/api/auth/profile', { headers })
 ## Security Considerations
 
 ### ✅ Implemented
+
 - OAuth tokens stored in database
 - Session-based for sensitive operations
 - JWT tokens have 1-hour expiration
@@ -243,6 +263,7 @@ fetch('/api/auth/profile', { headers })
 - Password now optional (nullable for OAuth users)
 
 ### ⚠️ Additional Recommendations
+
 - Use environment variables for all secrets (done ✓)
 - Enable HTTPS in production
 - Implement CSRF protection if needed
@@ -253,28 +274,34 @@ fetch('/api/auth/profile', { headers })
 ## Troubleshooting
 
 ### OAuth Callback Error
+
 **Problem**: Redirect URI mismatch
 **Solution**: Verify `GOOGLE_CALLBACK_URL` in .env matches Google Cloud Console settings
 
 ### Session Errors
+
 **Problem**: "passport.initialize()" not found
 **Solution**: Ensure `backend/config/passport.js` is required in server.js
 
 ### User Not Created
+
 **Problem**: OAuth user not appearing in database
 **Solution**: Check database permissions and ensure OAuth fields exist in users table
 
 ### Token Not Generated
+
 **Problem**: Blank token in redirect URL
 **Solution**: Ensure `JWT_SECRET` is set in .env and `googleCallback` completes successfully
 
 ### Email Already Exists Error
+
 **Problem**: User tries OAuth with existing email
 **Solution**: This is handled automatically - existing user account is linked
 
 ## Testing OAuth Flow
 
 ### Local Testing
+
 1. Start backend: `npm run dev`
 2. Start frontend (if separate): `npm start` or similar
 3. Click "Sign in with Google" button
@@ -282,6 +309,7 @@ fetch('/api/auth/profile', { headers })
 5. Should redirect back with JWT token
 
 ### Testing Password Login (Verify Not Broken)
+
 1. Register new account: `POST /api/auth/signup`
 2. Login with email/password: `POST /api/auth/login`
 3. Should receive JWT token
@@ -290,6 +318,7 @@ fetch('/api/auth/profile', { headers })
 ## Database Schema Updates
 
 New fields in `users` table:
+
 ```sql
 googleId TEXT UNIQUE           -- Google's unique user identifier
 googleAccessToken TEXT         -- OAuth access token
@@ -300,10 +329,12 @@ password TEXT                  -- Made nullable (was NOT NULL)
 ## File Changes Summary
 
 ### New Files
+
 - `backend/config/oauth.js` - Google OAuth strategy
 - `backend/config/passport.js` - Passport configuration
 
 ### Modified Files
+
 - `backend/server.js` - Added session and passport middleware
 - `backend/routes/auth.js` - Added OAuth endpoints
 - `backend/controllers/authController.js` - Added OAuth callback handler
@@ -317,6 +348,7 @@ password TEXT                  -- Made nullable (was NOT NULL)
 ## Future Enhancements
 
 Possible improvements:
+
 - Add more OAuth providers (GitHub, Microsoft, Facebook)
 - Implement refresh token rotation
 - Add OAuth token refresh endpoint
@@ -327,6 +359,7 @@ Possible improvements:
 ## Support
 
 For issues or questions:
+
 1. Check Google Cloud Console OAuth settings
 2. Verify all environment variables are set
 3. Check browser console for errors

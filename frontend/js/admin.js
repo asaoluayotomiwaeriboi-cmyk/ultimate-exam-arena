@@ -39,7 +39,7 @@ const generateInsights = (stats, sessions) => {
       title: 'High Activity Detected',
       message: 'Exam volume is high. Consider scaling resources.',
       action: 'Monitor server performance',
-      type: 'info'
+      type: 'info',
     });
   }
   if (sessions.length > 5) {
@@ -47,7 +47,7 @@ const generateInsights = (stats, sessions) => {
       title: 'Multiple Active Sessions',
       message: `${sessions.length} students currently taking exams.`,
       action: 'Ensure system stability',
-      type: 'warning'
+      type: 'warning',
     });
   }
   if (currentThreatLevel > 0) {
@@ -55,7 +55,7 @@ const generateInsights = (stats, sessions) => {
       title: 'Security Alert',
       message: 'Threat level elevated. Review recent login attempts.',
       action: 'Check security logs',
-      type: 'error'
+      type: 'error',
     });
   }
   return insights;
@@ -69,18 +69,46 @@ const loadAnalytics = async () => {
 const loadSessions = async () => {
   const data = await request('/api/admin/sessions');
   if (!data.success) return;
-  liveSessionsContainer.innerHTML = data.sessions.length ? data.sessions.map((session) => `
-    <div class="feature-card">
-      <strong>${session.student.name}</strong><br>${session.subject} • Started ${new Date(session.startedAt).toLocaleTimeString()}
-    </div>
-  `).join('') : '<p>No live exams currently.</p>';
+  liveSessionsContainer.innerHTML = '';
+  if (data.sessions.length) {
+    data.sessions.forEach((session) => {
+      const card = document.createElement('div');
+      card.className = 'feature-card';
+      const strong = document.createElement('strong');
+      strong.textContent = session.student?.name || 'Unknown';
+      card.appendChild(strong);
+      card.appendChild(document.createElement('br'));
+      const meta = document.createTextNode(
+        `${session.subject} • Started ${new Date(session.startedAt).toLocaleTimeString()}`
+      );
+      card.appendChild(meta);
+      liveSessionsContainer.appendChild(card);
+    });
+  } else {
+    liveSessionsContainer.innerHTML = '<p>No live exams currently.</p>';
+  }
 };
 
 const loadQuestions = async () => {
   const data = await request('/api/admin/questions');
-  questionTable.innerHTML = data.questions.length ? data.questions.map((question) => `
-    <tr><td>${question.subject}</td><td>${question.questionText}</td><td>${question.answer}</td></tr>
-  `).join('') : '<tr><td colspan="3">No questions found.</td></tr>';
+  questionTable.innerHTML = '';
+  if (data.questions.length) {
+    data.questions.forEach((question) => {
+      const tr = document.createElement('tr');
+      const tdSubject = document.createElement('td');
+      tdSubject.textContent = question.subject;
+      tr.appendChild(tdSubject);
+      const tdQuestion = document.createElement('td');
+      tdQuestion.textContent = question.questionText;
+      tr.appendChild(tdQuestion);
+      const tdAnswer = document.createElement('td');
+      tdAnswer.textContent = question.answer;
+      tr.appendChild(tdAnswer);
+      questionTable.appendChild(tr);
+    });
+  } else {
+    questionTable.innerHTML = '<tr><td colspan="3">No questions found.</td></tr>';
+  }
 };
 
 const loadSecurityData = async () => {
@@ -92,13 +120,22 @@ const loadSecurityData = async () => {
   const sessions = await request('/api/admin/sessions');
 
   const insights = generateInsights(analytics.stats, sessions.sessions);
-  securityInsights.innerHTML = insights.map(insight => `
-    <div class="security-insight">
-      <h4>${insight.title}</h4>
-      <p>${insight.message}</p>
-      <button class="btn btn-secondary">${insight.action}</button>
-    </div>
-  `).join('');
+  securityInsights.innerHTML = '';
+  insights.forEach((insight) => {
+    const node = document.createElement('div');
+    node.className = 'security-insight';
+    const h4 = document.createElement('h4');
+    h4.textContent = insight.title;
+    node.appendChild(h4);
+    const p = document.createElement('p');
+    p.textContent = insight.message;
+    node.appendChild(p);
+    const btn = document.createElement('button');
+    btn.className = 'btn btn-secondary';
+    btn.textContent = insight.action;
+    node.appendChild(btn);
+    securityInsights.appendChild(node);
+  });
 
   if (profile.user.ipWhitelist) {
     ipWhitelist.value = profile.user.ipWhitelist.join('\n');
@@ -111,7 +148,8 @@ subjectForm?.addEventListener('submit', async (event) => {
   const code = document.querySelector('#subject-code').value.trim();
   const duration = Number(document.querySelector('#subject-duration').value);
   await request('/api/admin/subjects', {
-    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name, code, duration }),
   });
   alert('Subject created successfully');
@@ -131,12 +169,13 @@ questionForm?.addEventListener('submit', async (event) => {
 
   try {
     await request('/api/admin/questions', {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         subject,
         questionText,
         choices: [choice1, choice2, choice3, choice4],
-        answer
+        answer,
       }),
     });
     alert('Question added successfully');
@@ -149,7 +188,11 @@ questionForm?.addEventListener('submit', async (event) => {
 
 setupMFA?.addEventListener('click', async () => {
   const data = await request('/api/auth/mfa/setup', { method: 'POST' });
-  mfaQR.innerHTML = `<img src="${data.qrCodeUrl}" alt="MFA QR Code">`;
+  mfaQR.innerHTML = '';
+  const img = document.createElement('img');
+  img.alt = 'MFA QR Code';
+  img.src = data.qrCodeUrl;
+  mfaQR.appendChild(img);
   mfaQR.style.display = 'block';
   mfaCode.style.display = 'block';
   enableMFA.style.display = 'block';
@@ -158,7 +201,8 @@ setupMFA?.addEventListener('click', async () => {
 enableMFA?.addEventListener('click', async () => {
   const token = mfaCode.value.trim();
   await request('/api/auth/mfa/enable', {
-    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ token }),
   });
   alert('MFA enabled successfully');
@@ -168,9 +212,13 @@ enableMFA?.addEventListener('click', async () => {
 });
 
 updateIPs?.addEventListener('click', async () => {
-  const ips = ipWhitelist.value.split('\n').map(ip => ip.trim()).filter(ip => ip);
+  const ips = ipWhitelist.value
+    .split('\n')
+    .map((ip) => ip.trim())
+    .filter((ip) => ip);
   await request('/api/auth/ip-whitelist', {
-    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ ips }),
   });
   alert('IP whitelist updated');

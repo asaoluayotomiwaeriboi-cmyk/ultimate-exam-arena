@@ -24,6 +24,14 @@ if (fs.existsSync(secretEnvPath)) {
   dotenv.config();
 }
 
+// Validate critical environment variables early
+try {
+  const validateEnv = require('./config/validateEnv');
+  validateEnv();
+} catch (e) {
+  console.warn('Environment validation module failed to load:', e.message);
+}
+
 // Diagnostic: show whether DATABASE_URL is present and a short masked preview
 const _mask = (s) => {
   if (!s) return '<empty>';
@@ -32,7 +40,16 @@ const _mask = (s) => {
   return `${s.slice(0, visible)}...${s.slice(-visible)}`;
 };
 const _dbUrl = process.env.DATABASE_URL || '';
-console.log('DATABASE_URL present:', _dbUrl ? 'yes' : 'no', 'protocol ok:', (_dbUrl.startsWith && (_dbUrl.startsWith('postgres://') || _dbUrl.startsWith('postgresql://'))) ? 'yes' : 'no', 'masked:', _mask(_dbUrl));
+console.log(
+  'DATABASE_URL present:',
+  _dbUrl ? 'yes' : 'no',
+  'protocol ok:',
+  _dbUrl.startsWith && (_dbUrl.startsWith('postgres://') || _dbUrl.startsWith('postgresql://'))
+    ? 'yes'
+    : 'no',
+  'masked:',
+  _mask(_dbUrl)
+);
 
 // Require DB and passport after environment is loaded so DATABASE_URL is available.
 const db = require('./config/db');
@@ -43,22 +60,31 @@ const HOST = process.env.HOST || '0.0.0.0';
 
 // Initialize AI assistants
 const tylaAI = new Sage();
+// Placeholder for additional AI assistant (Chris). Implement or replace with real client.
+const chrisAI = {
+  validateQuestion: async () => ({ message: 'Not implemented' }),
+  suggestQuestionFormat: async () => ({ message: 'Not implemented' }),
+  getQuestionCreationTips: async () => [],
+  validateBulkImport: async () => ({}),
+};
 
 app.use(cors({ origin: process.env.CORS_ORIGIN || true, credentials: true }));
 app.use(express.json({ limit: '12mb' }));
 app.use(express.urlencoded({ extended: true }));
 
 // Session configuration
-app.use(session({
-  secret: process.env.SESSION_SECRET || 'ultimate-exam-arena-session-secret',
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    secure: process.env.NODE_ENV === 'production',
-    httpOnly: true,
-    maxAge: 24 * 60 * 60 * 1000 // 24 hours
-  }
-}));
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || 'ultimate-exam-arena-session-secret',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: process.env.NODE_ENV === 'production',
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+    },
+  })
+);
 
 // Initialize Passport
 app.use(passport.initialize());
@@ -151,13 +177,15 @@ const startServer = async () => {
       console.log(`Ultimate Exam Arena server running on http://${HOST}:${PORT}`);
       if (HOST === '0.0.0.0' && localIPs.length) {
         console.log(`Accessible on local network at:
-  ${localIPs.map(ip => `http://${ip}:${PORT}`).join('\n  ')}`);
+  ${localIPs.map((ip) => `http://${ip}:${PORT}`).join('\n  ')}`);
       }
     });
 
     server.on('error', (error) => {
       if (error.code === 'EADDRINUSE') {
-        console.error(`Port ${PORT} is already in use. Stop the running process or set a different PORT in your .env file.`);
+        console.error(
+          `Port ${PORT} is already in use. Stop the running process or set a different PORT in your .env file.`
+        );
         process.exit(1);
       }
       console.error('Server error:', error);

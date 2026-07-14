@@ -13,7 +13,7 @@ if (!token) window.location.href = '/login.html';
 const request = async (path, options = {}) => {
   const res = await fetch(path, { headers: { Authorization: `Bearer ${token}` }, ...options });
   const data = await res.json();
-  if (!data.success && res.status === 401) return window.location.href = '/login.html';
+  if (!data.success && res.status === 401) return (window.location.href = '/login.html');
   return data;
 };
 
@@ -28,13 +28,17 @@ const loadDashboard = async () => {
         greetingMessage.textContent = `HELLO, ${firstName}!`;
       }
     }
-  } catch (err) { console.error('Error loading user:', err); }
+  } catch (err) {
+    console.error('Error loading user:', err);
+  }
 
   try {
     const overview = await request('/api/dashboard/overview');
     if (overview.success) {
       // subjects
-      subjectList.innerHTML = overview.subjects.map((item) => `
+      subjectList.innerHTML = overview.subjects
+        .map(
+          (item) => `
         <div class="card">
           <h3>${item.name}</h3>
           <p style="color: var(--text-muted);">Time: ${item.duration} mins • ${item.code}</p>
@@ -47,25 +51,35 @@ const loadDashboard = async () => {
             </button>
           </div>
         </div>
-      `).join('');
+      `
+        )
+        .join('');
 
       // history
       const history = overview.history || [];
-      historyList.innerHTML = history.length ? history.map((item) => `
+      historyList.innerHTML = history.length
+        ? history
+            .map(
+              (item) => `
         <tr>
           <td>${item.subject || 'N/A'}</td>
           <td>${item.score || 0}/${item.totalQuestions || 40}</td>
-          <td>${item.score && item.totalQuestions && (item.score / item.totalQuestions * 100).toFixed(0)}%</td>
+          <td>${item.score && item.totalQuestions && ((item.score / item.totalQuestions) * 100).toFixed(0)}%</td>
           <td>${new Date(item.finishedAt).toLocaleDateString()}</td>
         </tr>
-      `).join('') : '<tr><td colspan="4" style="text-align: center; color: var(--text-muted);">No exam results yet.</td></tr>';
+      `
+            )
+            .join('')
+        : '<tr><td colspan="4" style="text-align: center; color: var(--text-muted);">No exam results yet.</td></tr>';
     }
-  } catch (err) { console.error('Error loading overview:', err); }
+  } catch (err) {
+    console.error('Error loading overview:', err);
+  }
 };
 
 window.startSimulation = async (subjectCode) => {
   const data = await request('/api/exams/start', {
-    method: 'POST', 
+    method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ subjectCode }),
   });
@@ -75,20 +89,20 @@ window.startSimulation = async (subjectCode) => {
 };
 
 window.startWithPassword = async () => {
-  const password = prompt('Enter today\'s password for JAMB Mock Challenge:');
+  const password = prompt("Enter today's password for JAMB Mock Challenge:");
   if (!password) return;
   try {
     const res = await request('/api/exams/verify-competitive-password', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password })
+      body: JSON.stringify({ password }),
     });
     if (res.success && res.correct) {
       window.location.href = '/subject-picker.html?mode=mock';
     } else {
       alert(res.message || 'Invalid password or expired.');
     }
-  } catch (err) { 
+  } catch (err) {
     console.error('Error verifying password:', err);
     alert('Failed to verify password.');
   }
@@ -105,12 +119,14 @@ darkToggle?.addEventListener('click', () => {
   applyTheme();
 });
 
-logoutButtons.forEach((button) => button.addEventListener('click', () => {
-  localStorage.removeItem('token');
-  localStorage.removeItem('cbt_token');
-  localStorage.removeItem('cbt_role');
-  window.location.href = '/login.html';
-}));
+logoutButtons.forEach((button) =>
+  button.addEventListener('click', () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('cbt_token');
+    localStorage.removeItem('cbt_role');
+    window.location.href = '/login.html';
+  })
+);
 
 applyTheme();
 loadDashboard();

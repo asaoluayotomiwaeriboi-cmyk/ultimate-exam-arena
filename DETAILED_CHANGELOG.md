@@ -3,9 +3,11 @@
 ## New Files Created
 
 ### 1. backend/config/oauth.js
+
 **Purpose**: Google OAuth2 strategy configuration
 **Lines**: 58
 **Key Features**:
+
 - GoogleStrategy initialization with credentials
 - User lookup by Google ID
 - Email-based fallback for existing users
@@ -14,9 +16,11 @@
 - Secure token storage
 
 ### 2. backend/config/passport.js
+
 **Purpose**: Passport.js configuration
 **Lines**: 23
 **Key Features**:
+
 - User serialization (stores ID in session)
 - User deserialization (retrieves user from session)
 - Google strategy registration
@@ -24,9 +28,11 @@
 ## Modified Files
 
 ### 1. backend/server.js
+
 **Original**: 40 lines
 **Modified**: 57 lines
 **Changes**:
+
 ```
 ADDED:
 - const session = require('express-session')
@@ -48,9 +54,11 @@ REMOVED:
 ```
 
 ### 2. backend/routes/auth.js
+
 **Original**: 12 lines
 **Modified**: 26 lines
 **Changes**:
+
 ```
 ADDED IMPORTS:
 - passport require
@@ -73,9 +81,11 @@ ADDED COMMENTS:
 ```
 
 ### 3. backend/controllers/authController.js
+
 **Original**: 191 lines
 **Modified**: ~240 lines
 **Changes**:
+
 ```
 NEW FUNCTIONS ADDED:
 - googleCallback() - Handles OAuth callback
@@ -99,9 +109,11 @@ EXISTING FUNCTIONS:
 ```
 
 ### 4. backend/middleware/auth.js
+
 **Original**: 43 lines
 **Modified**: 74 lines
 **Changes**:
+
 ```
 ADDED NEW FUNCTION:
 - optionalAuth() - For optional authentication
@@ -117,7 +129,9 @@ EXISTING FUNCTIONS:
 ### 5. backend/models/User.js
 
 #### Constructor (lines 4-22)
+
 **Added OAuth fields**:
+
 ```javascript
 this.googleId = data.googleId;
 this.googleAccessToken = data.googleAccessToken;
@@ -125,7 +139,9 @@ this.googleRefreshToken = data.googleRefreshToken;
 ```
 
 #### findOne() method (lines 25-49)
+
 **Enhanced query support**:
+
 ```javascript
 if (query.googleId) {
   conditions.push('googleId = ?');
@@ -134,19 +150,25 @@ if (query.googleId) {
 ```
 
 #### create() method (lines 50-78)
+
 **Updated INSERT statement**:
+
 - Expanded to 15 parameters (was 12)
 - Added googleId, googleAccessToken, googleRefreshToken
 - Updated VALUES clause
 
 #### save() method (lines 80-110)
+
 **Updated UPDATE statement**:
+
 - Expanded to 15 columns (was 12)
 - Added googleId, googleAccessToken, googleRefreshToken parameters
 - Shifted WHERE id parameter to position 16
 
 #### toObject() method (lines 112-130)
+
 **Added OAuth fields to return object**:
+
 ```javascript
 googleId: this.googleId,
 // Removed some redundant fields but kept essential ones
@@ -155,7 +177,9 @@ googleId: this.googleId,
 ### 6. backend/config/db.js
 
 #### users table schema (lines 23-39)
+
 **Modifications**:
+
 ```sql
 -- Changed password constraint
 password TEXT NOT NULL,  →  password TEXT,
@@ -169,6 +193,7 @@ googleRefreshToken TEXT,
 ### 7. package.json
 
 **Added to dependencies**:
+
 ```json
 "express-session": "^1.17.3",
 "passport": "^0.7.0",
@@ -181,6 +206,7 @@ googleRefreshToken TEXT,
 ### 8. .env
 
 **Added configuration**:
+
 ```
 SESSION_SECRET=ultimate-cbt-session-secret
 GOOGLE_CLIENT_ID=
@@ -197,7 +223,9 @@ NODE_ENV=development
 ## Documentation Files Created
 
 ### 1. OAUTH_SETUP.md (9,419 characters)
+
 Comprehensive setup guide including:
+
 - Architecture overview
 - Step-by-step setup instructions
 - API endpoint documentation
@@ -210,7 +238,9 @@ Comprehensive setup guide including:
 - Future enhancement ideas
 
 ### 2. OAUTH_CHECKLIST.md (8,200 characters)
+
 Implementation checklist with:
+
 - Feature status checklist
 - Working features list
 - Quick start guide
@@ -221,7 +251,9 @@ Implementation checklist with:
 - Support resources
 
 ### 3. FRONTEND_OAUTH_EXAMPLES.md (14,707 characters)
+
 Frontend integration examples for:
+
 - Vanilla JavaScript HTML
 - React components
 - API client hooks
@@ -231,7 +263,9 @@ Frontend integration examples for:
 - Troubleshooting guide
 
 ### 4. IMPLEMENTATION_SUMMARY.md (10,299 characters)
+
 High-level summary with:
+
 - Overview of implementation
 - Components added
 - Key features
@@ -245,7 +279,9 @@ High-level summary with:
 - Testing procedures
 
 ### 5. QUICK_REFERENCE.md (10,095 characters)
+
 Quick reference for:
+
 - TL;DR setup instructions
 - API endpoints
 - Copy-paste frontend code
@@ -258,47 +294,52 @@ Quick reference for:
 - Environment variables
 
 ### 6. DETAILED_CHANGELOG.md (This file)
+
 Detailed line-by-line changes
 
 ## Summary Statistics
 
 ### Code Changes
-| Category | Count |
-|----------|-------|
-| New files | 2 |
-| Modified files | 7 |
-| Documentation files | 6 |
-| New dependencies | 3 |
-| New database fields | 3 |
-| New API endpoints | 3 |
-| New functions | 2 |
-| New middleware | 1 |
+
+| Category            | Count |
+| ------------------- | ----- |
+| New files           | 2     |
+| Modified files      | 7     |
+| Documentation files | 6     |
+| New dependencies    | 3     |
+| New database fields | 3     |
+| New API endpoints   | 3     |
+| New functions       | 2     |
+| New middleware      | 1     |
 
 ### Lines of Code
-| Component | Lines | Purpose |
-|-----------|-------|---------|
-| oauth.js | 58 | OAuth strategy |
-| passport.js | 23 | Passport config |
-| auth.js (additions) | 15 | New routes |
-| authController.js (additions) | ~50 | OAuth callbacks |
-| auth middleware (additions) | 31 | Optional auth |
-| User model (additions) | ~20 | OAuth fields |
-| server.js (additions) | 17 | Session/Passport |
+
+| Component                     | Lines | Purpose          |
+| ----------------------------- | ----- | ---------------- |
+| oauth.js                      | 58    | OAuth strategy   |
+| passport.js                   | 23    | Passport config  |
+| auth.js (additions)           | 15    | New routes       |
+| authController.js (additions) | ~50   | OAuth callbacks  |
+| auth middleware (additions)   | 31    | Optional auth    |
+| User model (additions)        | ~20   | OAuth fields     |
+| server.js (additions)         | 17    | Session/Passport |
 
 ### Documentation
-| File | Characters |
-|------|-----------|
-| OAUTH_SETUP.md | 9,419 |
-| OAUTH_CHECKLIST.md | 8,200 |
-| FRONTEND_OAUTH_EXAMPLES.md | 14,707 |
-| IMPLEMENTATION_SUMMARY.md | 10,299 |
-| QUICK_REFERENCE.md | 10,095 |
-| DETAILED_CHANGELOG.md | ~6,000 |
-| **Total** | **~58,720** |
+
+| File                       | Characters  |
+| -------------------------- | ----------- |
+| OAUTH_SETUP.md             | 9,419       |
+| OAUTH_CHECKLIST.md         | 8,200       |
+| FRONTEND_OAUTH_EXAMPLES.md | 14,707      |
+| IMPLEMENTATION_SUMMARY.md  | 10,299      |
+| QUICK_REFERENCE.md         | 10,095      |
+| DETAILED_CHANGELOG.md      | ~6,000      |
+| **Total**                  | **~58,720** |
 
 ## Feature Comparison
 
 ### Before Implementation
+
 - ✅ Email/Password registration
 - ✅ Email/Password login
 - ✅ JWT token generation
@@ -311,6 +352,7 @@ Detailed line-by-line changes
 - ❌ Account linking
 
 ### After Implementation
+
 - ✅ Email/Password registration (unchanged)
 - ✅ Email/Password login (unchanged)
 - ✅ JWT token generation (unchanged)
@@ -339,6 +381,7 @@ No functionality marked as deprecated. All existing methods continue to work.
 ## Database Migrations
 
 ### Automatic Migration
+
 The database schema is automatically updated when the server starts via `db.serialize()`:
 
 ```javascript
@@ -355,17 +398,21 @@ The database schema is automatically updated when the server starts via `db.seri
 ## Configuration Requirements
 
 ### Mandatory New Environment Variables
+
 1. `GOOGLE_CLIENT_ID` - From Google Cloud Console
 2. `GOOGLE_CLIENT_SECRET` - From Google Cloud Console
 3. `GOOGLE_CALLBACK_URL` - OAuth callback URL
 
 ### Optional New Environment Variables (have defaults)
+
 1. `SESSION_SECRET` - Defaults to 'ultimate-cbt-session-secret'
 2. `FRONTEND_URL` - Defaults to undefined (for redirect)
 3. `NODE_ENV` - Defaults to undefined
 
 ### Existing Environment Variables (unchanged)
+
 All existing variables continue to work as before, with the database variable now using Postgres:
+
 - `PORT`
 - `DATABASE_URL`
 - `JWT_SECRET`
@@ -376,14 +423,18 @@ All existing variables continue to work as before, with the database variable no
 ## Testing Impact
 
 ### Existing Tests
+
 If you have existing tests, they should continue to pass because:
+
 - JWT validation logic unchanged
 - Password authentication unchanged
 - All existing endpoints unchanged
 - Database queries compatible
 
 ### New Tests Needed
+
 Consider adding tests for:
+
 - OAuth callback endpoint
 - Logout endpoint
 - Account linking logic
@@ -393,16 +444,19 @@ Consider adding tests for:
 ## Performance Impact
 
 ### Database
+
 - Small overhead: 3 new nullable columns
 - Query: negligible impact (single extra column lookup)
 - Estimate: <1ms per query
 
 ### Authentication
+
 - New session middleware: ~1ms per request
 - Passport initialization: one-time on server start
 - OAuth flow: only during login (not on each request)
 
 ### Estimate Overall Impact
+
 - **Per request**: <1ms (session middleware)
 - **On login**: +50-200ms (Google redirect/auth)
 - **On OAuth callback**: +100ms (token generation)
@@ -449,6 +503,7 @@ If needed to rollback:
 ## Support & Questions
 
 Refer to:
+
 - `OAUTH_SETUP.md` for setup questions
 - `FRONTEND_OAUTH_EXAMPLES.md` for frontend integration
 - `QUICK_REFERENCE.md` for common tasks

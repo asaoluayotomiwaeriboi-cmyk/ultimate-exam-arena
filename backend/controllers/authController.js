@@ -10,7 +10,12 @@ const signToken = (userId) => {
 };
 
 const getClientIP = (req) => {
-  return req.ip || req.connection.remoteAddress || req.socket.remoteAddress || (req.connection.socket ? req.connection.socket.remoteAddress : null);
+  return (
+    req.ip ||
+    req.connection.remoteAddress ||
+    req.socket.remoteAddress ||
+    (req.connection.socket ? req.connection.socket.remoteAddress : null)
+  );
 };
 
 const calculateThreatLevel = (user) => {
@@ -23,14 +28,39 @@ const calculateThreatLevel = (user) => {
 
 exports.register = async (req, res, next) => {
   try {
-    const { 
-      name, email, phone, dateOfBirth, address, city, state, lga, 
-      school, jambNumber, targetUniversity, targetCourse, password, confirmPassword 
+    const {
+      name,
+      email,
+      phone,
+      dateOfBirth,
+      address,
+      city,
+      state,
+      lga,
+      school,
+      jambNumber,
+      targetUniversity,
+      targetCourse,
+      password,
+      confirmPassword,
     } = req.body;
 
     // Validate required fields
-    if (!name || !email || !phone || !dateOfBirth || !address || !city || !state || !lga || !school || !password) {
-      return res.status(400).json({ success: false, message: 'All required fields must be filled' });
+    if (
+      !name ||
+      !email ||
+      !phone ||
+      !dateOfBirth ||
+      !address ||
+      !city ||
+      !state ||
+      !lga ||
+      !school ||
+      !password
+    ) {
+      return res
+        .status(400)
+        .json({ success: false, message: 'All required fields must be filled' });
     }
 
     // Validate password match
@@ -40,7 +70,9 @@ exports.register = async (req, res, next) => {
 
     // Validate password strength (min 8 chars)
     if (password.length < 8) {
-      return res.status(400).json({ success: false, message: 'Password must be at least 8 characters' });
+      return res
+        .status(400)
+        .json({ success: false, message: 'Password must be at least 8 characters' });
     }
 
     // Check if email already exists
@@ -67,24 +99,24 @@ exports.register = async (req, res, next) => {
       targetUniversity: targetUniversity || null,
       targetCourse: targetCourse || null,
       password: hashed,
-      role: 'student'
+      role: 'student',
     });
 
     const token = signToken(user.id);
-    
-    res.status(201).json({ 
-      success: true, 
+
+    res.status(201).json({
+      success: true,
       message: 'Account created successfully',
-      token, 
-      user: { 
-        id: user.id, 
-        name: user.name, 
+      token,
+      user: {
+        id: user.id,
+        name: user.name,
         email: user.email,
         phone: user.phone,
         state: user.state,
         school: user.school,
-        role: user.role 
-      } 
+        role: user.role,
+      },
     });
   } catch (error) {
     next(error);
@@ -107,7 +139,9 @@ exports.login = async (req, res, next) => {
 
     // Check if account is locked
     if (user.lockedUntil && user.lockedUntil > Date.now()) {
-      return res.status(423).json({ success: false, message: 'Account locked due to too many failed attempts' });
+      return res
+        .status(423)
+        .json({ success: false, message: 'Account locked due to too many failed attempts' });
     }
 
     // For admin, require adminCode
@@ -119,7 +153,11 @@ exports.login = async (req, res, next) => {
     }
 
     // IP whitelisting for admin
-    if (user.role === 'admin' && user.ipWhitelist.length > 0 && !user.ipWhitelist.includes(clientIP)) {
+    if (
+      user.role === 'admin' &&
+      user.ipWhitelist.length > 0 &&
+      !user.ipWhitelist.includes(clientIP)
+    ) {
       user.loginAttempts += 1;
       user.threatLevel = Math.max(user.threatLevel, 2);
       await user.save();
@@ -166,7 +204,13 @@ exports.login = async (req, res, next) => {
     res.json({
       success: true,
       token,
-      user: { id: user.id, name: user.name, email: user.email, role: user.role, threatLevel: user.threatLevel },
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        threatLevel: user.threatLevel,
+      },
       history,
     });
   } catch (error) {
@@ -212,7 +256,10 @@ exports.setupMFA = async (req, res, next) => {
     if (!user || user.role !== 'admin') {
       return res.status(403).json({ success: false, message: 'Admin access required' });
     }
-    const secret = speakeasy.generateSecret({ name: 'Ultimate Exam Arena Admin', issuer: 'Ultimate Exam Arena' });
+    const secret = speakeasy.generateSecret({
+      name: 'Ultimate Exam Arena Admin',
+      issuer: 'Ultimate Exam Arena',
+    });
     user.mfaSecret = secret.base32;
     await user.save();
     const qrCodeUrl = await qrcode.toDataURL(secret.otpauth_url);
@@ -278,7 +325,9 @@ exports.adminLogin = async (req, res, next) => {
     const clientIP = getClientIP(req);
 
     if (!email || !password || !accessCode) {
-      return res.status(400).json({ success: false, message: 'Email, password, and access code are required' });
+      return res
+        .status(400)
+        .json({ success: false, message: 'Email, password, and access code are required' });
     }
 
     // Verify admin email
@@ -292,7 +341,8 @@ exports.adminLogin = async (req, res, next) => {
     }
 
     // Verify password
-    const adminPasswordHash = process.env.ADMIN_PASSWORD_HASH || await bcrypt.hash(process.env.ADMIN_PASSWORD, 10);
+    const adminPasswordHash =
+      process.env.ADMIN_PASSWORD_HASH || (await bcrypt.hash(process.env.ADMIN_PASSWORD, 10));
     const passwordMatch = await bcrypt.compare(password, adminPasswordHash);
 
     if (!passwordMatch) {
@@ -300,16 +350,20 @@ exports.adminLogin = async (req, res, next) => {
     }
 
     // Check IP whitelist if configured
-    const whitelist = process.env.ADMIN_IP_WHITELIST?.split(',').map(ip => ip.trim()) || [];
+    const whitelist = process.env.ADMIN_IP_WHITELIST?.split(',').map((ip) => ip.trim()) || [];
     if (whitelist.length > 0 && !whitelist.includes(clientIP)) {
       return res.status(403).json({ success: false, message: 'IP not whitelisted' });
     }
 
-    const token = jwt.sign({
-      id: 'admin',
-      role: 'admin',
-      email: email
-    }, process.env.JWT_SECRET, { expiresIn: '2h' });
+    const token = jwt.sign(
+      {
+        id: 'admin',
+        role: 'admin',
+        email: email,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: '2h' }
+    );
 
     res.json({
       success: true,
@@ -318,8 +372,8 @@ exports.adminLogin = async (req, res, next) => {
         id: 'admin',
         email: email,
         role: 'admin',
-        name: 'Administrator'
-      }
+        name: 'Administrator',
+      },
     });
   } catch (error) {
     next(error);

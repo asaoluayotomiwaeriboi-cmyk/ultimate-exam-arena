@@ -30,7 +30,7 @@ class Syllabus {
 
       db.all(sql, params, (err, rows) => {
         if (err) reject(err);
-        else resolve(rows.map(row => new Syllabus(row)));
+        else resolve(rows.map((row) => new Syllabus(row)));
       });
     });
   }
@@ -74,7 +74,7 @@ class Syllabus {
         data.examBody,
         JSON.stringify(data.topics || []),
         data.content,
-        data.createdBy
+        data.createdBy,
       ];
 
       db.run(`${sql} RETURNING id`, params)
@@ -98,7 +98,7 @@ class Syllabus {
         data.examBody,
         JSON.stringify(data.topics || []),
         data.content,
-        id
+        id,
       ];
 
       db.run(sql, params, (err) => {

@@ -28,7 +28,10 @@ redirectIfLoggedIn();
 const showMessage = (message, type = 'success') => {
   authMessage.textContent = message;
   authMessage.className = type === 'error' ? 'flash' : 'flash';
-  setTimeout(() => { authMessage.textContent = ''; authMessage.className = ''; }, 4200);
+  setTimeout(() => {
+    authMessage.textContent = '';
+    authMessage.className = '';
+  }, 4200);
 };
 
 const handleSubmit = async (event) => {
@@ -40,7 +43,13 @@ const handleSubmit = async (event) => {
   const adminCode = authForm.querySelector('#admin-code')?.value?.trim();
   const mfaToken = mfaTokenInput?.value?.trim();
   const route = mode === 'signup' ? '/api/auth/signup' : '/api/auth/login';
-  const payload = { email, password, ...(mode === 'signup' ? { name } : {}), ...(adminCode ? { adminCode } : {}), ...(mfaToken ? { mfaToken } : {}) };
+  const payload = {
+    email,
+    password,
+    ...(mode === 'signup' ? { name } : {}),
+    ...(adminCode ? { adminCode } : {}),
+    ...(mfaToken ? { mfaToken } : {}),
+  };
 
   try {
     const response = await fetch(route, {
@@ -72,7 +81,8 @@ const setMode = (mode) => {
   authTitle.textContent = mode === 'login' ? 'Student Login' : 'Create a student account';
   authForm.querySelector('.name-field').style.display = mode === 'login' ? 'none' : 'block';
   if (adminCodeGroup) adminCodeGroup.style.display = mode === 'login' ? 'block' : 'none';
-  toggleAuth.textContent = mode === 'login' ? 'Don’t have an account? Sign up' : 'Already have an account? Login';
+  toggleAuth.textContent =
+    mode === 'login' ? 'Don’t have an account? Sign up' : 'Already have an account? Login';
 };
 
 const switchMode = () => setMode(authForm.dataset.mode === 'login' ? 'signup' : 'login');

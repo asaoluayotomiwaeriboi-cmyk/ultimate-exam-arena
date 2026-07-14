@@ -1,123 +1,136 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ultimate Exam Arena</title>
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#1d4ed8">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Ultimate Exam Arena">
-</head>
-<body id="admin-body">
-  <main class="container">
-    <header class="navbar">
-      <div class="logo">Ultimate Exam Arena Admin</div>
-      <div class="toolbox">
-        <span id="threat-indicator" class="badge">Security: Low</span>
-        <button id="dark-toggle" class="btn btn-secondary">Toggle Dark Mode</button>
-        <button class="btn btn-secondary logout-btn">Logout</button>
-      </div>
-    </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ultimate Exam Arena</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1d4ed8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Ultimate Exam Arena" />
+  </head>
+  <body id="admin-body">
+    <main class="container">
+      <header class="navbar">
+        <div class="logo">Ultimate Exam Arena Admin</div>
+        <div class="toolbox">
+          <span id="threat-indicator" class="badge">Security: Low</span>
+          <button id="dark-toggle" class="btn btn-secondary">Toggle Dark Mode</button>
+          <button class="btn btn-secondary logout-btn">Logout</button>
+        </div>
+      </header>
 
-    <div id="security-insights" class="section"></div>
+      <div id="security-insights" class="section"></div>
 
-    <section class="section">
-      <div class="grid grid-2">
+      <section class="section">
+        <div class="grid grid-2">
+          <div class="card">
+            <h3>Analytics</h3>
+            <p id="analytics-summary">Loading analytics...</p>
+          </div>
+          <div class="card">
+            <h3>Live sessions</h3>
+            <div id="live-sessions">Loading sessions...</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
         <div class="card">
-          <h3>Analytics</h3>
-          <p id="analytics-summary">Loading analytics...</p>
+          <h3>Security Settings</h3>
+          <div class="grid">
+            <div>
+              <h4>MFA Setup</h4>
+              <button id="setup-mfa" class="btn btn-primary">Setup MFA</button>
+              <div id="mfa-qr" style="display: none"></div>
+              <input id="mfa-code" placeholder="Enter code to enable" style="display: none" />
+              <button id="enable-mfa" class="btn btn-secondary" style="display: none">
+                Enable MFA
+              </button>
+            </div>
+            <div>
+              <h4>IP Whitelist</h4>
+              <textarea id="ip-whitelist" placeholder="Enter IPs, one per line"></textarea>
+              <button id="update-ips" class="btn btn-primary">Update IPs</button>
+            </div>
+          </div>
         </div>
+      </section>
+
+      <section class="section">
         <div class="card">
-          <h3>Live sessions</h3>
-          <div id="live-sessions">Loading sessions...</div>
+          <h3>Add a new subject</h3>
+          <form id="subject-form" class="grid">
+            <input id="subject-name" placeholder="Subject name" required />
+            <input id="subject-code" placeholder="Code" required />
+            <input id="subject-duration" type="number" placeholder="Duration (minutes)" required />
+            <button class="btn btn-primary">Create subject</button>
+          </form>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="section">
-      <div class="card">
-        <h3>Security Settings</h3>
-        <div class="grid">
-          <div>
-            <h4>MFA Setup</h4>
-            <button id="setup-mfa" class="btn btn-primary">Setup MFA</button>
-            <div id="mfa-qr" style="display: none;"></div>
-            <input id="mfa-code" placeholder="Enter code to enable" style="display: none;">
-            <button id="enable-mfa" class="btn btn-secondary" style="display: none;">Enable MFA</button>
-          </div>
-          <div>
-            <h4>IP Whitelist</h4>
-            <textarea id="ip-whitelist" placeholder="Enter IPs, one per line"></textarea>
-            <button id="update-ips" class="btn btn-primary">Update IPs</button>
-          </div>
+      <section class="section">
+        <div class="card">
+          <h3>Add a new question</h3>
+          <form id="question-form" class="grid">
+            <input id="question-subject" placeholder="Subject" required />
+            <textarea id="question-text" placeholder="Question text" required></textarea>
+            <input id="question-choice1" placeholder="Choice 1" required />
+            <input id="question-choice2" placeholder="Choice 2" required />
+            <input id="question-choice3" placeholder="Choice 3" required />
+            <input id="question-choice4" placeholder="Choice 4" required />
+            <input id="question-answer" placeholder="Correct answer" required />
+            <button class="btn btn-primary">Add question</button>
+          </form>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="section">
-      <div class="card">
-        <h3>Add a new subject</h3>
-        <form id="subject-form" class="grid">
-          <input id="subject-name" placeholder="Subject name" required>
-          <input id="subject-code" placeholder="Code" required>
-          <input id="subject-duration" type="number" placeholder="Duration (minutes)" required>
-          <button class="btn btn-primary">Create subject</button>
-        </form>
-      </div>
-    </section>
+      <section class="section">
+        <div class="card">
+          <h3>Questions</h3>
+          <button id="refresh-questions" class="btn btn-secondary">Refresh</button>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Subject</th>
+                <th>Question</th>
+                <th>Answer</th>
+              </tr>
+            </thead>
+            <tbody id="question-table"></tbody>
+          </table>
+        </div>
+      </section>
 
-    <section class="section">
-      <div class="card">
-        <h3>Add a new question</h3>
-        <form id="question-form" class="grid">
-          <input id="question-subject" placeholder="Subject" required>
-          <textarea id="question-text" placeholder="Question text" required></textarea>
-          <input id="question-choice1" placeholder="Choice 1" required>
-          <input id="question-choice2" placeholder="Choice 2" required>
-          <input id="question-choice3" placeholder="Choice 3" required>
-          <input id="question-choice4" placeholder="Choice 4" required>
-          <input id="question-answer" placeholder="Correct answer" required>
-          <button class="btn btn-primary">Add question</button>
-        </form>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="card">
-        <h3>Questions</h3>
-        <button id="refresh-questions" class="btn btn-secondary">Refresh</button>
-        <table class="table">
-          <thead><tr><th>Subject</th><th>Question</th><th>Answer</th></tr></thead>
-          <tbody id="question-table"></tbody>
-        </table>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="card educational-ref">
-        <h3>Educational References (WAEC/JAMB Style)</h3>
-        <div class="ref-content">
-          <div class="ref-item">
-            <strong>WAEC 2023 Syllabus:</strong> Updated curriculum for all subjects including new topics in Mathematics and Sciences.
-          </div>
-          <div class="ref-item">
-            <strong>JAMB Brochure 2024:</strong> Complete guide to admission requirements, subject combinations, and cut-off marks.
-          </div>
-          <div class="ref-item">
-            <strong>myschool.ng Updates:</strong> Latest news on exam registrations, result checking, and admission processes.
-          </div>
-          <div class="ref-item">
-            <strong>Exam Tips:</strong> Time management strategies and common pitfalls to avoid in CBT examinations.
-          </div>
-          <div class="ref-item">
-            <strong>Subject Resources:</strong> Recommended textbooks and online materials for each subject area.
+      <section class="section">
+        <div class="card educational-ref">
+          <h3>Educational References (WAEC/JAMB Style)</h3>
+          <div class="ref-content">
+            <div class="ref-item">
+              <strong>WAEC 2023 Syllabus:</strong> Updated curriculum for all subjects including new
+              topics in Mathematics and Sciences.
+            </div>
+            <div class="ref-item">
+              <strong>JAMB Brochure 2024:</strong> Complete guide to admission requirements, subject
+              combinations, and cut-off marks.
+            </div>
+            <div class="ref-item">
+              <strong>myschool.ng Updates:</strong> Latest news on exam registrations, result
+              checking, and admission processes.
+            </div>
+            <div class="ref-item">
+              <strong>Exam Tips:</strong> Time management strategies and common pitfalls to avoid in
+              CBT examinations.
+            </div>
+            <div class="ref-item">
+              <strong>Subject Resources:</strong> Recommended textbooks and online materials for
+              each subject area.
+            </div>
           </div>
         </div>
-      </div>
-    </section>
-  </main>
-  <script src="js/admin.js"></script>
-</body>
+      </section>
+    </main>
+    <script src="js/admin.js"></script>
+  </body>
 </html>

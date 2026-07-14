@@ -21,7 +21,7 @@ const subjects = [
   { name: 'Yoruba', code: 'YOR', duration: 60 },
   { name: 'Hausa', code: 'HAU', duration: 60 },
   { name: 'Igbo', code: 'IGB', duration: 60 },
-  { name: 'JAMB Mock', code: 'JAMB', duration: 180 }
+  { name: 'JAMB Mock', code: 'JAMB', duration: 180 },
 ];
 
 console.log('Seeding JAMB subject list...');
@@ -35,7 +35,7 @@ console.log('Seeding JAMB subject list...');
       );
     }
     const rows = await db.all('SELECT id, name, code FROM subjects ORDER BY name');
-    console.log('Subjects now:', rows.map(r => r.code).join(', '));
+    console.log('Subjects now:', rows.map((r) => r.code).join(', '));
   } catch (error) {
     console.error(error);
   } finally {

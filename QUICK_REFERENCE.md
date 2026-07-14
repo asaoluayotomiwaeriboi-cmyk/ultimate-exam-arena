@@ -3,12 +3,15 @@
 ## TL;DR - What You Need to Do
 
 ### 1. Get Google Credentials (5 minutes)
+
 - Go to [Google Cloud Console](https://console.cloud.google.com/)
 - Create OAuth 2.0 Web credentials
 - Copy **Client ID** and **Client Secret**
 
 ### 2. Configure Environment (2 minutes)
+
 Edit `.env`:
+
 ```
 GOOGLE_CLIENT_ID=your_id_here
 GOOGLE_CLIENT_SECRET=your_secret_here
@@ -17,19 +20,20 @@ SESSION_SECRET=any_random_string
 ```
 
 ### 3. Install & Start (1 minute)
+
 ```bash
 npm install
 npm run dev
 ```
 
 ### 4. Add Frontend Button (2 minutes)
+
 ```html
-<a href="http://localhost:4000/api/auth/google">
-  Sign in with Google
-</a>
+<a href="http://localhost:4000/api/auth/google"> Sign in with Google </a>
 ```
 
 ### 5. Handle OAuth Token (3 minutes)
+
 ```javascript
 const token = new URLSearchParams(window.location.search).get('token');
 if (token) {
@@ -43,18 +47,23 @@ if (token) {
 ## API Endpoints
 
 ### OAuth Login
+
 ```
 GET /api/auth/google
 ```
+
 → Redirects user to Google login
 
 ### OAuth Callback (Automatic)
+
 ```
 GET /api/auth/google/callback
 ```
+
 → Backend handles automatically, redirects to frontend with token
 
 ### Traditional Login (Still Works)
+
 ```
 POST /api/auth/login
 Content-Type: application/json
@@ -63,12 +72,14 @@ Content-Type: application/json
 ```
 
 ### Get Authenticated User
+
 ```
 GET /api/auth/profile
 Authorization: Bearer <JWT_TOKEN>
 ```
 
 ### Logout
+
 ```
 POST /api/auth/logout
 Authorization: Bearer <JWT_TOKEN>
@@ -79,6 +90,7 @@ Authorization: Bearer <JWT_TOKEN>
 ## Frontend Integration - Copy & Paste
 
 ### React Login Component
+
 ```jsx
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -107,6 +119,7 @@ export function Login() {
 ```
 
 ### API Request Helper
+
 ```javascript
 const API_URL = 'http://localhost:4000';
 
@@ -114,13 +127,13 @@ async function apiCall(endpoint, options = {}) {
   const token = localStorage.getItem('token');
   const headers = {
     'Content-Type': 'application/json',
-    ...(token && { 'Authorization': `Bearer ${token}` }),
-    ...options.headers
+    ...(token && { Authorization: `Bearer ${token}` }),
+    ...options.headers,
   };
 
   const response = await fetch(`${API_URL}${endpoint}`, {
     ...options,
-    headers
+    headers,
   });
 
   if (response.status === 401) {
@@ -136,6 +149,7 @@ const profile = await apiCall('/api/auth/profile');
 ```
 
 ### Environment Variables (React)
+
 ```
 # .env
 REACT_APP_API_URL=http://localhost:4000
@@ -196,6 +210,7 @@ REACT_APP_API_URL=http://localhost:4000
 ## User Journey Examples
 
 ### First-Time OAuth User
+
 1. Clicks "Sign in with Google"
 2. Logs in with Google account
 3. Authorizes app
@@ -204,6 +219,7 @@ REACT_APP_API_URL=http://localhost:4000
 6. Logged in ✅
 
 ### Existing User (OAuth)
+
 1. Clicks "Sign in with Google"
 2. Logs in with Google account
 3. **Account linked** to existing email
@@ -211,12 +227,14 @@ REACT_APP_API_URL=http://localhost:4000
 5. Logged in ✅
 
 ### Existing User (Password)
+
 1. Enters email and password
 2. Credentials validated
 3. Receives JWT token
 4. Logged in ✅
 
 ### Account Linking
+
 1. Register with: email `user@example.com` + password
 2. Login via Google with email `user@example.com`
 3. **Google linked to existing account**
@@ -226,24 +244,26 @@ REACT_APP_API_URL=http://localhost:4000
 
 ## Troubleshooting
 
-| Problem | Solution |
-|---------|----------|
-| "OAuth redirect URI mismatch" | Ensure `GOOGLE_CALLBACK_URL` matches Google Cloud Console |
-| "Cannot find module 'passport'" | Run `npm install` |
-| "Token is undefined" | Check that `FRONTEND_URL` is set and correct |
-| "User not created" | Verify database schema was updated (check `googleId` column exists) |
-| "Session not working" | Verify `SESSION_SECRET` is set in `.env` |
-| "Frontend can't access API" | Check CORS settings and API URL in frontend |
+| Problem                         | Solution                                                            |
+| ------------------------------- | ------------------------------------------------------------------- |
+| "OAuth redirect URI mismatch"   | Ensure `GOOGLE_CALLBACK_URL` matches Google Cloud Console           |
+| "Cannot find module 'passport'" | Run `npm install`                                                   |
+| "Token is undefined"            | Check that `FRONTEND_URL` is set and correct                        |
+| "User not created"              | Verify database schema was updated (check `googleId` column exists) |
+| "Session not working"           | Verify `SESSION_SECRET` is set in `.env`                            |
+| "Frontend can't access API"     | Check CORS settings and API URL in frontend                         |
 
 ---
 
 ## Files Changed
 
 ### New Files
+
 - `backend/config/oauth.js` - OAuth strategy
 - `backend/config/passport.js` - Passport setup
 
 ### Modified Files
+
 - `backend/server.js` - Added session & passport middleware
 - `backend/routes/auth.js` - Added OAuth routes
 - `backend/controllers/authController.js` - Added OAuth handler
@@ -255,6 +275,7 @@ REACT_APP_API_URL=http://localhost:4000
 - `.env.example` - Added OAuth config example
 
 ### Documentation
+
 - `OAUTH_SETUP.md` - Full setup guide
 - `OAUTH_CHECKLIST.md` - Implementation checklist
 - `FRONTEND_OAUTH_EXAMPLES.md` - Integration examples

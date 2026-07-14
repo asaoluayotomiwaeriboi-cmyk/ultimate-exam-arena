@@ -37,7 +37,7 @@ class Dictionary {
 
       db.all(sql, params, (err, rows) => {
         if (err) reject(err);
-        else resolve(rows.map(row => new Dictionary(row)));
+        else resolve(rows.map((row) => new Dictionary(row)));
       });
     });
   }
@@ -65,7 +65,7 @@ class Dictionary {
         data.partOfSpeech,
         data.example,
         JSON.stringify(data.synonyms || []),
-        data.audioUrl
+        data.audioUrl,
       ];
 
       db.run(`${sql} RETURNING id`, params)

@@ -6,7 +6,7 @@ class Sage {
     this.name = 'Sage';
     this.role = 'AI_Tutor';
     this.client = new Anthropic({
-      apiKey: process.env.ANTHROPIC_API_KEY
+      apiKey: process.env.ANTHROPIC_API_KEY,
     });
     this.systemPrompt = `You are Sage, a Smart Exam Guide and AI tutor for Ultimate Exam Arena. You help Nigerian students prepare for JAMB UTME exams. You are friendly, encouraging, and give clear simple explanations. You specialize in all JAMB subjects. Always relate answers to the JAMB syllabus. Keep responses concise and practical.`;
   }
@@ -20,7 +20,7 @@ class Sage {
           return {
             success: false,
             message: 'Daily limit reached. Upgrade to Premium for unlimited messages.',
-            limitReached: true
+            limitReached: true,
           };
         }
       }
@@ -32,9 +32,9 @@ class Sage {
         messages: [
           {
             role: 'user',
-            content: question
-          }
-        ]
+            content: question,
+          },
+        ],
       });
 
       const response = message.content[0].text;
@@ -47,13 +47,13 @@ class Sage {
       return {
         success: true,
         response: response,
-        tokensUsed: message.usage.output_tokens
+        tokensUsed: message.usage.output_tokens,
       };
     } catch (error) {
       console.error('Sage error:', error);
       return {
         success: false,
-        message: 'Error processing your question. Please try again.'
+        message: 'Error processing your question. Please try again.',
       };
     }
   }
@@ -84,10 +84,7 @@ class Sage {
 
   async hasUnlimitedMessages(userId) {
     try {
-      const user = await db.get(
-        'SELECT role FROM users WHERE id = ?',
-        [userId]
-      );
+      const user = await db.get('SELECT role FROM users WHERE id = ?', [userId]);
       return user?.role === 'premium' || user?.role === 'admin';
     } catch (error) {
       return false;
@@ -96,10 +93,9 @@ class Sage {
 
   async trackMessageUsage(userId) {
     try {
-      await db.run(
-        'INSERT INTO sage_messages (userId, createdAt) VALUES (?, datetime("now"))',
-        [userId]
-      );
+      await db.run('INSERT INTO sage_messages (userId, createdAt) VALUES (?, datetime("now"))', [
+        userId,
+      ]);
     } catch (error) {
       console.error('Error tracking message:', error);
     }

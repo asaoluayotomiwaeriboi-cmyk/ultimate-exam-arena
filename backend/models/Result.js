@@ -52,7 +52,7 @@ class Result {
 
       db.all(sql, params, (err, rows) => {
         if (err) reject(err);
-        else resolve(rows.map(row => new Result(row)));
+        else resolve(rows.map((row) => new Result(row)));
       });
     });
   }
@@ -70,7 +70,7 @@ class Result {
         data.totalQuestions,
         JSON.stringify(data.answers || {}),
         data.startedAt,
-        data.finishedAt
+        data.finishedAt,
       ];
 
       db.run(`${sql} RETURNING id`, params)
@@ -125,7 +125,7 @@ class Result {
       `;
       db.all(sql, [], (err, rows) => {
         if (err) reject(err);
-        else resolve(rows.map(row => new Result(row)));
+        else resolve(rows.map((row) => new Result(row)));
       });
     });
   }

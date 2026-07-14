@@ -32,7 +32,7 @@ class CareerGuide {
 
       db.all(sql, params, (err, rows) => {
         if (err) reject(err);
-        else resolve(rows.map(row => new CareerGuide(row)));
+        else resolve(rows.map((row) => new CareerGuide(row)));
       });
     });
   }
@@ -74,7 +74,7 @@ class CareerGuide {
         JSON.stringify(data.institutions || []),
         data.jobProspects,
         data.salary,
-        JSON.stringify(data.skills || [])
+        JSON.stringify(data.skills || []),
       ];
 
       db.run(`${sql} RETURNING id`, params)

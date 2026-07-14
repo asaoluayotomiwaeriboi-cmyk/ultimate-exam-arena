@@ -39,7 +39,7 @@ exports.createGame = async (req, res) => {
       subject: req.body.subject,
       difficulty: req.body.difficulty || 'medium',
       questions: req.body.questions,
-      createdBy: req.user.id
+      createdBy: req.user.id,
     };
 
     const game = await Game.create(gameData);
@@ -157,7 +157,7 @@ exports.createSyllabus = async (req, res) => {
       examBody: req.body.examBody,
       topics: req.body.topics,
       content: req.body.content,
-      createdBy: req.user.id
+      createdBy: req.user.id,
     };
 
     const syllabus = await Syllabus.create(syllabusData);
@@ -252,10 +252,10 @@ exports.createExamLock = async (req, res) => {
       examId,
       subject,
       lockedAt: Math.floor(Date.now() / 1000),
-      expiresAt: Math.floor(Date.now() / 1000) + (60 * 60), // 60 minutes
+      expiresAt: Math.floor(Date.now() / 1000) + 60 * 60, // 60 minutes
       ipAddress: req.ip,
       userAgent: req.get('user-agent'),
-      isActive: 1
+      isActive: 1,
     };
 
     const lock = await ExamLock.create(lockData);
@@ -285,15 +285,16 @@ exports.getCourses = async (req, res) => {
     let filteredCourses = courses;
     if (search) {
       const searchLower = search.toLowerCase();
-      filteredCourses = courses.filter(c =>
-        c.name.toLowerCase().includes(searchLower) ||
-        c.combinations.some(comb => comb.toLowerCase().includes(searchLower))
+      filteredCourses = courses.filter(
+        (c) =>
+          c.name.toLowerCase().includes(searchLower) ||
+          c.combinations.some((comb) => comb.toLowerCase().includes(searchLower))
       );
     }
 
-    const coursesWithEnglish = filteredCourses.map(c => ({
+    const coursesWithEnglish = filteredCourses.map((c) => ({
       name: c.name,
-      combinations: ["Use of English", ...c.combinations]
+      combinations: ['Use of English', ...c.combinations],
     }));
 
     res.json({ success: true, data: coursesWithEnglish });

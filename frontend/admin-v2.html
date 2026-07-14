@@ -1,265 +1,529 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ultimate Exam Arena - Admin</title>
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#1d4ed8">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Ultimate Exam Arena">
-  <style>
-    .admin-header { padding: 16px; background: var(--surface); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-    .admin-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); background: var(--surface); overflow-x: auto; }
-    .admin-tabs button { flex: 1; padding: 16px; border: none; background: transparent; color: var(--text-muted); cursor: pointer; border-bottom: 3px solid transparent; transition: all .2s; font-weight: 600; white-space: nowrap; }
-    .admin-tabs button.active { color: var(--primary); border-bottom-color: var(--primary); }
-    .admin-tabs button:hover { background: var(--surface-soft); }
-    .admin-section { display: none; padding: 24px; }
-    .admin-section.active { display: block; }
-    .subject-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; }
-    .subject-card { background: var(--surface); border: 2px solid var(--border); border-radius: 16px; padding: 16px; cursor: pointer; transition: all .2s; text-align: center; }
-    .subject-card:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 8px 16px rgba(29,78,216,.15); }
-    .subject-card h4 { margin: 0 0 8px 0; color: var(--primary); }
-    .subject-card .q-count { font-size: 0.85rem; color: var(--text-muted); }
-    .stat-box { background: var(--surface); border-radius: 16px; padding: 20px; text-align: center; }
-    .stat-box .number { font-size: 2rem; font-weight: 800; color: var(--primary); }
-    .stat-box .label { color: var(--text-muted); font-size: 0.9rem; }
-    .security-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px; margin-bottom: 16px; }
-    .security-card h4 { margin-top: 0; color: var(--primary); }
-    .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 2000; align-items: center; justify-content: center; }
-    .modal.active { display: flex; }
-    .modal-content { background: var(--surface); border-radius: 20px; padding: 32px; max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto; }
-    .modal-close { position: absolute; top: 16px; right: 16px; background: none; border: none; color: var(--text); cursor: pointer; font-size: 1.5rem; }
-    .students-table { width: 100%; border-collapse: collapse; margin-top: 16px; }
-    .students-table th, .students-table td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border); }
-    .students-table th { background: var(--surface); color: var(--primary); font-weight: 600; }
-    .students-table tr:hover { background: var(--surface-soft); }
-    .student-search { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 12px; margin-bottom: 16px; }
-    .student-search input, .student-search select { padding: 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface-soft); color: var(--text); }
-    .badge-small { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
-    .badge-active { background: rgba(16, 185, 129, 0.2); color: #10b981; }
-    .badge-inactive { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
-  </style>
-</head>
-<body id="admin-body">
-  <div class="admin-header">
-    <div class="logo">🎓 Ultimate Exam Arena Admin Panel</div>
-    <div class="toolbox">
-      <span id="threat-indicator" class="badge">Security: Medium</span>
-      <button id="dark-toggle" class="btn btn-secondary">🌙 Dark Mode</button>
-      <button class="btn btn-danger logout-btn">Logout</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ultimate Exam Arena - Admin</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1d4ed8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Ultimate Exam Arena" />
+    <style>
+      .admin-header {
+        padding: 16px;
+        background: var(--surface);
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .admin-tabs {
+        display: flex;
+        gap: 0;
+        border-bottom: 1px solid var(--border);
+        background: var(--surface);
+        overflow-x: auto;
+      }
+      .admin-tabs button {
+        flex: 1;
+        padding: 16px;
+        border: none;
+        background: transparent;
+        color: var(--text-muted);
+        cursor: pointer;
+        border-bottom: 3px solid transparent;
+        transition: all 0.2s;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+      .admin-tabs button.active {
+        color: var(--primary);
+        border-bottom-color: var(--primary);
+      }
+      .admin-tabs button:hover {
+        background: var(--surface-soft);
+      }
+      .admin-section {
+        display: none;
+        padding: 24px;
+      }
+      .admin-section.active {
+        display: block;
+      }
+      .subject-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 16px;
+      }
+      .subject-card {
+        background: var(--surface);
+        border: 2px solid var(--border);
+        border-radius: 16px;
+        padding: 16px;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-align: center;
+      }
+      .subject-card:hover {
+        border-color: var(--primary);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(29, 78, 216, 0.15);
+      }
+      .subject-card h4 {
+        margin: 0 0 8px 0;
+        color: var(--primary);
+      }
+      .subject-card .q-count {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+      }
+      .stat-box {
+        background: var(--surface);
+        border-radius: 16px;
+        padding: 20px;
+        text-align: center;
+      }
+      .stat-box .number {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--primary);
+      }
+      .stat-box .label {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+      }
+      .security-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 20px;
+        margin-bottom: 16px;
+      }
+      .security-card h4 {
+        margin-top: 0;
+        color: var(--primary);
+      }
+      .modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 2000;
+        align-items: center;
+        justify-content: center;
+      }
+      .modal.active {
+        display: flex;
+      }
+      .modal-content {
+        background: var(--surface);
+        border-radius: 20px;
+        padding: 32px;
+        max-width: 600px;
+        width: 90%;
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+      .modal-close {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        background: none;
+        border: none;
+        color: var(--text);
+        cursor: pointer;
+        font-size: 1.5rem;
+      }
+      .students-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 16px;
+      }
+      .students-table th,
+      .students-table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid var(--border);
+      }
+      .students-table th {
+        background: var(--surface);
+        color: var(--primary);
+        font-weight: 600;
+      }
+      .students-table tr:hover {
+        background: var(--surface-soft);
+      }
+      .student-search {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr auto;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+      .student-search input,
+      .student-search select {
+        padding: 10px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: var(--surface-soft);
+        color: var(--text);
+      }
+      .badge-small {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 11px;
+        font-weight: 600;
+      }
+      .badge-active {
+        background: rgba(16, 185, 129, 0.2);
+        color: #10b981;
+      }
+      .badge-inactive {
+        background: rgba(239, 68, 68, 0.2);
+        color: #ef4444;
+      }
+    </style>
+  </head>
+  <body id="admin-body">
+    <div class="admin-header">
+      <div class="logo">🎓 Ultimate Exam Arena Admin Panel</div>
+      <div class="toolbox">
+        <span id="threat-indicator" class="badge">Security: Medium</span>
+        <button id="dark-toggle" class="btn btn-secondary">🌙 Dark Mode</button>
+        <button class="btn btn-danger logout-btn">Logout</button>
+      </div>
     </div>
-  </div>
 
-  <div class="admin-tabs">
-    <button class="tab-btn active" data-tab="dashboard">Dashboard</button>
-    <button class="tab-btn" data-tab="students">👥 Students</button>
-    <button class="tab-btn" data-tab="jamb">JAMB Exams</button>
-    <button class="tab-btn" data-tab="waec">WAEC Exams</button>
-    <button class="tab-btn" data-tab="settings">Settings</button>
-  </div>
-
-  <main class="container">
-    <!-- Dashboard Tab -->
-    <section class="admin-section active" id="dashboard-tab">
-      <div class="grid grid-2" style="margin-bottom: 24px;">
-        <div class="stat-box">
-          <div class="number" id="stat-students">0</div>
-          <div class="label">Total Students</div>
-        </div>
-        <div class="stat-box">
-          <div class="number" id="stat-questions">0</div>
-          <div class="label">Total Questions</div>
-        </div>
-        <div class="stat-box">
-          <div class="number" id="stat-exams">0</div>
-          <div class="label">Completed Exams</div>
-        </div>
-        <div class="stat-box">
-          <div class="number" id="stat-subjects">0</div>
-          <div class="label">Subjects</div>
-        </div>
-      </div>
-
-      <div class="card">
-        <h3>Live Sessions (Active Exams Only)</h3>
-        <div id="live-sessions" style="max-height: 300px; overflow-y: auto;">
-          <p style="color: var(--text-muted);">No active exams right now.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- STUDENTS TAB (NEW!) -->
-    <section class="admin-section" id="students-tab">
-      <h2>Student Management</h2>
-      
-      <div class="student-search">
-        <input type="text" id="search-name" placeholder="Search by name...">
-        <input type="text" id="search-email" placeholder="Search by email...">
-        <select id="filter-state">
-          <option value="">All States</option>
-          <option value="Lagos">Lagos</option>
-          <option value="Ogun">Ogun</option>
-          <option value="Oyo">Oyo</option>
-          <option value="Osun">Osun</option>
-          <option value="Ondo">Ondo</option>
-          <option value="Ekiti">Ekiti</option>
-          <option value="Kano">Kano</option>
-          <option value="Katsina">Katsina</option>
-          <option value="FCT">FCT</option>
-          <!-- Add all 36 states -->
-        </select>
-        <button class="btn btn-primary" id="search-btn">Search</button>
-      </div>
-
-      <table class="students-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>State</th>
-            <th>School</th>
-            <th>Target Course</th>
-            <th>Registered</th>
-            <th>Last Login</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="students-tbody">
-          <tr>
-            <td colspan="10" style="text-align: center; color: var(--text-muted);">Loading students...</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div id="pagination" style="margin-top: 16px; display: flex; gap: 8px; justify-content: center;">
-        <!-- Pagination buttons added here -->
-      </div>
-    </section>
-
-    <!-- JAMB Tab -->
-    <section class="admin-section" id="jamb-tab">
-      <div style="display: grid; grid-template-columns: 200px 1fr; gap: 24px;">
-        <div class="admin-sidebar-nav" style="background: var(--surface); border-radius: 16px; padding: 16px; height: fit-content;">
-          <button data-action="manage-subjects" class="active" style="display: block; width: 100%; padding: 12px 16px; background: transparent; border: none; color: var(--text); text-align: left; cursor: pointer; margin-bottom: 8px; border-radius: 10px; transition: all .2s;">📚 Subjects</button>
-          <button data-action="manage-questions" style="display: block; width: 100%; padding: 12px 16px; background: transparent; border: none; color: var(--text); text-align: left; cursor: pointer; margin-bottom: 8px; border-radius: 10px; transition: all .2s;">❓ Questions</button>
-          <button data-action="manage-competitions" style="display: block; width: 100%; padding: 12px 16px; background: transparent; border: none; color: var(--text); text-align: left; cursor: pointer; margin-bottom: 8px; border-radius: 10px; transition: all .2s;">🏆 Competitions</button>
-          <button data-action="manage-passwords" style="display: block; width: 100%; padding: 12px 16px; background: transparent; border: none; color: var(--text); text-align: left; cursor: pointer; margin-bottom: 8px; border-radius: 10px; transition: all .2s;">🔐 Daily Password</button>
-        </div>
-
-        <div>
-          <div id="manage-subjects-section">
-            <h2>JAMB Subject Management</h2>
-            <button class="btn btn-primary" id="add-subject-btn">+ Add New Subject</button>
-            <div class="subject-grid" id="subject-grid">
-              <!-- Dynamically populated -->
-            </div>
-          </div>
-
-          <div id="manage-questions-section" style="display: none;">
-            <h2>JAMB Questions</h2>
-            <button class="btn btn-primary" id="add-question-btn">+ Add Question</button>
-            <div id="questions-list">
-              <!-- Dynamically populated -->
-            </div>
-          </div>
-
-          <div id="manage-competitions-section" style="display: none;">
-            <h2>Active Competitions</h2>
-            <button class="btn btn-primary" id="create-competition-btn">+ Start Competition</button>
-            <div id="competitions-list" style="margin-top: 16px;">
-              <!-- Dynamically populated -->
-            </div>
-          </div>
-
-          <div id="manage-passwords-section" style="display: none;">
-            <h2>Daily Access Passwords</h2>
-            <button class="btn btn-primary" id="generate-password-btn">+ Generate Today's Password</button>
-            <div id="passwords-list" style="margin-top: 16px;">
-              <!-- Dynamically populated -->
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- WAEC Tab -->
-    <section class="admin-section" id="waec-tab">
-      <h2>WAEC Exam Management (Coming Soon)</h2>
-      <p style="color: var(--text-muted);">WAEC exam configuration and management features will be available here.</p>
-    </section>
-
-    <!-- Settings Tab -->
-    <section class="admin-section" id="settings-tab">
-      <div class="grid grid-2">
-        <div class="security-card">
-          <h4>🔐 Security Settings</h4>
-          <button id="setup-mfa" class="btn btn-primary" style="margin-bottom: 12px;">Setup MFA</button>
-          <div id="mfa-status" style="color: var(--text-muted); font-size: 0.9rem;">Checking MFA status...</div>
-        </div>
-
-        <div class="security-card">
-          <h4>🌐 IP Whitelist</h4>
-          <textarea id="ip-whitelist" placeholder="Enter IPs (one per line)" style="width: 100%; min-height: 100px; padding: 8px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface-soft); color: var(--text);"></textarea>
-          <button class="btn btn-primary" id="update-ips" style="margin-top: 12px;">Update IPs</button>
-        </div>
-
-        <div class="security-card">
-          <h4>📊 Threat Level</h4>
-          <p id="threat-details" style="color: var(--text-muted); margin: 0;">Analyzing security...</p>
-        </div>
-
-        <div class="security-card">
-          <h4>🎯 System Health</h4>
-          <p id="system-health" style="color: var(--text-muted); margin: 0;">Checking system status...</p>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- Modals -->
-  <div class="modal" id="add-subject-modal">
-    <div class="modal-content">
-      <button class="modal-close" onclick="closeModal('add-subject-modal')">✕</button>
-      <h3>Add New Subject</h3>
-      <form id="subject-form" class="grid">
-        <input id="subject-name" placeholder="Subject name (e.g., Mathematics)" required>
-        <input id="subject-code" placeholder="Code (e.g., MATH)" required>
-        <input id="subject-duration" type="number" placeholder="Duration (minutes)" value="60" required>
-        <button class="btn btn-primary" type="submit">Add Subject</button>
-      </form>
+    <div class="admin-tabs">
+      <button class="tab-btn active" data-tab="dashboard">Dashboard</button>
+      <button class="tab-btn" data-tab="students">👥 Students</button>
+      <button class="tab-btn" data-tab="jamb">JAMB Exams</button>
+      <button class="tab-btn" data-tab="waec">WAEC Exams</button>
+      <button class="tab-btn" data-tab="settings">Settings</button>
     </div>
-  </div>
 
-  <div class="modal" id="add-question-modal">
-    <div class="modal-content">
-      <button class="modal-close" onclick="closeModal('add-question-modal')">✕</button>
-      <h3>Add Question to Subject</h3>
-      <form id="question-form" class="grid">
-        <select id="question-subject" placeholder="Select Subject" required>
-          <option value="">-- Select Subject --</option>
-        </select>
-        <textarea id="question-text" placeholder="Question text" required style="min-height: 80px;"></textarea>
-        <input id="question-choice1" placeholder="Choice A" required>
-        <input id="question-choice2" placeholder="Choice B" required>
-        <input id="question-choice3" placeholder="Choice C" required>
-        <input id="question-choice4" placeholder="Choice D" required>
-        <select id="question-answer" required>
-          <option value="">-- Correct Answer --</option>
-          <option value="Choice A">Choice A</option>
-          <option value="Choice B">Choice B</option>
-          <option value="Choice C">Choice C</option>
-          <option value="Choice D">Choice D</option>
-        </select>
-        <button class="btn btn-primary" type="submit">Add Question</button>
-      </form>
+    <main class="container">
+      <!-- Dashboard Tab -->
+      <section class="admin-section active" id="dashboard-tab">
+        <div class="grid grid-2" style="margin-bottom: 24px">
+          <div class="stat-box">
+            <div class="number" id="stat-students">0</div>
+            <div class="label">Total Students</div>
+          </div>
+          <div class="stat-box">
+            <div class="number" id="stat-questions">0</div>
+            <div class="label">Total Questions</div>
+          </div>
+          <div class="stat-box">
+            <div class="number" id="stat-exams">0</div>
+            <div class="label">Completed Exams</div>
+          </div>
+          <div class="stat-box">
+            <div class="number" id="stat-subjects">0</div>
+            <div class="label">Subjects</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Live Sessions (Active Exams Only)</h3>
+          <div id="live-sessions" style="max-height: 300px; overflow-y: auto">
+            <p style="color: var(--text-muted)">No active exams right now.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- STUDENTS TAB (NEW!) -->
+      <section class="admin-section" id="students-tab">
+        <h2>Student Management</h2>
+
+        <div class="student-search">
+          <input type="text" id="search-name" placeholder="Search by name..." />
+          <input type="text" id="search-email" placeholder="Search by email..." />
+          <select id="filter-state">
+            <option value="">All States</option>
+            <option value="Lagos">Lagos</option>
+            <option value="Ogun">Ogun</option>
+            <option value="Oyo">Oyo</option>
+            <option value="Osun">Osun</option>
+            <option value="Ondo">Ondo</option>
+            <option value="Ekiti">Ekiti</option>
+            <option value="Kano">Kano</option>
+            <option value="Katsina">Katsina</option>
+            <option value="FCT">FCT</option>
+            <!-- Add all 36 states -->
+          </select>
+          <button class="btn btn-primary" id="search-btn">Search</button>
+        </div>
+
+        <table class="students-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>State</th>
+              <th>School</th>
+              <th>Target Course</th>
+              <th>Registered</th>
+              <th>Last Login</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="students-tbody">
+            <tr>
+              <td colspan="10" style="text-align: center; color: var(--text-muted)">
+                Loading students...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div
+          id="pagination"
+          style="margin-top: 16px; display: flex; gap: 8px; justify-content: center"
+        >
+          <!-- Pagination buttons added here -->
+        </div>
+      </section>
+
+      <!-- JAMB Tab -->
+      <section class="admin-section" id="jamb-tab">
+        <div style="display: grid; grid-template-columns: 200px 1fr; gap: 24px">
+          <div
+            class="admin-sidebar-nav"
+            style="
+              background: var(--surface);
+              border-radius: 16px;
+              padding: 16px;
+              height: fit-content;
+            "
+          >
+            <button
+              data-action="manage-subjects"
+              class="active"
+              style="
+                display: block;
+                width: 100%;
+                padding: 12px 16px;
+                background: transparent;
+                border: none;
+                color: var(--text);
+                text-align: left;
+                cursor: pointer;
+                margin-bottom: 8px;
+                border-radius: 10px;
+                transition: all 0.2s;
+              "
+            >
+              📚 Subjects
+            </button>
+            <button
+              data-action="manage-questions"
+              style="
+                display: block;
+                width: 100%;
+                padding: 12px 16px;
+                background: transparent;
+                border: none;
+                color: var(--text);
+                text-align: left;
+                cursor: pointer;
+                margin-bottom: 8px;
+                border-radius: 10px;
+                transition: all 0.2s;
+              "
+            >
+              ❓ Questions
+            </button>
+            <button
+              data-action="manage-competitions"
+              style="
+                display: block;
+                width: 100%;
+                padding: 12px 16px;
+                background: transparent;
+                border: none;
+                color: var(--text);
+                text-align: left;
+                cursor: pointer;
+                margin-bottom: 8px;
+                border-radius: 10px;
+                transition: all 0.2s;
+              "
+            >
+              🏆 Competitions
+            </button>
+            <button
+              data-action="manage-passwords"
+              style="
+                display: block;
+                width: 100%;
+                padding: 12px 16px;
+                background: transparent;
+                border: none;
+                color: var(--text);
+                text-align: left;
+                cursor: pointer;
+                margin-bottom: 8px;
+                border-radius: 10px;
+                transition: all 0.2s;
+              "
+            >
+              🔐 Daily Password
+            </button>
+          </div>
+
+          <div>
+            <div id="manage-subjects-section">
+              <h2>JAMB Subject Management</h2>
+              <button class="btn btn-primary" id="add-subject-btn">+ Add New Subject</button>
+              <div class="subject-grid" id="subject-grid">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+
+            <div id="manage-questions-section" style="display: none">
+              <h2>JAMB Questions</h2>
+              <button class="btn btn-primary" id="add-question-btn">+ Add Question</button>
+              <div id="questions-list">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+
+            <div id="manage-competitions-section" style="display: none">
+              <h2>Active Competitions</h2>
+              <button class="btn btn-primary" id="create-competition-btn">
+                + Start Competition
+              </button>
+              <div id="competitions-list" style="margin-top: 16px">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+
+            <div id="manage-passwords-section" style="display: none">
+              <h2>Daily Access Passwords</h2>
+              <button class="btn btn-primary" id="generate-password-btn">
+                + Generate Today's Password
+              </button>
+              <div id="passwords-list" style="margin-top: 16px">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- WAEC Tab -->
+      <section class="admin-section" id="waec-tab">
+        <h2>WAEC Exam Management (Coming Soon)</h2>
+        <p style="color: var(--text-muted)">
+          WAEC exam configuration and management features will be available here.
+        </p>
+      </section>
+
+      <!-- Settings Tab -->
+      <section class="admin-section" id="settings-tab">
+        <div class="grid grid-2">
+          <div class="security-card">
+            <h4>🔐 Security Settings</h4>
+            <button id="setup-mfa" class="btn btn-primary" style="margin-bottom: 12px">
+              Setup MFA
+            </button>
+            <div id="mfa-status" style="color: var(--text-muted); font-size: 0.9rem">
+              Checking MFA status...
+            </div>
+          </div>
+
+          <div class="security-card">
+            <h4>🌐 IP Whitelist</h4>
+            <textarea
+              id="ip-whitelist"
+              placeholder="Enter IPs (one per line)"
+              style="
+                width: 100%;
+                min-height: 100px;
+                padding: 8px;
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                background: var(--surface-soft);
+                color: var(--text);
+              "
+            ></textarea>
+            <button class="btn btn-primary" id="update-ips" style="margin-top: 12px">
+              Update IPs
+            </button>
+          </div>
+
+          <div class="security-card">
+            <h4>📊 Threat Level</h4>
+            <p id="threat-details" style="color: var(--text-muted); margin: 0">
+              Analyzing security...
+            </p>
+          </div>
+
+          <div class="security-card">
+            <h4>🎯 System Health</h4>
+            <p id="system-health" style="color: var(--text-muted); margin: 0">
+              Checking system status...
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Modals -->
+    <div class="modal" id="add-subject-modal">
+      <div class="modal-content">
+        <button class="modal-close" onclick="closeModal('add-subject-modal')">✕</button>
+        <h3>Add New Subject</h3>
+        <form id="subject-form" class="grid">
+          <input id="subject-name" placeholder="Subject name (e.g., Mathematics)" required />
+          <input id="subject-code" placeholder="Code (e.g., MATH)" required />
+          <input
+            id="subject-duration"
+            type="number"
+            placeholder="Duration (minutes)"
+            value="60"
+            required
+          />
+          <button class="btn btn-primary" type="submit">Add Subject</button>
+        </form>
+      </div>
     </div>
-  </div>
 
-  <script src="js/admin-v2.js"></script>
-  <script src="js/admin-students.js"></script>
-</body>
+    <div class="modal" id="add-question-modal">
+      <div class="modal-content">
+        <button class="modal-close" onclick="closeModal('add-question-modal')">✕</button>
+        <h3>Add Question to Subject</h3>
+        <form id="question-form" class="grid">
+          <select id="question-subject" placeholder="Select Subject" required>
+            <option value="">-- Select Subject --</option>
+          </select>
+          <textarea
+            id="question-text"
+            placeholder="Question text"
+            required
+            style="min-height: 80px"
+          ></textarea>
+          <input id="question-choice1" placeholder="Choice A" required />
+          <input id="question-choice2" placeholder="Choice B" required />
+          <input id="question-choice3" placeholder="Choice C" required />
+          <input id="question-choice4" placeholder="Choice D" required />
+          <select id="question-answer" required>
+            <option value="">-- Correct Answer --</option>
+            <option value="Choice A">Choice A</option>
+            <option value="Choice B">Choice B</option>
+            <option value="Choice C">Choice C</option>
+            <option value="Choice D">Choice D</option>
+          </select>
+          <button class="btn btn-primary" type="submit">Add Question</button>
+        </form>
+      </div>
+    </div>
+
+    <script src="js/admin-v2.js"></script>
+    <script src="js/admin-students.js"></script>
+  </body>
 </html>

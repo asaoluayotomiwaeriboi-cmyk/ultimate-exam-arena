@@ -27,7 +27,7 @@ class ExamLock {
         data.expiresAt,
         data.ipAddress,
         data.userAgent,
-        data.isActive || 1
+        data.isActive || 1,
       ];
 
       db.run(`${sql} RETURNING id`, params)
@@ -106,7 +106,7 @@ class ExamLock {
 
       db.all(sql, params, (err, rows) => {
         if (err) reject(err);
-        else resolve(rows.map(row => new ExamLock(row)));
+        else resolve(rows.map((row) => new ExamLock(row)));
       });
     });
   }

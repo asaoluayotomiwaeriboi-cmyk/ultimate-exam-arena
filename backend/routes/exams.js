@@ -10,7 +10,7 @@ const {
 const {
   verifyCompetitivePassword,
   getPasswordStatus,
-  getUserPasswordHistory
+  getUserPasswordHistory,
 } = require('../controllers/examPasswordController');
 
 const router = express.Router();

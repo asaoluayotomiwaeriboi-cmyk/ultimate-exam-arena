@@ -1,3 +1,4 @@
+/* global selectQuestion */
 const sessionId = new URLSearchParams(window.location.search).get('sessionId');
 const token = localStorage.getItem('token') || localStorage.getItem('cbt_token');
 const questionTitle = document.querySelector('#question-title');
@@ -32,20 +33,27 @@ let remainingSeconds = 0;
 let warnings = 0;
 
 const renderPalette = () => {
-  palette.innerHTML = sessionData.session.questions.map((q, idx) => {
-    const selected = sessionData.session.answers.some((item) => item.questionId === q._id);
-    return `<button class="progress-pill ${selected ? 'active' : 'unanswered'}" onclick="selectQuestion(${idx})">${idx + 1}</button>`;
-  }).join('');
+  palette.innerHTML = sessionData.session.questions
+    .map((q, idx) => {
+      const selected = sessionData.session.answers.some((item) => item.questionId === q._id);
+      return `<button class="progress-pill ${selected ? 'active' : 'unanswered'}" onclick="selectQuestion(${idx})">${idx + 1}</button>`;
+    })
+    .join('');
 };
 
 const renderQuestion = () => {
   const question = sessionData.session.questions[activeIndex];
   questionTitle.textContent = `${activeIndex + 1}. ${question.questionText}`;
-  const answered = sessionData.session.answers.find((item) => item.questionId === question._id)?.answer;
-  optionsContainer.innerHTML = question.choices.map((choice) => {
-    const active = answered === choice ? 'active' : '';
-    return `<div class="option ${active}" data-choice="${encodeURIComponent(choice)}" data-question="${question._id}">${choice}</div>`;
-  }).join('');
+  const answered = sessionData.session.answers.find(
+    (item) => item.questionId === question._id
+  )?.answer;
+  // Escape choice text to prevent XSS
+  optionsContainer.innerHTML = question.choices
+    .map((choice) => {
+      const active = answered === choice ? 'active' : '';
+      return `<div class="option ${active}" data-choice="${encodeURIComponent(choice)}" data-question="${question._id}">${window.escapeHtml ? window.escapeHtml(choice) : choice}</div>`;
+    })
+    .join('');
   scoreTracker.textContent = `${sessionData.session.answers.length} / ${sessionData.session.questions.length} answered`;
 };
 
@@ -86,7 +94,9 @@ const updateTimer = () => {
 const submitTest = async () => {
   clearInterval(timer);
   const data = await request('/api/exams/finish', {
-    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ sessionId }),
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ sessionId }),
   });
   if (data.success) {
     window.location.href = '/dashboard.html';
@@ -100,23 +110,38 @@ const loadSession = async () => {
     alert('Time expired. Your exam will be submitted.');
     return submitTest();
   }
-  remainingSeconds = Math.max(0, Math.round((new Date(sessionData.session.expiresAt) - new Date()) / 1000));
+  remainingSeconds = Math.max(
+    0,
+    Math.round((new Date(sessionData.session.expiresAt) - new Date()) / 1000)
+  );
   renderPalette();
   renderQuestion();
   timerLabel.textContent = '00:00';
   timer = setInterval(updateTimer, 1000);
 };
 
-prevBtn?.addEventListener('click', () => { if (activeIndex > 0) selectQuestion(activeIndex - 1); });
-nextBtn?.addEventListener('click', () => { if (activeIndex < sessionData.session.questions.length - 1) selectQuestion(activeIndex + 1); });
+prevBtn?.addEventListener('click', () => {
+  if (activeIndex > 0) selectQuestion(activeIndex - 1);
+});
+nextBtn?.addEventListener('click', () => {
+  if (activeIndex < sessionData.session.questions.length - 1) selectQuestion(activeIndex + 1);
+});
 quitBtn?.addEventListener('click', () => {
-  if (confirm('Are you sure you want to quit this exam? Your progress will be saved but exam will not be completed.')) {
+  if (
+    confirm(
+      'Are you sure you want to quit this exam? Your progress will be saved but exam will not be completed.'
+    )
+  ) {
     localStorage.removeItem('currentSessionId');
     window.location.href = '/dashboard.html';
   }
 });
-finishBtn?.addEventListener('click', () => { if (confirm('Submit exam now?')) submitTest(); });
-fullscreenBtn?.addEventListener('click', () => { document.documentElement.requestFullscreen?.(); });
+finishBtn?.addEventListener('click', () => {
+  if (confirm('Submit exam now?')) submitTest();
+});
+fullscreenBtn?.addEventListener('click', () => {
+  document.documentElement.requestFullscreen?.();
+});
 calcToggle?.addEventListener('click', () => calcPopup.classList.toggle('hidden'));
 calcClose?.addEventListener('click', () => calcPopup.classList.add('hidden'));
 
@@ -124,7 +149,7 @@ calcClose?.addEventListener('click', () => calcPopup.classList.add('hidden'));
 window.addEventListener('keydown', (event) => {
   // Prevent keyboard shortcuts when typing in input fields
   if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA') return;
-  
+
   // N for Next question
   if (event.key.toLowerCase() === 'n' && activeIndex < sessionData.session.questions.length - 1) {
     selectQuestion(activeIndex + 1);

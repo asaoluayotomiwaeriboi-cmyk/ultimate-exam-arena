@@ -28,8 +28,13 @@ class Subject {
         params.push(query._id);
       }
       if (query.active !== undefined) {
-        sql += ' AND active = ?';
-        params.push(query.active ? 1 : 0);
+        if (query.active) {
+          sql += ' AND (active = ? OR active = 1 OR active = true)';
+          params.push(1);
+        } else {
+          sql += ' AND (active = ? OR active = 0 OR active = false)';
+          params.push(0);
+        }
       }
 
       sql += ' ORDER BY name';
@@ -41,7 +46,7 @@ class Subject {
 
       db.all(sql, params, (err, rows) => {
         if (err) reject(err);
-        else resolve(rows.map(row => new Subject(row)));
+        else resolve(rows.map((row) => new Subject(row)));
       });
     });
   }
@@ -83,16 +88,16 @@ class Subject {
 
   static async create(data) {
     return new Promise((resolve, reject) => {
-      const sql = 'INSERT INTO subjects (name, code, duration, active) VALUES (?, ?, ?, ?) RETURNING id';
-      const params = [
-        data.name,
-        data.code,
-        data.duration,
-        data.active === false ? 0 : 1
-      ];
+      const sql =
+        'INSERT INTO subjects (name, code, duration, active) VALUES (?, ?, ?, ?) RETURNING id';
+      const params = [data.name, data.code, data.duration, data.active === false ? 0 : 1];
 
       db.run(sql, params)
-        .then((result) => resolve(new Subject({ id: result.rows[0].id, ...data, active: data.active === false ? 0 : 1 })))
+        .then((result) =>
+          resolve(
+            new Subject({ id: result.rows[0].id, ...data, active: data.active === false ? 0 : 1 })
+          )
+        )
         .catch(reject);
     });
   }
@@ -107,15 +112,9 @@ class Subject {
           active = ?
         WHERE id = ?
       `;
-      const params = [
-        data.name,
-        data.code,
-        data.duration,
-        data.active === false ? 0 : 1,
-        id
-      ];
+      const params = [data.name, data.code, data.duration, data.active === false ? 0 : 1, id];
 
-      db.run(sql, params, async function(err) {
+      db.run(sql, params, async function (err) {
         if (err) reject(err);
         else resolve(await Subject.findById(id));
       });
@@ -124,7 +123,9 @@ class Subject {
 
   static async insertMany(subjects) {
     return new Promise((resolve, reject) => {
-      const stmt = db.prepare('INSERT INTO subjects (name, code, duration, active) VALUES (?, ?, ?, ?)');
+      const stmt = db.prepare(
+        'INSERT INTO subjects (name, code, duration, active) VALUES (?, ?, ?, ?)'
+      );
 
       for (const subject of subjects) {
         stmt.run(subject.name, subject.code, subject.duration, subject.active === false ? 0 : 1);

@@ -1,7 +1,8 @@
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 const Question = require('../models/Question');
-  const { randomUUID } = require('crypto');
+const Subject = require('../models/Subject');
+const { randomUUID } = require('crypto');
 const ExamSession = require('../models/ExamSession');
 const Result = require('../models/Result');
 
@@ -64,12 +65,12 @@ exports.bulkUpload = async (req, res, next) => {
 exports.getStudents = async (req, res, next) => {
   try {
     const students = await User.find({ role: 'student' });
-    const result = students.map(u => ({
+    const result = students.map((u) => ({
       id: u.id,
       name: u.name,
       email: u.email,
       role: u.role,
-      createdAt: u.createdAt
+      createdAt: u.createdAt,
     }));
     res.json({ success: true, students: result });
   } catch (error) {
@@ -121,7 +122,10 @@ exports.exportResults = async (_req, res, next) => {
     const results = await Result.findWithStudent();
     const csv = [
       'Student Name,Email,Subject,Score,Total Questions,Finished At',
-      ...results.map((item) => `${item.studentName || 'Unknown'},${item.studentEmail || 'N/A'},${item.subject},${item.score},${item.totalQuestions},${new Date(item.finishedAt * 1000).toISOString()}`),
+      ...results.map(
+        (item) =>
+          `${item.studentName || 'Unknown'},${item.studentEmail || 'N/A'},${item.subject},${item.score},${item.totalQuestions},${new Date(item.finishedAt * 1000).toISOString()}`
+      ),
     ].join('\n');
     res.setHeader('Content-Type', 'text/csv');
     res.setHeader('Content-Disposition', 'attachment; filename=cbt-results.csv');
@@ -138,11 +142,12 @@ exports.createCompetition = async (req, res, next) => {
     if (!subject) return res.status(404).json({ success: false, message: 'Subject not found' });
 
     const lockedAt = Math.floor(Date.now() / 1000);
-    const expiresAt = lockedAt + ((durationMinutes || subject.duration) * 60);
+    const expiresAt = lockedAt + (durationMinutes || subject.duration) * 60;
 
     const ExamLock = require('../models/ExamLock');
     // Use a standardized competition display name for JAMB/UTME
-    const competitionName = (subject.code && subject.code.includes('JAMB')) ? 'JAMB/UTME Mock challange' : subject.name;
+    const competitionName =
+      subject.code && subject.code.includes('JAMB') ? 'JAMB/UTME Mock challange' : subject.name;
 
     const lock = await ExamLock.create({
       userId: 0,
@@ -152,7 +157,7 @@ exports.createCompetition = async (req, res, next) => {
       expiresAt,
       ipAddress: req.ip,
       userAgent: req.headers['user-agent'] || 'admin',
-      isActive: 1
+      isActive: 1,
     });
 
     res.json({ success: true, lock });
@@ -178,31 +183,39 @@ exports.generateDailyPassword = async (req, res, next) => {
 
     const passwordId = randomUUID();
     const createdAt = Math.floor(Date.now() / 1000);
-    const expiresAt = createdAt + (durationHours * 3600);
+    const expiresAt = createdAt + durationHours * 3600;
 
     return new Promise((resolve) => {
-      db.run(`
+      db.run(
+        `
         INSERT INTO daily_exam_passwords 
         (id, examType, password, passwordHash, createdAt, expiresAt, isActive, generatedBy)
         VALUES (?, ?, ?, ?, ?, ?, 1, ?)
-      `, [passwordId, examType, password, passwordHash, createdAt, expiresAt, adminId], (err) => {
-        if (err) {
-          console.error('Error generating password:', err);
-          return resolve(res.status(500).json({ 
-            success: false, 
-            message: 'Failed to generate password' 
-          }));
-        }
+      `,
+        [passwordId, examType, password, passwordHash, createdAt, expiresAt, adminId],
+        (err) => {
+          if (err) {
+            console.error('Error generating password:', err);
+            return resolve(
+              res.status(500).json({
+                success: false,
+                message: 'Failed to generate password',
+              })
+            );
+          }
 
-        resolve(res.json({ 
-          success: true, 
-          message: 'Password generated successfully',
-          passwordId,
-          password,
-          expiresAt: new Date(expiresAt * 1000).toISOString(),
-          validFor: `${durationHours} hours`
-        }));
-      });
+          resolve(
+            res.json({
+              success: true,
+              message: 'Password generated successfully',
+              passwordId,
+              password,
+              expiresAt: new Date(expiresAt * 1000).toISOString(),
+              validFor: `${durationHours} hours`,
+            })
+          );
+        }
+      );
     });
   } catch (error) {
     next(error);
@@ -218,45 +231,55 @@ exports.getCurrentPassword = async (req, res, next) => {
     const now = Math.floor(Date.now() / 1000);
 
     return new Promise((resolve) => {
-      db.get(`
+      db.get(
+        `
         SELECT id, examType, createdAt, expiresAt, isActive 
         FROM daily_exam_passwords 
         WHERE examType = 'UTME' AND isActive = 1 AND expiresAt > ?
         ORDER BY createdAt DESC LIMIT 1
-      `, [now], (err, row) => {
-        if (err) {
-          console.error('Error fetching current password:', err);
-          return resolve(res.status(500).json({ 
-            success: false, 
-            message: 'Error fetching password' 
-          }));
-        }
-
-        if (!row) {
-          return resolve(res.json({ 
-            success: true, 
-            hasActivePassword: false,
-            message: 'No active password'
-          }));
-        }
-
-        const timeRemaining = row.expiresAt - now;
-        const hoursRemaining = Math.floor(timeRemaining / 3600);
-        const minutesRemaining = Math.floor((timeRemaining % 3600) / 60);
-
-        resolve(res.json({ 
-          success: true, 
-          hasActivePassword: true,
-          passwordId: row.id,
-          expiresAt: new Date(row.expiresAt * 1000).toISOString(),
-          timeRemaining: {
-            total: timeRemaining,
-            hours: hoursRemaining,
-            minutes: minutesRemaining,
-            formatted: `${hoursRemaining}h ${minutesRemaining}m`
+      `,
+        [now],
+        (err, row) => {
+          if (err) {
+            console.error('Error fetching current password:', err);
+            return resolve(
+              res.status(500).json({
+                success: false,
+                message: 'Error fetching password',
+              })
+            );
           }
-        }));
-      });
+
+          if (!row) {
+            return resolve(
+              res.json({
+                success: true,
+                hasActivePassword: false,
+                message: 'No active password',
+              })
+            );
+          }
+
+          const timeRemaining = row.expiresAt - now;
+          const hoursRemaining = Math.floor(timeRemaining / 3600);
+          const minutesRemaining = Math.floor((timeRemaining % 3600) / 60);
+
+          resolve(
+            res.json({
+              success: true,
+              hasActivePassword: true,
+              passwordId: row.id,
+              expiresAt: new Date(row.expiresAt * 1000).toISOString(),
+              timeRemaining: {
+                total: timeRemaining,
+                hours: hoursRemaining,
+                minutes: minutesRemaining,
+                formatted: `${hoursRemaining}h ${minutesRemaining}m`,
+              },
+            })
+          );
+        }
+      );
     });
   } catch (error) {
     next(error);

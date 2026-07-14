@@ -7,8 +7,8 @@ module.exports = {
       env: {
         NODE_ENV: 'production',
         PORT: 5000,
-        HOST: '0.0.0.0'
-      }
-    }
-  ]
+        HOST: '0.0.0.0',
+      },
+    },
+  ],
 };

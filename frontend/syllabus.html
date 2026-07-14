@@ -1,149 +1,201 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ultimate Exam Arena</title>
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#1d4ed8">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Ultimate Exam Arena">
-  <style>
-    .syllabus-filter { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
-    .syllabus-filter select { padding: 12px 16px; border: 1px solid #dbe4ff; border-radius: 8px; }
-    .syllabus-card { background: white; border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-    .syllabus-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-    .syllabus-title { font-size: 1.4rem; font-weight: 600; color: #1243b0; }
-    .exam-badge { display: inline-block; background: #f0f4ff; color: #1243b0; padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; }
-    .syllabus-content { color: #666; line-height: 1.8; }
-    .topics-list { margin-top: 16px; padding-top: 16px; border-top: 1px solid #eee; }
-    .topics-list li { margin: 8px 0; color: #333; }
-  </style>
-</head>
-<body>
-  <main class="container">
-    <header class="navbar">
-      <div class="logo">Ultimate Exam Arena</div>
-      <div class="toolbox">
-        <a href="dashboard.html" class="btn btn-secondary">Back to Dashboard</a>
-        <button class="btn btn-secondary logout-btn">Logout</button>
-      </div>
-    </header>
-
-    <section class="layout-dashboard">
-      <aside class="sidebar">
-        <h3>Exam Syllabus</h3>
-        <p>View official syllabuses for JAMB, WAEC, and other exam bodies.</p>
-        <div class="feature-card">
-          <h4>Prepare Better</h4>
-          <p>Know what to study for your exams with official syllabuses.</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ultimate Exam Arena</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1d4ed8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Ultimate Exam Arena" />
+    <style>
+      .syllabus-filter {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 24px;
+        flex-wrap: wrap;
+      }
+      .syllabus-filter select {
+        padding: 12px 16px;
+        border: 1px solid #dbe4ff;
+        border-radius: 8px;
+      }
+      .syllabus-card {
+        background: white;
+        border-radius: 12px;
+        padding: 24px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      }
+      .syllabus-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+      .syllabus-title {
+        font-size: 1.4rem;
+        font-weight: 600;
+        color: #1243b0;
+      }
+      .exam-badge {
+        display: inline-block;
+        background: #f0f4ff;
+        color: #1243b0;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+      }
+      .syllabus-content {
+        color: #666;
+        line-height: 1.8;
+      }
+      .topics-list {
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 1px solid #eee;
+      }
+      .topics-list li {
+        margin: 8px 0;
+        color: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="container">
+      <header class="navbar">
+        <div class="logo">Ultimate Exam Arena</div>
+        <div class="toolbox">
+          <a href="dashboard.html" class="btn btn-secondary">Back to Dashboard</a>
+          <button class="btn btn-secondary logout-btn">Logout</button>
         </div>
-      </aside>
+      </header>
 
-      <section class="main-panel">
-        <div class="header">
-          <h2>Exam Syllabuses</h2>
-        </div>
+      <section class="layout-dashboard">
+        <aside class="sidebar">
+          <h3>Exam Syllabus</h3>
+          <p>View official syllabuses for JAMB, WAEC, and other exam bodies.</p>
+          <div class="feature-card">
+            <h4>Prepare Better</h4>
+            <p>Know what to study for your exams with official syllabuses.</p>
+          </div>
+        </aside>
 
-        <div class="syllabus-filter">
-          <select id="subject-select" style="flex: 1;">
-            <option value="Select Subject">Select Subject</option>
-            <option value="Mathematics">Mathematics</option>
-            <option value="Physics">Physics</option>
-            <option value="Chemistry">Chemistry</option>
-            <option value="Biology">Biology</option>
-            <option value="USE OF ENGLISH">USE OF ENGLISH</option>
-            <option value="Government">Government</option>
-            <option value="Financial Accounting">Financial Accounting</option>
-            <option value="Literature in English">Literature in English</option>
-            <option value="History">History</option>
-            <option value="Geography">Geography</option>
-            <option value="Further Mathematics">Further Mathematics</option>
-            <option value="Economics">Economics</option>
-            <option value="Commerce">Commerce</option>
-            <option value="Computer Science">Computer Science</option>
-            <option value="Agricultural Science">Agricultural Science</option>
-            <option value="Principle of Management">Principle of Management</option>
-            <option value="Hausa">Hausa</option>
-            <option value="Yoruba">Yoruba</option>
-            <option value="Igbo">Igbo</option>
-          </select>
+        <section class="main-panel">
+          <div class="header">
+            <h2>Exam Syllabuses</h2>
+          </div>
 
-          <select id="exam-select" style="flex: 1;">
-            <option value="">All Exam Bodies</option>
-            <option value="JAMB">JAMB</option>
-            <option value="WAEC">WAEC</option>
-            <option value="NECO">NECO</option>
-          </select>
+          <div class="syllabus-filter">
+            <select id="subject-select" style="flex: 1">
+              <option value="Select Subject">Select Subject</option>
+              <option value="Mathematics">Mathematics</option>
+              <option value="Physics">Physics</option>
+              <option value="Chemistry">Chemistry</option>
+              <option value="Biology">Biology</option>
+              <option value="USE OF ENGLISH">USE OF ENGLISH</option>
+              <option value="Government">Government</option>
+              <option value="Financial Accounting">Financial Accounting</option>
+              <option value="Literature in English">Literature in English</option>
+              <option value="History">History</option>
+              <option value="Geography">Geography</option>
+              <option value="Further Mathematics">Further Mathematics</option>
+              <option value="Economics">Economics</option>
+              <option value="Commerce">Commerce</option>
+              <option value="Computer Science">Computer Science</option>
+              <option value="Agricultural Science">Agricultural Science</option>
+              <option value="Principle of Management">Principle of Management</option>
+              <option value="Hausa">Hausa</option>
+              <option value="Yoruba">Yoruba</option>
+              <option value="Igbo">Igbo</option>
+            </select>
 
-          <button id="filter-btn" class="btn btn-primary">Filter</button>
-        </div>
+            <select id="exam-select" style="flex: 1">
+              <option value="">All Exam Bodies</option>
+              <option value="JAMB">JAMB</option>
+              <option value="WAEC">WAEC</option>
+              <option value="NECO">NECO</option>
+            </select>
 
-        <div id="syllabuses-list"></div>
+            <button id="filter-btn" class="btn btn-primary">Filter</button>
+          </div>
+
+          <div id="syllabuses-list"></div>
+        </section>
       </section>
-    </section>
-  </main>
+    </main>
 
-  <script>
-    const token = localStorage.getItem('cbt_token');
-    if (!token) window.location.href = '/login.html';
+    <script>
+      const token = localStorage.getItem('cbt_token');
+      if (!token) window.location.href = '/login.html';
 
-    const request = async (path, options = {}) => {
-      const res = await fetch(path, { headers: { Authorization: `Bearer ${token}` }, ...options });
-      return await res.json();
-    };
+      const request = async (path, options = {}) => {
+        const res = await fetch(path, {
+          headers: { Authorization: `Bearer ${token}` },
+          ...options,
+        });
+        return await res.json();
+      };
 
-    const subjectSelect = document.getElementById('subject-select');
-    const examSelect = document.getElementById('exam-select');
-    const filterBtn = document.getElementById('filter-btn');
-    const syllabusesList = document.getElementById('syllabuses-list');
+      const subjectSelect = document.getElementById('subject-select');
+      const examSelect = document.getElementById('exam-select');
+      const filterBtn = document.getElementById('filter-btn');
+      const syllabusesList = document.getElementById('syllabuses-list');
 
-    const loadSyllabuses = async () => {
-      const subject = subjectSelect.value;
-      const examBody = examSelect.value;
-      
-      let url = '/api/features/syllabuses';
-      const params = new URLSearchParams();
-      if (subject) params.append('subject', subject);
-      if (examBody) params.append('examBody', examBody);
-      if (params.toString()) url += '?' + params;
+      const loadSyllabuses = async () => {
+        const subject = subjectSelect.value;
+        const examBody = examSelect.value;
 
-      const data = await request(url);
-      if (data.success && data.data.length > 0) {
-        syllabusesList.innerHTML = data.data.map(syllabus => `
+        let url = '/api/features/syllabuses';
+        const params = new URLSearchParams();
+        if (subject) params.append('subject', subject);
+        if (examBody) params.append('examBody', examBody);
+        if (params.toString()) url += '?' + params;
+
+        const data = await request(url);
+        if (data.success && data.data.length > 0) {
+          syllabusesList.innerHTML = data.data
+            .map(
+              (syllabus) => `
           <div class="syllabus-card">
             <div class="syllabus-header">
               <div class="syllabus-title">${syllabus.subject}</div>
               <span class="exam-badge">${syllabus.examBody}</span>
             </div>
-            ${syllabus.topics && syllabus.topics.length > 0 ? `
+            ${
+              syllabus.topics && syllabus.topics.length > 0
+                ? `
               <div class="topics-list">
                 <strong>Topics:</strong>
                 <ul>
-                  ${syllabus.topics.map(topic => `<li>${topic}</li>`).join('')}
+                  ${syllabus.topics.map((topic) => `<li>${topic}</li>`).join('')}
                 </ul>
               </div>
-            ` : ''}
+            `
+                : ''
+            }
             <div class="syllabus-content">${syllabus.content}</div>
           </div>
-        `).join('');
-      } else {
-        syllabusesList.innerHTML = '<p>No syllabuses found for the selected filters.</p>';
-      }
-    };
+        `
+            )
+            .join('');
+        } else {
+          syllabusesList.innerHTML = '<p>No syllabuses found for the selected filters.</p>';
+        }
+      };
 
-    filterBtn?.addEventListener('click', loadSyllabuses);
+      filterBtn?.addEventListener('click', loadSyllabuses);
 
-    // Logout handler
-    document.querySelectorAll('.logout-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        localStorage.removeItem('cbt_token');
-        window.location.href = '/login.html';
+      // Logout handler
+      document.querySelectorAll('.logout-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          localStorage.removeItem('cbt_token');
+          window.location.href = '/login.html';
+        });
       });
-    });
 
-    loadSyllabuses();
-  </script>
-</body>
+      loadSyllabuses();
+    </script>
+  </body>
 </html>
