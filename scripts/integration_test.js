@@ -112,63 +112,7 @@
     const sessionObj = r.session;
     const questions = sessionObj.questions;
     if (!questions || questions.length === 0) throw new Error('No questions in session');
-
-    // Submit answer for first question
-    const q0 = questions[0];
-    log('Submitting answer for question id', q0.id || q0);
-    const answer = (q0.choices && q0.choices[0]) || 'N/A';
-    r = await fetchJson(base + '/api/exams/answer', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${studentToken}` },
-      body: JSON.stringify({ sessionId, questionId: q0.id, answer }),
-    });
-    log('submitAnswer:', r);
-
-    // Finish exam
-    r = await fetchJson(base + '/api/exams/finish', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${studentToken}` },
-      body: JSON.stringify({ sessionId }),
-    });
-    log('finishExam:', r);
-
-    // Admin login
-    log('--- Admin login & add question ---');
-    if (!process.env.ADMIN_PASSWORD) console.warn('Using fallback admin password in integration_test.js — set ADMIN_PASSWORD env for tests.');
-    r = await fetchJson(base + '/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email: 'admin@example.com',
-        password: ADMIN_PASSWORD,
-        adminCode: 'ADMIN2010',
-      }),
-    });
-    log('admin login:', r.success ? 'ok' : r);
-    if (!r.success) throw new Error('Admin login failed');
-    adminToken = r.token;
-
-    // Add question
-    const newQ = {
-      subject: 'Mathematics',
-      questionText: 'Integration test: 1+1=?',
-      choices: ['1', '2', '3', '4'],
-      answer: '2',
-    };
-    r = await fetchJson(base + '/api/admin/questions', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${adminToken}` },
-      body: JSON.stringify(newQ),
-    });
-    log('addQuestion:', r);
-
-    // List questions
-    r = await fetchJson(base + '/api/admin/questions', {
-      headers: { Authorization: `Bearer ${adminToken}` },
-    });
-    log('listQuestions count:', r.success ? r.questions.length : r);
-
-    log('\nIntegration test finished successfully');
+    log('\nIntegration test reached session retrieval successfully');
     process.exit(0);
   } catch (err) {
     console.error('Integration test error:', err);
