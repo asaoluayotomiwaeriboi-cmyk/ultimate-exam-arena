@@ -1,0 +1,26 @@
+:root{--uea-sidebar-bg:#050a1c;--uea-sidebar-accent:#1d4ed8;--uea-text:#e9f2ff;--uea-muted:#9bb3d6}
+.uea-sidebar{position:fixed;left:0;top:0;bottom:0;width:280px;background:var(--uea-sidebar-bg);color:var(--uea-text);z-index:999;overflow:auto;border-right:1px solid rgba(255,255,255,0.08);padding:20px 12px;transition:transform .25s ease}
+.uea-brand{padding:8px 12px;margin-bottom:12px}
+.uea-logo{color:var(--uea-text);font-weight:800;text-decoration:none;font-size:1.05rem;display:inline-block}
+.uea-menu ul{list-style:none;padding:0;margin:8px 0}
+.uea-menu .menu-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;cursor:pointer;color:var(--uea-text);transition:background .15s,transform .08s;font-weight:600}
+.uea-menu .menu-item .icon{width:26px;text-align:center;color:var(--uea-text)}
+.uea-menu .menu-item .label{flex:1;color:var(--uea-text)}
+.uea-menu .menu-item:hover{background:rgba(29,78,216,0.16);transform:translateX(2px)}
+.uea-menu .menu-item.active{background:linear-gradient(90deg,var(--uea-sidebar-accent),#2563eb);color:#f8fafc}
+.uea-menu .menu-group .sub{margin-left:36px;margin-top:6px}
+.uea-menu .sub-item{padding:8px 12px;border-radius:8px;font-size:0.95rem;color:var(--uea-muted)}
+.uea-menu .sub-item:hover{background:rgba(255,255,255,0.04);color:var(--uea-text)}
+#uea-logout{margin-top:14px;border-top:1px solid rgba(255,255,255,0.08);padding-top:16px}
+
+/* Responsive: collapse on small screens */
+@media(max-width:900px){
+  .uea-sidebar{transform:translateX(-110%)}
+  body.uea-sidebar-open .uea-sidebar{transform:translateX(0)}
+  .uea-hamburger{position:fixed;left:10px;top:10px;z-index:1100;background:var(--uea-sidebar-bg);border-radius:8px;padding:8px;color:var(--uea-text);border:1px solid rgba(255,255,255,0.08)}
+  /* main content occupies full width on mobile */
+  body.with-sidebar main, body.with-sidebar .container, body.with-sidebar .auth-container{margin-left:0 !important}
+}
+
+/* Desktop main offset */
+body.with-sidebar main, body.with-sidebar .container, body.with-sidebar .auth-container{margin-left:280px;transition:margin .18s ease}

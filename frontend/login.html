@@ -3,56 +3,54 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ultimate Exam Arena</title>
+    <title>Ultimate Exam Arena - Login</title>
     <link rel="stylesheet" href="css/styles.css" />
-    <link rel="manifest" href="/manifest.json" />
+    <link rel="stylesheet" href="css/auth.css" />
+    <link rel="stylesheet" href="css/sidebar.css" />
     <meta name="theme-color" content="#1d4ed8" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="Ultimate Exam Arena" />
   </head>
-  <body>
-    <header class="container navbar">
-      <a class="logo" href="/">Ultimate Exam Arena</a>
-    </header>
-    <main class="container">
-      <div class="branding">
-        <h1>🎓 Ultimate Exam Arena Platform</h1>
-        <p>JAMB Standard Practice & Mock Exams</p>
-      </div>
-      <div class="form-card">
-        <h2 id="auth-title">Student Login</h2>
-        <p id="auth-message"></p>
-        <form id="auth-form" data-mode="login">
-          <div class="input-group name-field">
-            <label for="name">Name</label>
-            <input type="text" id="name" placeholder="John Doe" />
-          </div>
-          <div class="input-group">
-            <label for="email">Email</label>
+  <body class="auth-body">
+    <main class="auth-container">
+      <div class="auth-card">
+        <div class="auth-left">
+          <h1>Welcome Back to Ultimate Exam Arena</h1>
+          <p class="muted">Access practice tests, track progress, and compete with peers.</p>
+        </div>
+        <div class="auth-right">
+          <form id="auth-form" data-mode="login" class="auth-form">
+            <h2>Sign in</h2>
+            <div id="auth-message" class="auth-message" aria-live="polite"></div>
+
+            <a href="/api/auth/google" class="btn btn-google full auth-google-btn" role="button">
+              <span aria-hidden="true">🔷</span>
+              <span>Sign in with Google</span>
+            </a>
+
+            <div class="separator"><span>Or continue with</span></div>
+
+            <label class="input-label">Email</label>
             <input type="email" id="email" required placeholder="student@example.com" />
-          </div>
-          <div class="input-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" required placeholder="Enter your password" />
-          </div>
-          <div class="input-group" id="admin-code-group">
-            <label for="admin-code">Admin Code (if admin)</label>
-            <input type="text" id="admin-code" placeholder="Enter code" />
-          </div>
-          <div id="mfa-section" style="display: none">
-            <img id="qr-code" alt="QR Code" style="display: block; margin: 10px auto" />
-            <div class="input-group">
-              <label for="mfa-token">MFA Token</label>
-              <input type="text" id="mfa-token" placeholder="Enter 6-digit code" />
+
+            <label class="input-label">Password</label>
+            <div class="password-row">
+              <input type="password" id="password" required placeholder="Enter your password" />
+              <button type="button" id="toggle-password" class="btn btn-link small">Show</button>
             </div>
-          </div>
-          <button class="btn btn-primary" type="submit">Continue</button>
-        </form>
-        <button id="toggle-auth" class="btn btn-secondary" type="button">
-          Don’t have an account? Sign up
-        </button>
+
+            <div class="actions">
+              <a href="#" class="muted small">Forgot password?</a>
+            </div>
+
+            <button class="btn btn-primary full" id="submit-btn" type="submit">Login</button>
+            <p class="muted center">Don't have an account? <a href="/signup.html">Sign up</a></p>
+
+            <p class="muted tiny center">By logging in, you agree to our terms</p>
+          </form>
+        </div>
       </div>
     </main>
+
+    <script src="js/sidebar.js"></script>
     <script src="js/auth.js"></script>
   </body>
 </html>

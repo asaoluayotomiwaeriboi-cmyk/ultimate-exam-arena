@@ -12,7 +12,7 @@ const examRoutes = require('./routes/exams');
 const dashboardRoutes = require('./routes/dashboard');
 const featuresRoutes = require('./routes/features');
 const { errorHandler } = require('./middleware/errorHandler');
-const Sage = require('./ai/Sage');
+const Clara = require('./ai/Clara');
 
 // If Render (or another host) mounts a secret file at /etc/secrets/.env, load it first.
 // Otherwise fall back to local .env.
@@ -59,7 +59,7 @@ const PORT = process.env.PORT || 5000;
 const HOST = process.env.HOST || '0.0.0.0';
 
 // Initialize AI assistants
-const tylaAI = new Sage();
+const tylaAI = new Clara();
 // Placeholder for additional AI assistant (Chris). Implement or replace with real client.
 const chrisAI = {
   validateQuestion: async () => ({ message: 'Not implemented' }),
@@ -144,6 +144,11 @@ app.post('/api/ai/chris/validate-bulk', async (req, res) => {
 
 app.use('/api', (_req, res) => {
   res.status(404).json({ success: false, message: 'API route not found' });
+});
+
+// Serve secret admin login page at /admin-login (no public link)
+app.get('/admin-login', (_req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'admin-login.html'));
 });
 
 app.use(express.static(path.join(__dirname, '..', 'frontend')));

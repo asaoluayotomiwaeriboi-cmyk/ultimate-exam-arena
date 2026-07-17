@@ -3,7 +3,51 @@ const MAX_ATTEMPTS = 5;
 const ATTEMPT_KEY = 'admin_login_attempts';
 const LOCKOUT_KEY = 'admin_login_lockout';
 
+const messageEl = document.getElementById('auth-message');
+const lockoutTimerEl = document.getElementById('lockout-timer');
+
 document.getElementById('admin-form').addEventListener('submit', handleAdminLogin);
+
+// show/hide password toggle
+const toggleBtn = document.getElementById('toggle-admin-password');
+if (toggleBtn) {
+  toggleBtn.addEventListener('click', () => {
+    const input = document.getElementById('password');
+    if (!input) return;
+    if (input.type === 'password') {
+      input.type = 'text';
+      toggleBtn.textContent = 'Hide';
+    } else {
+      input.type = 'password';
+      toggleBtn.textContent = 'Show';
+    }
+  });
+}
+
+let lockoutInterval = null;
+function startLockoutCountdown(untilTs) {
+  clearInterval(lockoutInterval);
+  const update = () => {
+    const now = Date.now();
+    const rem = untilTs - now;
+    if (rem <= 0) {
+      clearInterval(lockoutInterval);
+      localStorage.removeItem(LOCKOUT_KEY);
+      localStorage.removeItem(ATTEMPT_KEY);
+      if (lockoutTimerEl) lockoutTimerEl.textContent = '';
+      return;
+    }
+    const mins = Math.floor(rem / 60000);
+    const secs = Math.floor((rem % 60000) / 1000);
+    if (lockoutTimerEl) lockoutTimerEl.textContent = `Locked. Try again in ${mins}m ${secs}s`;
+  };
+  update();
+  lockoutInterval = setInterval(update, 1000);
+}
+
+// initialize if localStorage has lock
+const existingLock = parseInt(localStorage.getItem(LOCKOUT_KEY) || '0', 10);
+if (existingLock && existingLock > Date.now()) startLockoutCountdown(existingLock);
 
 async function handleAdminLogin(e) {
   e.preventDefault();
@@ -11,20 +55,13 @@ async function handleAdminLogin(e) {
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
   const accessCode = document.getElementById('access-code').value;
-  const messageEl = document.getElementById('auth-message');
 
-  // Check if locked out
-  const lockoutTime = localStorage.getItem(LOCKOUT_KEY);
-  if (lockoutTime) {
-    const now = Date.now();
-    if (now < parseInt(lockoutTime)) {
-      const remainingMin = Math.ceil((parseInt(lockoutTime) - now) / 60000);
-      messageEl.textContent = `Too many failed attempts. Try again in ${remainingMin} minutes.`;
-      return;
-    } else {
-      localStorage.removeItem(LOCKOUT_KEY);
-      localStorage.removeItem(ATTEMPT_KEY);
-    }
+  // Check if locked out (local)
+  const lockoutTime = parseInt(localStorage.getItem(LOCKOUT_KEY) || '0', 10);
+  if (lockoutTime && Date.now() < lockoutTime) {
+    messageEl.textContent = 'Too many failed attempts. Please wait.';
+    startLockoutCountdown(lockoutTime);
+    return;
   }
 
   try {
@@ -44,18 +81,30 @@ async function handleAdminLogin(e) {
       setTimeout(() => {
         window.location.href = '/admin-v2.html';
       }, 1000);
-    } else {
-      // Increment attempt counter
-      let attempts = parseInt(localStorage.getItem(ATTEMPT_KEY) || '0') + 1;
-      localStorage.setItem(ATTEMPT_KEY, attempts.toString());
+      return;
+    }
 
-      if (attempts >= MAX_ATTEMPTS) {
-        localStorage.setItem(LOCKOUT_KEY, (Date.now() + LOCKOUT_DURATION).toString());
-        messageEl.textContent = 'Too many failed attempts. Account locked for 30 minutes.';
-      } else {
-        const remaining = MAX_ATTEMPTS - attempts;
-        messageEl.textContent = `${data.message} (${remaining} attempts remaining)`;
-      }
+    // Handle server-side lockout
+    if (response.status === 429 || data.lockedUntil) {
+      const until = data.lockedUntil ? parseInt(data.lockedUntil, 10) : Date.now() + LOCKOUT_DURATION;
+      localStorage.setItem(LOCKOUT_KEY, until.toString());
+      startLockoutCountdown(until);
+      messageEl.textContent = 'Too many failed attempts. Account locked.';
+      return;
+    }
+
+    // increment local attempts
+    let attempts = parseInt(localStorage.getItem(ATTEMPT_KEY) || '0', 10) + 1;
+    localStorage.setItem(ATTEMPT_KEY, attempts.toString());
+
+    if (attempts >= MAX_ATTEMPTS) {
+      const until = Date.now() + LOCKOUT_DURATION;
+      localStorage.setItem(LOCKOUT_KEY, until.toString());
+      startLockoutCountdown(until);
+      messageEl.textContent = 'Too many failed attempts. Account locked for 30 minutes.';
+    } else {
+      const remaining = MAX_ATTEMPTS - attempts;
+      messageEl.textContent = `${data.message || 'Invalid credentials'} (${remaining} attempts remaining)`;
     }
   } catch (error) {
     messageEl.textContent = 'Login error. Please try again.';

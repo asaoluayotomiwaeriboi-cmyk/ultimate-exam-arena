@@ -33,12 +33,21 @@ let remainingSeconds = 0;
 let warnings = 0;
 
 const renderPalette = () => {
+  const total = sessionData.session.questions.length;
+  // build a compact grid palette (1..N)
   palette.innerHTML = sessionData.session.questions
     .map((q, idx) => {
       const selected = sessionData.session.answers.some((item) => item.questionId === q._id);
-      return `<button class="progress-pill ${selected ? 'active' : 'unanswered'}" onclick="selectQuestion(${idx})">${idx + 1}</button>`;
+      return `<button class="progress-pill ${selected ? 'active' : 'unanswered'}" data-index="${idx}" aria-label="Question ${idx + 1}">${idx + 1}</button>`;
     })
     .join('');
+  // attach delegated click handler
+  palette.querySelectorAll('button').forEach((b) => {
+    b.addEventListener('click', (e) => {
+      const idx = Number(b.dataset.index);
+      selectQuestion(idx);
+    });
+  });
 };
 
 const renderQuestion = () => {
@@ -55,6 +64,15 @@ const renderQuestion = () => {
     })
     .join('');
   scoreTracker.textContent = `${sessionData.session.answers.length} / ${sessionData.session.questions.length} answered`;
+  // update question indicator and progress
+  const total = sessionData.session.questions.length || 0;
+  const answeredCount = sessionData.session.answers.length || 0;
+  const qNumEl = document.getElementById('question-number');
+  const qIndicator = document.getElementById('q-indicator');
+  const progressFill = document.getElementById('progress-fill');
+  if (qNumEl) qNumEl.textContent = `Question ${activeIndex + 1} of ${total}`;
+  if (qIndicator) qIndicator.textContent = `${activeIndex + 1} of ${total}`;
+  if (progressFill) progressFill.style.width = `${Math.round((answeredCount / Math.max(1, total)) * 100)}%`;
 };
 
 window.selectQuestion = (index) => {
@@ -128,10 +146,15 @@ nextBtn?.addEventListener('click', () => {
 });
 quitBtn?.addEventListener('click', () => {
   if (
-    confirm(
-      'Are you sure you want to quit this exam? Your progress will be saved but exam will not be completed.'
-    )
+    confirm('Are you sure? Your progress will be saved and you will exit the exam.')
   ) {
+    localStorage.removeItem('currentSessionId');
+    window.location.href = '/dashboard.html';
+  }
+});
+const quitTopBtn = document.getElementById('quit-top-btn');
+quitTopBtn?.addEventListener('click', () => {
+  if (confirm('Are you sure? Your progress will be saved and you will exit the exam.')) {
     localStorage.removeItem('currentSessionId');
     window.location.href = '/dashboard.html';
   }
@@ -144,6 +167,36 @@ fullscreenBtn?.addEventListener('click', () => {
 });
 calcToggle?.addEventListener('click', () => calcPopup.classList.toggle('hidden'));
 calcClose?.addEventListener('click', () => calcPopup.classList.add('hidden'));
+const calcFloat = document.getElementById('calc-float');
+calcFloat?.addEventListener('click', () => calcPopup.classList.toggle('hidden'));
+
+// Calculator logic (safe-ish: validate characters before evaluating)
+const calcDisplay = document.getElementById('calc-display');
+window.calcInput = (value) => {
+  if (!calcDisplay) return;
+  if (value === 'C') {
+    calcDisplay.value = '';
+    return;
+  }
+  if (value === '=') {
+    try {
+      const expr = (calcDisplay.value || '0').trim();
+      if (!/^[0-9+\-×x*÷/.()\s]+$/.test(expr)) throw new Error('Invalid expression');
+      // Normalize ×/÷ to * and /
+      const safeExpr = expr.replace(/×|x/g, '*').replace(/÷/g, '/');
+      // Basic validation: only allowed chars
+      if (!/^[0-9+\-*/().\s]+$/.test(safeExpr)) throw new Error('Invalid expression');
+      // Evaluate using Function after validation
+      // eslint-disable-next-line no-new-func
+      const result = Function('"use strict"; return (' + safeExpr + ')')();
+      calcDisplay.value = String(result);
+    } catch (e) {
+      calcDisplay.value = 'Error';
+    }
+    return;
+  }
+  calcDisplay.value = calcDisplay.value === '0' && value !== '.' ? value : calcDisplay.value + value;
+};
 
 // Keyboard shortcuts
 window.addEventListener('keydown', (event) => {

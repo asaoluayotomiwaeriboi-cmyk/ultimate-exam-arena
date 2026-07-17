@@ -1,14 +1,14 @@
 const { Anthropic } = require('@anthropic-ai/sdk');
 const db = require('../config/db');
 
-class Sage {
+class Clara {
   constructor() {
-    this.name = 'Sage';
+    this.name = 'Clara';
     this.role = 'AI_Tutor';
     this.client = new Anthropic({
       apiKey: process.env.ANTHROPIC_API_KEY,
     });
-    this.systemPrompt = `You are Sage, a Smart Exam Guide and AI tutor for Ultimate Exam Arena. You help Nigerian students prepare for JAMB UTME exams. You are friendly, encouraging, and give clear simple explanations. You specialize in all JAMB subjects. Always relate answers to the JAMB syllabus. Keep responses concise and practical.`;
+    this.systemPrompt = `You are Clara, a Smart Exam Guide and AI tutor for Ultimate Exam Arena. You help Nigerian students prepare for JAMB UTME exams. You are friendly, encouraging, and give clear simple explanations. You specialize in all JAMB subjects. Always relate answers to the JAMB syllabus. Keep responses concise and practical.`;
   }
 
   async askQuestion(question, userId = null) {
@@ -50,7 +50,7 @@ class Sage {
         tokensUsed: message.usage.output_tokens,
       };
     } catch (error) {
-      console.error('Sage error:', error);
+      console.error('Clara error:', error);
       return {
         success: false,
         message: 'Error processing your question. Please try again.',
@@ -64,7 +64,9 @@ class Sage {
   }
 
   async analyzePerformance(performanceData, userId = null) {
-    const question = `Analyze this exam performance and give improvement suggestions:\n${JSON.stringify(performanceData)}`;
+    const question = `Analyze this exam performance and give improvement suggestions:\n${JSON.stringify(
+      performanceData
+    )}`;
     return this.askQuestion(question, userId);
   }
 
@@ -72,7 +74,7 @@ class Sage {
     try {
       const today = new Date().toISOString().split('T')[0];
       const result = await db.get(
-        'SELECT COUNT(*) as count FROM sage_messages WHERE userId = ? AND DATE(createdAt) = ?',
+        'SELECT COUNT(*) as count FROM clara_messages WHERE userId = ? AND DATE(createdAt) = ?',
         [userId, today]
       );
       return result?.count || 0;
@@ -93,7 +95,7 @@ class Sage {
 
   async trackMessageUsage(userId) {
     try {
-      await db.run('INSERT INTO sage_messages (userId, createdAt) VALUES (?, datetime("now"))', [
+      await db.run('INSERT INTO clara_messages (userId, createdAt) VALUES (?, datetime("now"))', [
         userId,
       ]);
     } catch (error) {
@@ -102,4 +104,4 @@ class Sage {
   }
 }
 
-module.exports = Sage;
+module.exports = Clara;

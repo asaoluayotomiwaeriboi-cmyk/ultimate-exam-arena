@@ -1,0 +1,21 @@
+/* Exam specific styles: JAMB layout, progress bar, calculator float */
+.top-right-tools { display: flex; align-items: center; gap: 12px; }
+#progress-bar { width: 220px; height: 10px; background: rgba(255,255,255,0.06); border-radius: 999px; overflow: hidden; margin-right: 12px; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, #1d4ed8, #3b82f6); width: 0%; transition: width .35s ease; }
+.q-indicator { display: inline-block; color: var(--text-muted); font-weight: 700; margin-right: 8px; }
+.question-header { display: flex; flex-direction: column; gap: 12px; }
+.question-number { color: var(--text-muted); font-weight: 700; }
+#question-palette { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; max-height: 420px; overflow: auto; padding-top: 8px; }
+#question-palette button { width: 100%; padding: 10px 8px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface-muted); color: var(--text); font-weight: 700; cursor: pointer; }
+#question-palette button.active { background: var(--primary); color: #fff; border-color: transparent; }
+#question-palette button.unanswered { background: var(--surface); }
+.calc-float { position: fixed; right: 18px; bottom: 18px; z-index: 1200; width: 64px; height: 64px; border-radius: 999px; background: linear-gradient(180deg,#1d4ed8,#2563eb); color: #fff; border: none; box-shadow: 0 12px 30px rgba(29,78,216,0.24); font-weight: 700; cursor: pointer; }
+.overlay .popup { max-width: 420px; }
+/* Make options visually nicer for JAMB */
+.options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.option { padding: 18px 20px; border-radius: 12px; font-weight: 600; }
+.option.active { border: none; box-shadow: 0 8px 28px rgba(29,78,216,0.14); }
+/* Dark theme accents */
+body { background: linear-gradient(180deg,#050a1c 0%, #071227 60%); }
+.topbar { margin-bottom: 20px; }
+@media (max-width: 900px) { #question-palette { grid-template-columns: repeat(4, 1fr); } .options { grid-template-columns: 1fr; } }

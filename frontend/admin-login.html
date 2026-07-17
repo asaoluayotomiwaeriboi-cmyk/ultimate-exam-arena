@@ -6,6 +6,7 @@
     <title>Ultimate Exam Arena</title>
     <meta name="description" content="Your Ultimate JAMB UTME Practice Platform" />
     <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/sidebar.css" />
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#1d4ed8" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -30,13 +31,17 @@
           </div>
           <div class="input-group">
             <label for="password">Password</label>
-            <input type="password" id="password" required placeholder="Enter password" />
+            <div style="display:flex;gap:8px;align-items:center">
+              <input type="password" id="password" required placeholder="Enter password" />
+              <button type="button" id="toggle-admin-password" class="btn btn-link small">Show</button>
+            </div>
           </div>
           <div class="input-group">
             <label for="access-code">Access Code</label>
             <input type="text" id="access-code" required placeholder="Enter access code" />
           </div>
           <button class="btn btn-primary" type="submit">Login</button>
+          <div id="lockout-timer" style="margin-top:8px;color:var(--muted)"></div>
         </form>
         <p style="margin-top: 20px; text-align: center; color: var(--text-muted)">
           <a href="/login.html" style="color: var(--primary)">← Back to Student Login</a>

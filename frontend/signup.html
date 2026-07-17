@@ -3,241 +3,114 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ultimate Exam Arena - Register</title>
+    <title>Ultimate Exam Arena - Sign Up</title>
     <link rel="stylesheet" href="css/styles.css" />
-    <link rel="manifest" href="/manifest.json" />
+    <link rel="stylesheet" href="css/auth.css" />
+    <link rel="stylesheet" href="css/sidebar.css" />
     <meta name="theme-color" content="#1d4ed8" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="Ultimate Exam Arena" />
   </head>
-  <body>
-    <header class="container navbar">
-      <a class="logo" href="/">Ultimate Exam Arena</a>
-    </header>
-    <main class="container">
-      <div class="form-card">
-        <h2 id="auth-title">Create Your Student Account</h2>
-        <p id="auth-message" style="font-size: 12px; color: #9bb3d6; margin-bottom: 20px">
-          Fill in all required fields (*)
-        </p>
+  <body class="auth-body">
+    <main class="auth-container">
+      <div class="auth-card">
+        <div class="auth-left">
+          <h1>Create Your Account</h1>
+          <p class="muted">Join thousands of students preparing for success.</p>
+        </div>
+        <div class="auth-right">
+          <form id="auth-form" data-mode="signup" class="auth-form">
+            <h2>Create Account</h2>
+            <div id="auth-message" class="auth-message" aria-live="polite"></div>
 
-        <form id="auth-form" data-mode="signup">
-          <!-- Personal Information Section -->
-          <fieldset style="border: none; padding: 0; margin-bottom: 20px">
-            <legend style="font-size: 13px; font-weight: 600; color: #1d4ed8; margin-bottom: 12px">
-              Personal Information
-            </legend>
+            <a href="/api/auth/google" class="btn btn-google full auth-google-btn" role="button">
+              <span aria-hidden="true">🔷</span>
+              <span>Sign up with Google</span>
+            </a>
 
-            <div class="input-group name-field">
-              <label for="name">Full Name *</label>
-              <input type="text" id="name" name="name" required placeholder="John Doe" />
+            <div class="separator"><span>Or continue with</span></div>
+
+            <label class="input-label" for="name">Full name</label>
+            <input type="text" id="name" name="name" required placeholder="John Doe" />
+
+            <label class="input-label" for="email">Email</label>
+            <input type="email" id="email" name="email" required placeholder="student@example.com" />
+
+            <label class="input-label" for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone" required placeholder="08012345678" />
+
+            <label class="input-label" for="password">Password</label>
+            <div class="password-row">
+              <input type="password" id="password" name="password" required placeholder="Create a strong password" />
+              <button type="button" id="toggle-password" class="btn btn-link small">Show</button>
             </div>
 
-            <div class="input-group">
-              <label for="email">Email Address *</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                required
-                placeholder="student@example.com"
-              />
+            <div class="pw-strength">
+              <div id="pw-bar" class="pw-bar"></div>
+              <div id="pw-text" class="pw-text">Password strength</div>
             </div>
 
-            <div class="input-group">
-              <label for="phone">Phone Number *</label>
-              <input type="tel" id="phone" name="phone" required placeholder="08012345678" />
-            </div>
+            <label class="input-label" for="confirm-password">Confirm password</label>
+            <input type="password" id="confirm-password" name="confirm-password" required placeholder="Confirm password" />
 
-            <div class="input-group">
-              <label for="dob">Date of Birth *</label>
-              <input type="date" id="dob" name="dob" required />
-            </div>
-          </fieldset>
+            <label class="input-label" for="dob">Date of birth (optional)</label>
+            <input type="date" id="dob" name="dob" />
 
-          <!-- Address Section -->
-          <fieldset style="border: none; padding: 0; margin-bottom: 20px">
-            <legend style="font-size: 13px; font-weight: 600; color: #1d4ed8; margin-bottom: 12px">
-              Address
-            </legend>
+            <label class="input-label" for="state">State</label>
+            <select id="state" name="state" required title="Select your state">
+              <option value="">Select your state</option>
+              <option>Abia</option>
+              <option>Adamawa</option>
+              <option>Akwa Ibom</option>
+              <option>Anambra</option>
+              <option>Bauchi</option>
+              <option>Bayelsa</option>
+              <option>Benue</option>
+              <option>Borno</option>
+              <option>Cross River</option>
+              <option>Delta</option>
+              <option>Ebonyi</option>
+              <option>Edo</option>
+              <option>Ekiti</option>
+              <option>Enugu</option>
+              <option>FCT</option>
+              <option>Gombe</option>
+              <option>Imo</option>
+              <option>Jigawa</option>
+              <option>Kaduna</option>
+              <option>Kano</option>
+              <option>Katsina</option>
+              <option>Kebbi</option>
+              <option>Kogi</option>
+              <option>Kwara</option>
+              <option>Lagos</option>
+              <option>Nasarawa</option>
+              <option>Niger</option>
+              <option>Ogun</option>
+              <option>Ondo</option>
+              <option>Osun</option>
+              <option>Oyo</option>
+              <option>Plateau</option>
+              <option>Rivers</option>
+              <option>Sokoto</option>
+              <option>Taraba</option>
+              <option>Yobe</option>
+              <option>Zamfara</option>
+            </select>
 
-            <div class="input-group">
-              <label for="address">Street Address *</label>
-              <input
-                type="text"
-                id="address"
-                name="address"
-                required
-                placeholder="123 Main Street"
-              />
-            </div>
+            <label class="input-label" for="school">School / College (optional)</label>
+            <input type="text" id="school" name="school" placeholder="e.g. Lagos State University" />
 
-            <div class="input-group">
-              <label for="city">City *</label>
-              <input type="text" id="city" name="city" required placeholder="Lagos" />
-            </div>
+            <label class="checkbox"><input type="checkbox" id="agree" /> I agree to the terms</label>
 
-            <div class="input-group">
-              <label for="state">State *</label>
-              <select id="state" name="state" required>
-                <option value="">Select your state</option>
-                <option value="Abia">Abia</option>
-                <option value="Adamawa">Adamawa</option>
-                <option value="Akwa Ibom">Akwa Ibom</option>
-                <option value="Anambra">Anambra</option>
-                <option value="Bauchi">Bauchi</option>
-                <option value="Bayelsa">Bayelsa</option>
-                <option value="Benue">Benue</option>
-                <option value="Borno">Borno</option>
-                <option value="Cross River">Cross River</option>
-                <option value="Delta">Delta</option>
-                <option value="Ebonyi">Ebonyi</option>
-                <option value="Edo">Edo</option>
-                <option value="Ekiti">Ekiti</option>
-                <option value="Enugu">Enugu</option>
-                <option value="FCT">FCT (Abuja)</option>
-                <option value="Gombe">Gombe</option>
-                <option value="Imo">Imo</option>
-                <option value="Jigawa">Jigawa</option>
-                <option value="Kaduna">Kaduna</option>
-                <option value="Kano">Kano</option>
-                <option value="Katsina">Katsina</option>
-                <option value="Kebbi">Kebbi</option>
-                <option value="Kogi">Kogi</option>
-                <option value="Kwara">Kwara</option>
-                <option value="Lagos">Lagos</option>
-                <option value="Nasarawa">Nasarawa</option>
-                <option value="Niger">Niger</option>
-                <option value="Ogun">Ogun</option>
-                <option value="Ondo">Ondo</option>
-                <option value="Osun">Osun</option>
-                <option value="Oyo">Oyo</option>
-                <option value="Plateau">Plateau</option>
-                <option value="Rivers">Rivers</option>
-                <option value="Sokoto">Sokoto</option>
-                <option value="Taraba">Taraba</option>
-                <option value="Yobe">Yobe</option>
-                <option value="Zamfara">Zamfara</option>
-              </select>
-            </div>
+            <button class="btn btn-primary full" id="submit-btn" type="submit">Create Account</button>
+            <p class="muted center">Already have account? <a href="/login.html">Login</a></p>
 
-            <div class="input-group">
-              <label for="lga">Local Government Area (LGA) *</label>
-              <input type="text" id="lga" name="lga" required placeholder="e.g. Ikeja" />
-            </div>
-          </fieldset>
-
-          <!-- Educational Information Section -->
-          <fieldset style="border: none; padding: 0; margin-bottom: 20px">
-            <legend style="font-size: 13px; font-weight: 600; color: #1d4ed8; margin-bottom: 12px">
-              Educational Information
-            </legend>
-
-            <div class="input-group">
-              <label for="school">School/College Name *</label>
-              <input
-                type="text"
-                id="school"
-                name="school"
-                required
-                placeholder="e.g. Lagos State University"
-              />
-            </div>
-
-            <div class="input-group">
-              <label for="jamb-number">JAMB Registration Number (Optional)</label>
-              <input
-                type="text"
-                id="jamb-number"
-                name="jamb-number"
-                placeholder="e.g. 12345678AB"
-              />
-            </div>
-
-            <div class="input-group">
-              <label for="target-uni">Target University (Optional)</label>
-              <input
-                type="text"
-                id="target-uni"
-                name="target-uni"
-                placeholder="e.g. University of Lagos"
-              />
-            </div>
-
-            <div class="input-group">
-              <label for="target-course">Target Course (Optional)</label>
-              <input
-                type="text"
-                id="target-course"
-                name="target-course"
-                placeholder="e.g. Medicine & Surgery"
-              />
-            </div>
-          </fieldset>
-
-          <!-- Security Section -->
-          <fieldset style="border: none; padding: 0; margin-bottom: 20px">
-            <legend style="font-size: 13px; font-weight: 600; color: #1d4ed8; margin-bottom: 12px">
-              Security
-            </legend>
-
-            <div class="input-group">
-              <label for="password">Password *</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                required
-                placeholder="Create a strong password (min 8 characters)"
-              />
-              <small style="color: #9bb3d6; margin-top: 4px; display: block"
-                >Use uppercase, lowercase, numbers & symbols</small
-              >
-            </div>
-
-            <div class="input-group">
-              <label for="confirm-password">Confirm Password *</label>
-              <input
-                type="password"
-                id="confirm-password"
-                name="confirm-password"
-                required
-                placeholder="Re-enter your password"
-              />
-            </div>
-          </fieldset>
-
-          <button class="btn btn-primary" type="submit" style="width: 100%; margin-bottom: 12px">
-            Create Account
-          </button>
-        </form>
-
-        <p style="text-align: center; color: #9bb3d6; font-size: 13px">
-          Already have an account?
-          <button
-            id="toggle-auth"
-            class="btn btn-link"
-            type="button"
-            style="
-              background: none;
-              border: none;
-              color: #1d4ed8;
-              cursor: pointer;
-              text-decoration: underline;
-            "
-          >
-            Login here
-          </button>
-        </p>
-
-        <p style="text-align: center; color: #64748b; font-size: 11px; margin-top: 16px">
-          Ultimate Exam Arena is not affiliated with JAMB.<br />
-          For educational purposes only.
-        </p>
+            <p class="muted tiny center">We protect your data</p>
+          </form>
+        </div>
       </div>
     </main>
 
-    <script src="js/pwa-register.js"></script>
+    <script src="js/sidebar.js"></script>
     <script src="js/auth.js"></script>
   </body>
 </html>
