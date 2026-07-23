@@ -23,7 +23,7 @@
       </div>
       <div class="form-card">
         <h2>Administrator Login</h2>
-        <p id="auth-message" style="color: #f87171"></p>
+        <p id="auth-message" class="auth-message-inline"></p>
         <form id="admin-form">
           <div class="input-group">
             <label for="email">Admin Email</label>
@@ -31,7 +31,7 @@
           </div>
           <div class="input-group">
             <label for="password">Password</label>
-            <div style="display:flex;gap:8px;align-items:center">
+            <div class="password-row admin-password-row">
               <input type="password" id="password" required placeholder="Enter password" />
               <button type="button" id="toggle-admin-password" class="btn btn-link small">Show</button>
             </div>
@@ -41,10 +41,10 @@
             <input type="text" id="access-code" required placeholder="Enter access code" />
           </div>
           <button class="btn btn-primary" type="submit">Login</button>
-          <div id="lockout-timer" style="margin-top:8px;color:var(--muted)"></div>
+          <div id="lockout-timer" class="lockout-timer"></div>
         </form>
-        <p style="margin-top: 20px; text-align: center; color: var(--text-muted)">
-          <a href="/login.html" style="color: var(--primary)">← Back to Student Login</a>
+        <p class="admin-back-link-wrap">
+          <a href="/login.html" class="admin-back-link">← Back to Student Login</a>
         </p>
       </div>
     </main>

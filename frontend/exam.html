@@ -21,7 +21,7 @@
         </div>
         <div class="top-right-tools">
           <div id="progress-bar" class="progress">
-            <div id="progress-fill" class="progress-fill" style="width:0%"></div>
+            <div id="progress-fill" class="progress-fill"></div>
           </div>
           <div class="toolbox">
             <span id="q-indicator" class="q-indicator">0 of 0</span>
@@ -46,7 +46,7 @@
             <div class="question-text" id="question-title"></div>
           </div>
           <div class="options" id="options-container"></div>
-          <div class="toolbox" style="margin-top: 24px">
+          <div class="toolbox exam-actions">
             <button id="prev-btn" class="btn btn-secondary">Previous (P)</button>
             <button id="next-btn" class="btn btn-secondary">Next (N)</button>
             <button id="quit-btn" class="btn btn-danger">Quit Exam (Q)</button>
@@ -62,20 +62,8 @@
     <div id="calculator-popup" class="overlay hidden">
       <div class="popup">
         <h3>Exam Calculator</h3>
-        <input
-          id="calc-display"
-          type="text"
-          placeholder="0"
-          readonly
-          style="
-            width: 100%;
-            padding: 14px 16px;
-            margin-bottom: 14px;
-            border-radius: 14px;
-            border: 1px solid #dbe4ff;
-          "
-        />
-        <div class="grid" style="grid-template-columns: repeat(4, 1fr); gap: 10px">
+        <input id="calc-display" type="text" placeholder="0" readonly class="calc-display" />
+        <div class="grid calc-grid">
           <button class="btn btn-secondary" type="button" onclick="calcInput('7')">7</button>
           <button class="btn btn-secondary" type="button" onclick="calcInput('8')">8</button>
           <button class="btn btn-secondary" type="button" onclick="calcInput('9')">9</button>
@@ -93,7 +81,7 @@
           <button class="btn btn-secondary" type="button" onclick="calcInput('=')">=</button>
           <button class="btn btn-secondary" type="button" onclick="calcInput('+')">+</button>
         </div>
-        <button id="calc-close" class="btn btn-primary" style="margin-top: 16px">Close</button>
+        <button id="calc-close" class="btn btn-primary calc-close-btn">Close</button>
       </div>
     </div>
 
