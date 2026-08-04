@@ -1,7 +1,8 @@
 (async function initSidebar(){
   const path = location.pathname || '/';
   const normalize = (value) => (value || '/').replace(/\\/g, '/').replace(/index\.html$/, '').replace(/\/$/, '') || '/';
-  const allowedPaths = new Set([
+  const publicPaths = new Set(['/', '/index.html', '/login.html', '/signup.html', '/admin-login']);
+  const appPaths = new Set([
     '/dashboard.html',
     '/exam.html',
     '/subject-picker.html',
@@ -22,17 +23,14 @@
     '/topic-wise.html',
     '/clara.html'
   ]);
-  const hasAuthToken = Boolean(localStorage.getItem('token') || localStorage.getItem('cbt_token'));
 
-  if (!hasAuthToken && !allowedPaths.has(path) && normalize(path) !== '') {
-    return;
-  }
-
-  if (!hasAuthToken && !allowedPaths.has(path)) {
+  if (publicPaths.has(normalize(path)) || (!appPaths.has(path) && !appPaths.has(normalize(path)))) {
     return;
   }
 
   try {
+    if (document.querySelector('.uea-sidebar')) return;
+
     const resp = await fetch('/sidebar.html');
     const html = await resp.text();
     const div = document.createElement('div');
@@ -50,9 +48,15 @@
     });
 
     const items = Array.from(document.querySelectorAll('.uea-menu .menu-item'));
+    const groups = Array.from(document.querySelectorAll('.uea-menu .menu-group'));
+
     items.forEach((item) => {
       const dp = item.getAttribute('data-path') || null;
-      if (dp && normalize(dp) === normalize(path)) item.classList.add('active');
+      if (dp && normalize(dp) === normalize(path)) {
+        item.classList.add('active');
+        const group = item.closest('.menu-group');
+        if (group) group.classList.add('active', 'open');
+      }
       item.addEventListener('click', () => {
         const target = item.getAttribute('data-path');
         if (item.id === 'uea-logout') {
@@ -65,9 +69,16 @@
       });
     });
 
-    document.addEventListener('click', (e) => {
+    groups.forEach((group) => {
+      group.addEventListener('click', (event) => {
+        if (event.target.closest('.sub-item')) return;
+        group.classList.toggle('open');
+      });
+    });
+
+    document.addEventListener('click', (event) => {
       if (!document.body.classList.contains('uea-sidebar-open')) return;
-      if (e.target.closest('.uea-sidebar') || e.target.closest('.uea-hamburger')) return;
+      if (event.target.closest('.uea-sidebar') || event.target.closest('.uea-hamburger')) return;
       document.body.classList.remove('uea-sidebar-open');
     });
   } catch (err) {
