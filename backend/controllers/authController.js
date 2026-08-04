@@ -45,22 +45,11 @@ exports.register = async (req, res, next) => {
       confirmPassword,
     } = req.body;
 
-    // Validate required fields
-    if (
-      !name ||
-      !email ||
-      !phone ||
-      !dateOfBirth ||
-      !address ||
-      !city ||
-      !state ||
-      !lga ||
-      !school ||
-      !password
-    ) {
+    // Validate core fields expected by the current signup form
+    if (!name || !email || !phone || !state || !password) {
       return res
         .status(400)
-        .json({ success: false, message: 'All required fields must be filled' });
+        .json({ success: false, message: 'Name, email, phone, state, and password are required' });
     }
 
     // Validate password match
@@ -234,7 +223,11 @@ exports.googleCallback = async (req, res, next) => {
     const token = signToken(user.id);
     const history = await Result.find({ student: user.id, limit: 10 });
 
-    const redirectUrl = `${process.env.FRONTEND_URL || 'http://localhost:3000'}?token=${token}`;
+    const frontendBaseUrl =
+      process.env.FRONTEND_URL ||
+      process.env.BASE_URL ||
+      `http://localhost:${process.env.PORT || 5002}`;
+    const redirectUrl = `${frontendBaseUrl.replace(/\/$/, '')}/dashboard.html?token=${token}`;
     res.redirect(redirectUrl);
   } catch (error) {
     next(error);

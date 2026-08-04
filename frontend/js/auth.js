@@ -93,6 +93,9 @@ const handleSubmit = async (event) => {
   if (mode === 'signup') {
     payload.name = authForm.querySelector('#name')?.value?.trim();
     payload.phone = authForm.querySelector('#phone')?.value?.trim();
+    payload.address = authForm.querySelector('#address')?.value?.trim() || '';
+    payload.city = authForm.querySelector('#city')?.value?.trim() || '';
+    payload.lga = authForm.querySelector('#lga')?.value?.trim() || '';
     payload.state = authForm.querySelector('#state')?.value || '';
     payload.school = authForm.querySelector('#school')?.value?.trim() || '';
     payload.dateOfBirth = authForm.querySelector('#dob')?.value || null;
