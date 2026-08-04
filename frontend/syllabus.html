@@ -6,11 +6,8 @@
     <title>Ultimate Exam Arena</title>
     <link rel="stylesheet" href="css/styles.css" />
     <link rel="stylesheet" href="css/sidebar.css" />
-    <link rel="manifest" href="/manifest.json" />
-    <meta name="theme-color" content="#1d4ed8" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="Ultimate Exam Arena" />
-    <style>
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<style>
       .syllabus-filter {
         display: flex;
         gap: 12px;
@@ -62,7 +59,10 @@
         color: #333;
       }
     </style>
-  </head>
+      <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#050a1c" />
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.svg" />
+</head>
   <body>
     <main class="container">
       <header class="navbar">
@@ -89,7 +89,7 @@
           </div>
 
           <div class="syllabus-filter">
-            <select id="subject-select" style="flex: 1">
+            <select id="subject-select" style="flex: 1" title="Subject Select">
               <option value="Select Subject">Select Subject</option>
               <option value="Mathematics">Mathematics</option>
               <option value="Physics">Physics</option>
@@ -112,7 +112,7 @@
               <option value="Igbo">Igbo</option>
             </select>
 
-            <select id="exam-select" style="flex: 1">
+            <select id="exam-select" style="flex: 1" title="Exam Select">
               <option value="">All Exam Bodies</option>
               <option value="JAMB">JAMB</option>
               <option value="WAEC">WAEC</option>

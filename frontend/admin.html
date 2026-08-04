@@ -6,11 +6,11 @@
     <title>Ultimate Exam Arena</title>
     <link rel="stylesheet" href="css/styles.css" />
     <link rel="stylesheet" href="css/sidebar.css" />
-    <link rel="manifest" href="/manifest.json" />
-    <meta name="theme-color" content="#1d4ed8" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="Ultimate Exam Arena" />
-  </head>
+<meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#050a1c" />
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.svg" />
+</head>
   <body id="admin-body">
     <main class="container">
       <header class="navbar">
@@ -45,14 +45,14 @@
               <h4>MFA Setup</h4>
               <button id="setup-mfa" class="btn btn-primary">Setup MFA</button>
               <div id="mfa-qr" style="display: none"></div>
-              <input id="mfa-code" placeholder="Enter code to enable" style="display: none" />
+              <input id="mfa-code" placeholder="Enter code to enable" style="display: none" / title="Mfa Code">
               <button id="enable-mfa" class="btn btn-secondary" style="display: none">
                 Enable MFA
               </button>
             </div>
             <div>
               <h4>IP Whitelist</h4>
-              <textarea id="ip-whitelist" placeholder="Enter IPs, one per line"></textarea>
+              <textarea id="ip-whitelist" placeholder="Enter IPs, one per line" title="Ip Whitelist"></textarea>
               <button id="update-ips" class="btn btn-primary">Update IPs</button>
             </div>
           </div>
@@ -63,9 +63,9 @@
         <div class="card">
           <h3>Add a new subject</h3>
           <form id="subject-form" class="grid">
-            <input id="subject-name" placeholder="Subject name" required />
-            <input id="subject-code" placeholder="Code" required />
-            <input id="subject-duration" type="number" placeholder="Duration (minutes)" required />
+            <input id="subject-name" placeholder="Subject name" required / title="Subject Name">
+            <input id="subject-code" placeholder="Code" required / title="Subject Code">
+            <input id="subject-duration" type="number" placeholder="Duration (minutes)" required / title="Subject Duration">
             <button class="btn btn-primary">Create subject</button>
           </form>
         </div>
@@ -75,13 +75,13 @@
         <div class="card">
           <h3>Add a new question</h3>
           <form id="question-form" class="grid">
-            <input id="question-subject" placeholder="Subject" required />
-            <textarea id="question-text" placeholder="Question text" required></textarea>
-            <input id="question-choice1" placeholder="Choice 1" required />
-            <input id="question-choice2" placeholder="Choice 2" required />
-            <input id="question-choice3" placeholder="Choice 3" required />
-            <input id="question-choice4" placeholder="Choice 4" required />
-            <input id="question-answer" placeholder="Correct answer" required />
+            <input id="question-subject" placeholder="Subject" required / title="Question Subject">
+            <textarea id="question-text" placeholder="Question text" required title="Question Text"></textarea>
+            <input id="question-choice1" placeholder="Choice 1" required / title="Question Choice1">
+            <input id="question-choice2" placeholder="Choice 2" required / title="Question Choice2">
+            <input id="question-choice3" placeholder="Choice 3" required / title="Question Choice3">
+            <input id="question-choice4" placeholder="Choice 4" required / title="Question Choice4">
+            <input id="question-answer" placeholder="Correct answer" required / title="Question Answer">
             <button class="btn btn-primary">Add question</button>
           </form>
         </div>

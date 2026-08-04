@@ -1,15 +1,12 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <title>Ultimate Exam Arena</title>
     <link rel="stylesheet" href="assets/css/styles.css" />
     <link rel="stylesheet" href="css/sidebar.css" />
-    <link rel="manifest" href="/manifest.json" />
-    <meta name="theme-color" content="#1d4ed8" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="Ultimate Exam Arena" />
-    <style>
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<style>
       table {
         width: 100%;
         border-collapse: collapse;
@@ -21,13 +18,16 @@
         font-size: 13px;
       }
     </style>
-  </head>
+      <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#050a1c" />
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.svg" />
+</head>
   <body>
     <div class="container">
       <h1>Password Verification Logs</h1>
       <p>Shows recent attempts to verify the daily mock password.</p>
       <div style="margin: 8px 0">
-        <label>Limit: <input id="logLimit" type="number" value="200" style="width: 80px" /></label>
+        <label>Limit: <input id="logLimit" type="number" value="200" style="width: 80px" / title="Loglimit"></label>
         <button id="refreshBtn">Refresh</button>
         <button id="exportBtn">Export CSV</button>
       </div>

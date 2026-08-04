@@ -6,11 +6,8 @@
     <title>Ultimate Exam Arena - Admin</title>
     <link rel="stylesheet" href="css/styles.css" />
     <link rel="stylesheet" href="css/sidebar.css" />
-    <link rel="manifest" href="/manifest.json" />
-    <meta name="theme-color" content="#1d4ed8" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="Ultimate Exam Arena" />
-    <style>
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<style>
       .admin-header {
         padding: 16px;
         background: var(--surface);
@@ -185,7 +182,10 @@
         color: #ef4444;
       }
     </style>
-  </head>
+      <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#050a1c" />
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.svg" />
+</head>
   <body id="admin-body">
     <script src="js/sidebar.js"></script>
     <div class="admin-header">
@@ -240,9 +240,9 @@
         <h2>Student Management</h2>
 
         <div class="student-search">
-          <input type="text" id="search-name" placeholder="Search by name..." />
-          <input type="text" id="search-email" placeholder="Search by email..." />
-          <select id="filter-state">
+          <input type="text" id="search-name" placeholder="Search by name..." / title="Search Name">
+          <input type="text" id="search-email" placeholder="Search by email..." / title="Search Email">
+          <select id="filter-state" title="Filter State">
             <option value="">All States</option>
             <option value="Lagos">Lagos</option>
             <option value="Ogun">Ogun</option>
@@ -452,7 +452,7 @@
                 background: var(--surface-soft);
                 color: var(--text);
               "
-            ></textarea>
+             title="Ip Whitelist"></textarea>
             <button class="btn btn-primary" id="update-ips" style="margin-top: 12px">
               Update IPs
             </button>
@@ -481,15 +481,15 @@
         <button class="modal-close" onclick="closeModal('add-subject-modal')">✕</button>
         <h3>Add New Subject</h3>
         <form id="subject-form" class="grid">
-          <input id="subject-name" placeholder="Subject name (e.g., Mathematics)" required />
-          <input id="subject-code" placeholder="Code (e.g., MATH)" required />
+          <input id="subject-name" placeholder="Subject name (e.g., Mathematics)" required / title="Subject Name">
+          <input id="subject-code" placeholder="Code (e.g., MATH)" required / title="Subject Code">
           <input
             id="subject-duration"
             type="number"
             placeholder="Duration (minutes)"
             value="60"
             required
-          />
+          / title="Subject Duration">
           <button class="btn btn-primary" type="submit">Add Subject</button>
         </form>
       </div>
@@ -500,7 +500,7 @@
         <button class="modal-close" onclick="closeModal('add-question-modal')">✕</button>
         <h3>Add Question to Subject</h3>
         <form id="question-form" class="grid">
-          <select id="question-subject" placeholder="Select Subject" required>
+          <select id="question-subject" placeholder="Select Subject" required title="Question Subject">
             <option value="">-- Select Subject --</option>
           </select>
           <textarea
@@ -508,12 +508,12 @@
             placeholder="Question text"
             required
             style="min-height: 80px"
-          ></textarea>
-          <input id="question-choice1" placeholder="Choice A" required />
-          <input id="question-choice2" placeholder="Choice B" required />
-          <input id="question-choice3" placeholder="Choice C" required />
-          <input id="question-choice4" placeholder="Choice D" required />
-          <select id="question-answer" required>
+           title="Question Text"></textarea>
+          <input id="question-choice1" placeholder="Choice A" required / title="Question Choice1">
+          <input id="question-choice2" placeholder="Choice B" required / title="Question Choice2">
+          <input id="question-choice3" placeholder="Choice C" required / title="Question Choice3">
+          <input id="question-choice4" placeholder="Choice D" required / title="Question Choice4">
+          <select id="question-answer" required title="Question Answer">
             <option value="">-- Correct Answer --</option>
             <option value="Choice A">Choice A</option>
             <option value="Choice B">Choice B</option>

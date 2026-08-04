@@ -7,8 +7,10 @@
     <link rel="stylesheet" href="css/styles.css" />
     <link rel="stylesheet" href="css/auth.css" />
     <link rel="stylesheet" href="css/sidebar.css" />
-    <meta name="theme-color" content="#1d4ed8" />
-  </head>
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#050a1c" />
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.svg" />
+</head>
   <body class="auth-body">
     <main class="auth-container">
       <div class="auth-card">
@@ -29,17 +31,17 @@
             <div class="separator"><span>Or continue with</span></div>
 
             <label class="input-label" for="name">Full name</label>
-            <input type="text" id="name" name="name" required placeholder="John Doe" />
+            <input type="text" id="name" name="name" required placeholder="John Doe" / title="Name">
 
             <label class="input-label" for="email">Email</label>
-            <input type="email" id="email" name="email" required placeholder="student@example.com" />
+            <input type="email" id="email" name="email" required placeholder="student@example.com" / title="Email">
 
             <label class="input-label" for="phone">Phone</label>
-            <input type="tel" id="phone" name="phone" required placeholder="08012345678" />
+            <input type="tel" id="phone" name="phone" required placeholder="08012345678" / title="Phone">
 
             <label class="input-label" for="password">Password</label>
             <div class="password-row">
-              <input type="password" id="password" name="password" required placeholder="Create a strong password" />
+              <input type="password" id="password" name="password" required placeholder="Create a strong password" / title="Password">
               <button type="button" id="toggle-password" class="btn btn-link small">Show</button>
             </div>
 
@@ -49,10 +51,10 @@
             </div>
 
             <label class="input-label" for="confirm-password">Confirm password</label>
-            <input type="password" id="confirm-password" name="confirm-password" required placeholder="Confirm password" />
+            <input type="password" id="confirm-password" name="confirm-password" required placeholder="Confirm password" / title="Password">
 
             <label class="input-label" for="dob">Date of birth (optional)</label>
-            <input type="date" id="dob" name="dob" />
+            <input type="date" id="dob" name="dob" / title="Dob">
 
             <label class="input-label" for="state">State</label>
             <select id="state" name="state" required title="Select your state">
@@ -97,7 +99,7 @@
             </select>
 
             <label class="input-label" for="school">School / College (optional)</label>
-            <input type="text" id="school" name="school" placeholder="e.g. Lagos State University" />
+            <input type="text" id="school" name="school" placeholder="e.g. Lagos State University" / title="School">
 
             <label class="checkbox"><input type="checkbox" id="agree" /> I agree to the terms</label>
 

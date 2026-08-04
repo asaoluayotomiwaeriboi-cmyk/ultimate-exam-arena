@@ -7,11 +7,11 @@
     <meta name="description" content="Your Ultimate JAMB UTME Practice Platform" />
     <link rel="stylesheet" href="css/styles.css" />
     <link rel="stylesheet" href="css/sidebar.css" />
-    <link rel="manifest" href="/manifest.json" />
-    <meta name="theme-color" content="#1d4ed8" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="Ultimate Exam Arena" />
-  </head>
+<meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#050a1c" />
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.svg" />
+</head>
   <body>
     <header class="container navbar">
       <a class="logo" href="/">Ultimate Exam Arena</a>
@@ -27,18 +27,18 @@
         <form id="admin-form">
           <div class="input-group">
             <label for="email">Admin Email</label>
-            <input type="email" id="email" required placeholder="admin@ultimateexamarena.com" />
+            <input type="email" id="email" required placeholder="admin@ultimateexamarena.com" / title="Email">
           </div>
           <div class="input-group">
             <label for="password">Password</label>
             <div class="password-row admin-password-row">
-              <input type="password" id="password" required placeholder="Enter password" />
+              <input type="password" id="password" required placeholder="Enter password" / title="Password">
               <button type="button" id="toggle-admin-password" class="btn btn-link small">Show</button>
             </div>
           </div>
           <div class="input-group">
             <label for="access-code">Access Code</label>
-            <input type="text" id="access-code" required placeholder="Enter access code" />
+            <input type="text" id="access-code" required placeholder="Enter access code" / title="Access Code">
           </div>
           <button class="btn btn-primary" type="submit">Login</button>
           <div id="lockout-timer" class="lockout-timer"></div>

@@ -4,19 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ultimate Exam Arena</title>
-    <meta name="description" content="Your Ultimate JAMB UTME Practice Platform" />
+    <meta name="description" content="A polished JAMB UTME practice platform with timed CBT exams, instant feedback, and performance insights." />
+    <meta name="color-scheme" content="dark" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.svg" />
     <link rel="stylesheet" href="css/styles.css" />
-    <link rel="stylesheet" href="css/sidebar.css" />
-    <link rel="manifest" href="/manifest.json" />
-    <meta name="theme-color" content="#1d4ed8" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="Ultimate Exam Arena" />
-    <link rel="manifest" href="/manifest.json" />
-    <meta name="theme-color" content="#1d4ed8" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="Ultimate Exam Arena" />
   </head>
-  <body>
+  <body class="landing-page">
     <header class="container navbar">
       <a class="logo" href="/">Ultimate Exam Arena</a>
       <nav>
@@ -25,63 +19,96 @@
       </nav>
     </header>
 
-    <main class="container">
-      <section class="hero">
-        <div>
-          <h1>Your Ultimate JAMB UTME Practice Platform</h1>
+    <main class="container landing-shell">
+      <section class="hero hero-landing">
+        <div class="hero-copy">
+          <p class="eyebrow">JAMB UTME practice, reimagined</p>
+          <h1>Train with confidence, one exam at a time.</h1>
           <p>
-            Fast, responsive and secure computer-based testing for students. Launch exams, track
-            performance, learn, have fun, compete with other students and access vast variety of
-            study materials.
+            Ultimate Exam Arena combines timed CBT practice, instant feedback, and performance
+            insights in one calm, focused experience so students can prepare smarter and stay on
+            track.
           </p>
           <div class="toolbox">
-            <a class="btn btn-primary" href="/login.html">Log in</a>
-            <a class="btn btn-secondary" href="/signup.html">Create Student Account</a>
+            <a class="btn btn-primary" href="/signup.html">Create account</a>
+            <a class="btn btn-secondary" href="/login.html">Continue to login</a>
+          </div>
+          <div class="pill-row">
+            <span class="badge">Timed practice</span>
+            <span class="badge">Instant scores</span>
+            <span class="badge">Focused prep</span>
           </div>
         </div>
-        <div class="card card-hero">
-          <h2>Easy exam workflow</h2>
+
+        <div class="card hero-panel">
+          <h2>Everything students need</h2>
           <p>
-            Access subject tests, view your results, continue unfinished exams, and complete the
-            full JAMB-style CBT experience on desktop or mobile.
+            From subject-based drills to full exam simulations, the experience is designed to feel
+            familiar, fast, and motivating.
           </p>
+          <ul>
+            <li>Start, pause, and continue practice sessions effortlessly.</li>
+            <li>Track performance trends and focus on weaker areas.</li>
+            <li>Use a polished, distraction-free experience across desktop and mobile.</li>
+          </ul>
         </div>
       </section>
 
       <section class="section">
-        <h2 class="section-title">Designed for exam success</h2>
+        <div class="section-heading">
+          <p class="eyebrow">Why students choose it</p>
+          <h2>Built for solid exam preparation</h2>
+          <p>Every part of the experience is shaped to help learners stay consistent and improve with clarity.</p>
+        </div>
         <div class="stats-grid">
           <div class="feature-card">
             <h3>Responsive interface</h3>
-            <p>Looks great on phones, tablets, and desktops.</p>
+            <p>Clear layouts and smooth navigation make every session feel effortless.</p>
           </div>
           <div class="feature-card">
-            <h3>Real-time scoring</h3>
-            <p>Watch your answers and exam flow update instantly.</p>
+            <h3>Real-time feedback</h3>
+            <p>See results quickly so you can adjust your approach without losing momentum.</p>
           </div>
           <div class="feature-card">
-            <h3>Secure login</h3>
-            <p>Student authentication with protected APIs.</p>
+            <h3>Structured practice</h3>
+            <p>Explore subjects, review progress, and build confidence with focused repetition.</p>
           </div>
         </div>
       </section>
 
+      <section class="section grid grid-2">
+        <div class="card">
+          <h3>Study with direction</h3>
+          <ul class="feature-list">
+            <li>Switch between subjects with ease.</li>
+            <li>Keep practice sessions aligned with your goals.</li>
+            <li>Use the dashboard to monitor your progress at a glance.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Stay motivated</h3>
+          <ul class="feature-list">
+            <li>Build momentum through exam-style challenges.</li>
+            <li>Review weak points with a clearer learning path.</li>
+            <li>Enjoy a cleaner experience that feels more like a serious study tool.</li>
+          </ul>
+        </div>
+      </section>
+
       <section class="section">
-        <h2 class="section-title">Subjects</h2>
-        <div class="grid grid-2">
-          <div class="feature-card"><strong>English</strong></div>
-          <div class="feature-card"><strong>Mathematics</strong></div>
-          <div class="feature-card"><strong>Physics</strong></div>
-          <div class="feature-card"><strong>Chemistry</strong></div>
-          <div class="feature-card"><strong>Biology</strong></div>
-          <div class="feature-card"><strong>Government</strong></div>
-          <div class="feature-card"><strong>Economics</strong></div>
-          <div class="feature-card"><strong>CRS</strong></div>
-          <div class="feature-card"><strong>Yoruba</strong></div>
-          <div class="feature-card"><strong>And many more.......</strong></div>
+        <div class="card cta-banner">
+          <h2>Ready to begin your prep journey?</h2>
+          <p>Join students who want a cleaner, more focused way to train for JAMB and beyond.</p>
+          <div class="toolbox">
+            <a class="btn btn-primary" href="/signup.html">Create student account</a>
+            <a class="btn btn-secondary" href="/login.html">I already have an account</a>
+          </div>
         </div>
       </section>
     </main>
-    <script src="js/sidebar.js"></script>
+
+    <footer class="container footer">
+      <p>Ultimate Exam Arena © 2024 · Built for focused academic preparation.</p>
+    </footer>
   </body>
 </html>
