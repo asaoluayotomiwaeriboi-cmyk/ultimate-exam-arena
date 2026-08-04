@@ -35,18 +35,31 @@ router.get('/google', (req, res, next) => {
 
 router.get('/google/callback', (req, res, next) => {
   if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
-    return res.status(503).json({
-      success: false,
-      message: 'Google OAuth is not configured. Set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET.',
-    });
+    return res.redirect('/login.html?oauth=missing-config');
   }
 
-  passport.authenticate('google', { failureRedirect: '/login.html?oauth=failed' })(req, res, next);
-}, (req, res) => {
-  const token = signToken(req.user.id);
-  const frontendBaseUrl =
-    process.env.FRONTEND_URL || process.env.BASE_URL || `http://localhost:${process.env.PORT || 5002}`;
-  res.redirect(`${frontendBaseUrl.replace(/\/$/, '')}/dashboard.html?token=${token}`);
+  passport.authenticate('google', (err, user) => {
+    if (err) {
+      console.error('Google OAuth callback error:', err.message || err);
+      return res.redirect('/login.html?oauth=callback-error');
+    }
+
+    if (!user) {
+      return res.redirect('/login.html?oauth=failed');
+    }
+
+    req.logIn(user, (loginErr) => {
+      if (loginErr) {
+        console.error('Google OAuth login error:', loginErr.message || loginErr);
+        return res.redirect('/login.html?oauth=login-error');
+      }
+
+      const token = signToken(user.id);
+      const frontendBaseUrl =
+        process.env.FRONTEND_URL || process.env.BASE_URL || `http://localhost:${process.env.PORT || 5002}`;
+      return res.redirect(`${frontendBaseUrl.replace(/\/$/, '')}/dashboard.html?token=${token}`);
+    });
+  })(req, res, next);
 });
 
 // Logout
