@@ -1,22 +1,31 @@
-/* Auth page styles (dark-only) */
+﻿/* Auth page styles (dark-only) */
 :root {
-  --bg: #050a1c;
-  --surface: #0c1630;
-  --surface-strong: #101d35;
-  --surface-alt: #071428;
-  --blue: #1d4ed8;
-  --blue-2: #2563eb;
-  --text: #e9f2ff;
-  --muted: #9bb3d6;
-  --card-border: rgba(29, 78, 216, 0.24);
-  --input-border: #1d4ed8;
-  --input-focus: #2563eb;
-  --input-bg: #050a1c;
+  --color-primary: #1d4ed8;
+  --color-primary-bright: #2563eb;
+  --color-dark: #050a1c;
+  --color-surface: #0c1630;
+  --color-surface-light: #101d35;
+  --color-text: #e9f2ff;
+  --color-text-secondary: #9bb3d6;
+  --color-text-muted: #6b7892;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-danger: #f87171;
+  --color-info: #3b82f6;
+  --color-border: rgba(29, 78, 216, 0.2);
+  --color-divider: rgba(255, 255, 255, 0.08);
+  --color-overlay: rgba(5, 10, 28, 0.8);
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --transition-fast: 0.15s ease-in-out;
+  --shadow-medium: 0 10px 25px rgba(0, 0, 0, 0.4);
+  --font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
+
 body.auth-body {
-  background: linear-gradient(180deg, var(--bg) 0%, #071227 60%);
-  font-family: Inter, 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-  color: var(--text);
+  background: linear-gradient(180deg, var(--color-dark) 0%, #071227 60%);
+  font-family: var(--font-family);
+  color: var(--color-text);
   margin: 0;
   min-height: 100vh;
   display: flex;
@@ -29,26 +38,26 @@ body.auth-body {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 440px;
   gap: 28px;
-  background: var(--surface);
-  border-radius: 16px;
-  border: 1px solid var(--card-border);
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
   padding: 28px;
-  box-shadow: 0 20px 60px rgba(2, 6, 23, 0.6);
+  box-shadow: var(--shadow-medium);
 }
 .auth-left { padding: 12px 18px; }
-.auth-left h1 { font-size: 1.9rem; margin: 0 0 8px; color: var(--text); line-height: 1.15; }
-.muted { color: var(--muted); }
+.auth-left h1 { font-size: 2rem; margin: 0 0 8px; color: var(--color-text); line-height: 1.15; }
+.muted { color: var(--color-text-secondary); }
 .auth-right { padding: 12px 18px; }
 .auth-form { display: grid; gap: 12px; }
-.auth-form h2 { margin: 0 0 4px; font-size: 1.25rem; color: var(--text); }
-.auth-message { min-height: 24px; margin-bottom: 4px; color: var(--text); }
+.auth-form h2 { margin: 0 0 4px; font-size: 1.25rem; color: var(--color-text); }
+.auth-message { min-height: 24px; margin-bottom: 4px; color: var(--color-text); }
 .btn.full { width: 100%; }
 .btn-google {
   background: #f5f5f5;
   color: #333333;
   border: 1px solid #dddddd;
   padding: 14px;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   font-weight: 600;
   text-decoration: none;
   gap: 10px;
@@ -63,7 +72,7 @@ body.auth-body {
   transform: translateY(-1px);
 }
 .btn-google:focus-visible {
-  outline: 2px solid var(--input-focus);
+  outline: 2px solid var(--color-primary-bright);
   outline-offset: 2px;
 }
 .separator {
@@ -82,7 +91,7 @@ body.auth-body {
 .separator span {
   display: inline-block;
   padding: 0 10px;
-  color: var(--muted);
+  color: var(--color-text-secondary);
   font-size: 0.9rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -92,7 +101,7 @@ body.auth-body {
   display: block;
   margin-top: 2px;
   margin-bottom: 6px;
-  color: var(--muted);
+  color: var(--color-text-secondary);
   font-weight: 600;
 }
 .auth-form input[type="text"],
@@ -104,37 +113,37 @@ body.auth-body {
   width: 100%;
   padding: 12px 14px;
   border-radius: 12px;
-  background: var(--input-bg);
-  border: 1px solid var(--input-border);
-  color: var(--text);
+  background: var(--color-dark);
+  border: 1px solid var(--color-primary);
+  color: var(--color-text);
   box-sizing: border-box;
 }
 .auth-form input::placeholder,
 .auth-form select option {
-  color: var(--muted);
+  color: var(--color-text-muted);
 }
 .auth-form input:focus,
 .auth-form select:focus {
   outline: none;
-  border-color: var(--input-focus);
+  border-color: var(--color-primary-bright);
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
-  background: var(--input-bg);
+  background: var(--color-dark);
 }
 .password-row { display: flex; gap: 8px; align-items: center; }
 .password-row input { flex: 1; }
-.btn-link { background: none; border: none; color: var(--blue); cursor: pointer; }
+.btn-link { background: none; border: none; color: var(--color-primary); cursor: pointer; }
 .small { font-size: 0.85rem; }
 .actions { display: flex; justify-content: flex-end; margin-top: 4px; }
 .center { text-align: center; }
-.tiny { font-size: 0.8rem; color: var(--muted); }
+.tiny { font-size: 0.8rem; color: var(--color-text-secondary); }
 .pw-strength { display: flex; align-items: center; gap: 10px; margin-top: 8px; margin-bottom: 6px; }
 .pw-bar { height: 8px; flex: 1; background: rgba(255,255,255,0.06); border-radius: 8px; overflow: hidden; }
-.pw-bar > div { height: 100%; width: 0%; background: linear-gradient(90deg, var(--blue), var(--blue-2)); transition: width .3s ease; }
-.pw-text { font-size: 0.85rem; color: var(--muted); }
-.checkbox { display: flex; align-items: center; gap: 8px; margin-top: 6px; color: var(--text); }
-.checkbox input { accent-color: var(--blue); width: 16px; height: 16px; }
-.auth-form a:not(.btn-google) { color: var(--blue); }
-.auth-form a:not(.btn-google):hover { color: var(--blue-2); }
+.pw-bar > div { height: 100%; width: 0%; background: linear-gradient(90deg, var(--color-primary), var(--color-primary-bright)); transition: width .3s ease; }
+.pw-text { font-size: 0.85rem; color: var(--color-text-secondary); }
+.checkbox { display: flex; align-items: center; gap: 8px; margin-top: 6px; color: var(--color-text); }
+.checkbox input { accent-color: var(--color-primary); width: 16px; height: 16px; }
+.auth-form a:not(.btn-google) { color: var(--color-primary); }
+.auth-form a:not(.btn-google):hover { color: var(--color-primary-bright); }
 @media (max-width: 900px) {
   .auth-card { grid-template-columns: 1fr; padding: 18px; gap: 12px; }
   .auth-right { order: 2; }
