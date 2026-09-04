@@ -19,8 +19,8 @@
       <nav class="sidebar-nav">
         <a href="index.html"><span class="nav-emoji">🏠</span> Home</a>
         <a href="dashboard.html"><span class="nav-emoji">📚</span> Classroom</a>
-        <a href="store.html"><span class="nav-emoji">🛒</span> Store</a>
-        <a href="news.html"><span class="nav-emoji">📰</span> News</a>
+       <a href="materials.html"><span class="nav-emoji">📘</span> Materials</a>
+       <a href="performance.html"><span class="nav-emoji">📊</span> Performance</a>
         <a href="leaderboard.html"><span class="nav-emoji">🏆</span> Leaderboard</a>
         <a href="support.html"><span class="nav-emoji">📞</span> Support</a>
         <a href="about.html"><span class="nav-emoji">ℹ️</span> About</a>
@@ -36,46 +36,51 @@
       </header>
 
       <main class="content-panel">
-        <div class="page-section">
-          <div class="grid grid-4">
-            <div class="card summary-card"><div class="muted">Score</div><div class="summary-value">280/400</div></div>
-            <div class="card summary-card"><div class="muted">Rank</div><div class="summary-value">#12</div></div>
-            <div class="card summary-card"><div class="muted">Accuracy</div><div class="summary-value">70%</div></div>
-            <div class="card summary-card"><div class="muted">Streak</div><div class="summary-value">6</div></div>
-          </div>
-        </div>
+       <section class="page-section">
+         <div class="card section-card result-hero">
+           <div>
+             <div class="badge">Mock exam summary</div>
+             <h1 style="margin-top:12px;">JAMB Mock Results</h1>
+             <p class="muted">Your performance is in the top 18% of students in the recent cohort.</p>
+           </div>
+           <div class="score-box">320 / 400</div>
+         </div>
+       </section>
 
-        <div class="page-section">
-          <div class="card section-card">
-            <h3>Performance by subject</h3>
-            <div class="stat-list">
-              <div class="stat-item"><span>English</span><span>78%</span></div>
-              <div class="performance-bar"><span style="width:78%"></span></div>
-              <div class="stat-item"><span>Physics</span><span>72%</span></div>
-              <div class="performance-bar"><span style="width:72%"></span></div>
-              <div class="stat-item"><span>Chemistry</span><span>68%</span></div>
-              <div class="performance-bar"><span style="width:68%"></span></div>
-            </div>
-          </div>
-        </div>
+       <section class="grid grid-4">
+         <div class="card summary-card"><div class="muted">Accuracy</div><div class="summary-value">80%</div></div>
+         <div class="card summary-card"><div class="muted">Speed</div><div class="summary-value">82%</div></div>
+         <div class="card summary-card"><div class="muted">Questions reviewed</div><div class="summary-value">28</div></div>
+         <div class="card summary-card"><div class="muted">Rank</div><div class="summary-value">#124</div></div>
+       </section>
 
-        <div class="page-section">
-          <div class="card section-card">
-            <h3>Question review</h3>
-            <div class="table-wrap">
-              <table>
-                <thead><tr><th>Subject</th><th>Correct</th><th>Accuracy</th></tr></thead>
-                <tbody>
-                  <tr><td>English</td><td>18</td><td>78%</td></tr>
-                  <tr><td>Physics</td><td>16</td><td>72%</td></tr>
-                  <tr><td>Chemistry</td><td>15</td><td>68%</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </main>
-    </div>
+       <section class="page-section" style="display:grid; grid-template-columns: 1.2fr 0.8fr; gap:20px;">
+         <div class="card section-card">
+           <h2 class="page-title">Subject breakdown</h2>
+           <div class="subject-breakdown">
+             <div class="subject-row"><span>English</span><strong>82%</strong></div>
+             <div class="progress-bar"><span style="width:82%"></span></div>
+             <div class="subject-row"><span>Mathematics</span><strong>88%</strong></div>
+             <div class="progress-bar"><span style="width:88%"></span></div>
+             <div class="subject-row"><span>Physics</span><strong>68%</strong></div>
+             <div class="progress-bar"><span style="width:68%"></span></div>
+             <div class="subject-row"><span>Chemistry</span><strong>74%</strong></div>
+             <div class="progress-bar"><span style="width:74%"></span></div>
+           </div>
+         </div>
+
+         <div class="card section-card">
+           <h2 class="page-title">Recommended next step</h2>
+           <ul class="bullet-list">
+             <li>Revise Physics data-based questions.</li>
+             <li>Increase speed in English reading passages.</li>
+             <li>Reattempt 3 previously missed Chemistry questions.</li>
+           </ul>
+           <a class="btn btn-primary" href="review.html">Review answers</a>
+         </div>
+       </section>
+     </main>
+   </div>
   </div>
 
   <script src="js/sidebar.js"></script>

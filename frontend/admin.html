@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel | Ultimate Exam Arena</title>
+  <link rel="stylesheet" href="css/design-tokens.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/sidebar.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-header brand"><span class="brand-mark">UEA</span><span>Ultimate Exam Arena</span></div>
+      <nav class="sidebar-nav">
+        <a href="index.html"><span class="nav-emoji">🏠</span> Home</a>
+        <a href="dashboard.html"><span class="nav-emoji">📚</span> Classroom</a>
+        <a href="materials.html"><span class="nav-emoji">📘</span> Materials</a>
+        <a href="performance.html"><span class="nav-emoji">📊</span> Performance</a>
+        <a href="leaderboard.html"><span class="nav-emoji">🏆</span> Leaderboard</a>
+        <a href="support.html"><span class="nav-emoji">📞</span> Support</a>
+        <a href="about.html"><span class="nav-emoji">ℹ️</span> About</a>
+      </nav>
+    </aside>
+
+    <div class="main-area">
+      <header class="topbar">
+        <div class="container topbar-inner">
+          <div class="brand"><span class="brand-mark">UEA</span><span>Admin</span></div>
+          <div class="topbar-actions"><button class="nav-toggle" aria-label="Open menu">☰</button></div>
+        </div>
+      </header>
+
+      <main class="content-panel">
+        <section class="page-section">
+          <div class="row" style="justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:16px;">
+            <div>
+              <div class="badge">Admin dashboard</div>
+              <h1 style="margin:12px 0 0;">Exam system controls</h1>
+            </div>
+            <button class="btn btn-primary">Publish mock</button>
+          </div>
+        </section>
+
+        <section class="grid grid-4">
+          <div class="card summary-card"><div class="muted">Students</div><div class="summary-value">14.2k</div></div>
+          <div class="card summary-card"><div class="muted">Active tests</div><div class="summary-value">287</div></div>
+          <div class="card summary-card"><div class="muted">Pass rate</div><div class="summary-value">81%</div></div>
+          <div class="card summary-card"><div class="muted">Issues</div><div class="summary-value">03</div></div>
+        </section>
+
+        <section class="page-section feed-layout">
+          <div class="card section-card">
+            <h2 class="page-title">Latest activity</h2>
+            <div class="stack">
+              <div class="feed-item"><div class="feed-avatar">A</div><div><h4>New practice set uploaded</h4><p>Mathematics paper 2024 was released.</p></div></div>
+              <div class="feed-item"><div class="feed-avatar">T</div><div><h4>Timed mock scheduled</h4><p>WAEC revision set starts in 2 hours.</p></div></div>
+              <div class="feed-item"><div class="feed-avatar">R</div><div><h4>Result sync complete</h4><p>1,824 students were processed successfully.</p></div></div>
+            </div>
+          </div>
+
+          <div class="card section-card">
+            <h2 class="page-title">Quick actions</h2>
+            <div class="stack">
+              <button class="btn btn-secondary">Create new CBT</button>
+              <button class="btn btn-secondary">Review flagged items</button>
+              <button class="btn btn-secondary">Manage materials</button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="js/sidebar.js"></script>
+</body>
+</html>

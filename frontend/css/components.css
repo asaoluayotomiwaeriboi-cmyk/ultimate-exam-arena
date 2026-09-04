@@ -276,3 +276,83 @@ label {
 .summary-box strong {
   font-size: 1.2rem;
 }
+
+.chip-row {
+ display: flex;
+ flex-wrap: wrap;
+ gap: 8px;
+}
+
+.chip {
+ display: inline-flex;
+ align-items: center;
+ justify-content: center;
+ min-height: 30px;
+ padding: 0 12px;
+ border-radius: 999px;
+ border: 1px solid var(--border);
+ background: rgba(255,255,255,0.02);
+ color: var(--text-secondary);
+ font-size: 12px;
+}
+
+.chip.active {
+ background: rgba(29, 78, 216, 0.18);
+ border-color: rgba(29,78,216,0.6);
+ color: var(--text-primary);
+}
+
+.subject-breakdown {
+ display: grid;
+ gap: 10px;
+}
+
+.subject-row {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ font-size: 0.95rem;
+}
+
+.progress-bar {
+ width: 100%;
+ height: 10px;
+ border-radius: 999px;
+ background: rgba(255,255,255,0.04);
+ border: 1px solid var(--border);
+ overflow: hidden;
+}
+
+.progress-bar span {
+ display: block;
+ height: 100%;
+ background: linear-gradient(90deg, var(--accent), var(--accent-hover));
+ border-radius: inherit;
+}
+
+.result-hero {
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ gap: 20px;
+ padding: 26px 24px;
+}
+
+.score-box {
+ min-width: 150px;
+ padding: 18px 20px;
+ border-radius: 16px;
+ background: linear-gradient(135deg, rgba(29,78,216,0.22), rgba(37,99,235,0.12));
+ border: 1px solid rgba(29,78,216,0.5);
+ font-size: clamp(1.4rem, 3vw, 2.3rem);
+ font-weight: 800;
+ text-align: center;
+}
+
+.bullet-list {
+ margin: 18px 0 20px;
+ padding-left: 18px;
+ color: var(--text-primary);
+ display: grid;
+ gap: 10px;
+}

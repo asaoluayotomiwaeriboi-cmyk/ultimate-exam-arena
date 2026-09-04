@@ -1,53 +1,82 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Materials | Ultimate Exam Arena</title>
-  <link rel="stylesheet" href="css/design-tokens.css" />
-  <link rel="stylesheet" href="css/base.css" />
-  <link rel="stylesheet" href="css/navbar.css" />
-  <link rel="stylesheet" href="css/sidebar.css" />
-  <link rel="stylesheet" href="css/layout.css" />
-  <link rel="stylesheet" href="css/components.css" />
-  <link rel="stylesheet" href="css/responsive.css" />
+ <meta charset="UTF-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+ <title>Materials | Ultimate Exam Arena</title>
+ <link rel="stylesheet" href="css/design-tokens.css" />
+ <link rel="stylesheet" href="css/base.css" />
+ <link rel="stylesheet" href="css/navbar.css" />
+ <link rel="stylesheet" href="css/sidebar.css" />
+ <link rel="stylesheet" href="css/layout.css" />
+ <link rel="stylesheet" href="css/components.css" />
+ <link rel="stylesheet" href="css/responsive.css" />
 </head>
 <body>
-  <div class="app-shell">
-    <aside class="sidebar">
-      <div class="sidebar-header brand"><span class="brand-mark">UEA</span><span>Ultimate Exam Arena</span></div>
-      <nav class="sidebar-nav">
-        <a href="index.html"><span class="nav-emoji">🏠</span> Home</a>
-        <a href="dashboard.html"><span class="nav-emoji">📚</span> Classroom</a>
-        <a href="store.html"><span class="nav-emoji">🛒</span> Store</a>
-        <a href="news.html"><span class="nav-emoji">📰</span> News</a>
-        <a href="leaderboard.html"><span class="nav-emoji">🏆</span> Leaderboard</a>
-        <a href="support.html"><span class="nav-emoji">📞</span> Support</a>
-        <a href="about.html"><span class="nav-emoji">ℹ️</span> About</a>
-      </nav>
-    </aside>
+ <div class="app-shell">
+   <aside class="sidebar">
+     <div class="sidebar-header brand"><span class="brand-mark">UEA</span><span>Ultimate Exam Arena</span></div>
+     <nav class="sidebar-nav">
+       <a href="index.html"><span class="nav-emoji">🏠</span> Home</a>
+       <a href="dashboard.html"><span class="nav-emoji">📚</span> Classroom</a>
+       <a href="materials.html" class="active"><span class="nav-emoji">📘</span> Materials</a>
+       <a href="performance.html"><span class="nav-emoji">📊</span> Performance</a>
+       <a href="leaderboard.html"><span class="nav-emoji">🏆</span> Leaderboard</a>
+       <a href="support.html"><span class="nav-emoji">📞</span> Support</a>
+       <a href="about.html"><span class="nav-emoji">ℹ️</span> About</a>
+     </nav>
+   </aside>
 
-    <div class="main-area">
-      <header class="topbar">
-        <div class="container topbar-inner">
-          <div class="brand"><span class="brand-mark">UEA</span><span>Materials</span></div>
-          <div class="topbar-actions"><button class="nav-toggle" aria-label="Open menu">☰</button></div>
-        </div>
-      </header>
+   <div class="main-area">
+     <header class="topbar">
+       <div class="container topbar-inner">
+         <div class="brand"><span class="brand-mark">UEA</span><span>Materials</span></div>
+         <div class="topbar-actions"><button class="nav-toggle" aria-label="Open menu">☰</button></div>
+       </div>
+     </header>
 
-      <main class="content-panel">
-        <div class="page-section">
-          <div class="grid grid-4">
-            <div class="card section-card"><h3>Physics notes</h3><p class="muted">Download</p><button class="btn btn-primary">Open</button></div>
-            <div class="card section-card"><h3>Math syllabus</h3><p class="muted">Download</p><button class="btn btn-secondary">Open</button></div>
-            <div class="card section-card"><h3>English guide</h3><p class="muted">Download</p><button class="btn btn-secondary">Open</button></div>
-            <div class="card section-card"><h3>Chemistry summary</h3><p class="muted">Download</p><button class="btn btn-secondary">Open</button></div>
-          </div>
-        </div>
-      </main>
-    </div>
-  </div>
+     <main class="content-panel">
+       <section class="page-section">
+         <div class="row" style="justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:16px;">
+           <div>
+             <div class="badge">Revision library</div>
+             <h1 style="margin:12px 0 0;">Study materials</h1>
+           </div>
+           <div class="chip-row">
+             <span class="chip active">All</span>
+             <span class="chip">Math</span>
+             <span class="chip">Science</span>
+             <span class="chip">English</span>
+           </div>
+         </div>
+       </section>
 
-  <script src="js/sidebar.js"></script>
+       <section class="grid grid-4">
+         <article class="card section-card">
+           <h3>Physics notes</h3>
+           <p class="muted">Key formulas and exam trends.</p>
+           <button class="btn btn-primary">Download</button>
+         </article>
+         <article class="card section-card">
+           <h3>Math syllabus</h3>
+           <p class="muted">Topic coverage and practice breakdown.</p>
+           <button class="btn btn-secondary">Open</button>
+         </article>
+         <article class="card section-card">
+           <h3>English guide</h3>
+           <p class="muted">Essay, grammar and comprehension notes.</p>
+           <button class="btn btn-secondary">Open</button>
+         </article>
+         <article class="card section-card">
+           <h3>Chemistry summary</h3>
+           <p class="muted">Quick revision sheets and key reactions.</p>
+           <button class="btn btn-secondary">Open</button>
+         </article>
+       </section>
+     </main>
+   </div>
+ </div>
+
+ <script src="js/sidebar.js"></script>
 </body>
 </html>
