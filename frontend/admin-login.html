@@ -1,53 +1,24 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ultimate Exam Arena</title>
-    <meta name="description" content="Your Ultimate JAMB UTME Practice Platform" />
-    <link rel="stylesheet" href="css/styles.css" />
-    <link rel="stylesheet" href="css/sidebar.css" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="color-scheme" content="dark" />
-    <meta name="theme-color" content="#050a1c" />
-    <link rel="apple-touch-icon" href="icons/apple-touch-icon.svg" />
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin Login</title>
+  <link rel="stylesheet" href="css/design-tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
 </head>
-  <body>
-    <header class="container navbar">
-      <a class="logo" href="/">Ultimate Exam Arena</a>
-    </header>
-    <main class="container">
-      <div class="branding">
-        <h1>🔐 Admin Portal</h1>
-        <p>Your Ultimate JAMB UTME Practice Platform</p>
-      </div>
-      <div class="form-card">
-        <h2>Administrator Login</h2>
-        <p id="auth-message" class="auth-message-inline"></p>
-        <form id="admin-form">
-          <div class="input-group">
-            <label for="email">Admin Email</label>
-            <input type="email" id="email" required placeholder="admin@ultimateexamarena.com" / title="Email">
-          </div>
-          <div class="input-group">
-            <label for="password">Password</label>
-            <div class="password-row admin-password-row">
-              <input type="password" id="password" required placeholder="Enter password" / title="Password">
-              <button type="button" id="toggle-admin-password" class="btn btn-link small">Show</button>
-            </div>
-          </div>
-          <div class="input-group">
-            <label for="access-code">Access Code</label>
-            <input type="text" id="access-code" required placeholder="Enter access code" / title="Access Code">
-          </div>
-          <button class="btn btn-primary" type="submit">Login</button>
-          <div id="lockout-timer" class="lockout-timer"></div>
-        </form>
-        <p class="admin-back-link-wrap">
-          <a href="/login.html" class="admin-back-link">← Back to Student Login</a>
-        </p>
-      </div>
-    </main>
-    <script src="js/admin-login.js"></script>
-  </body>
+<body>
+  <main class="container" style="padding-top:40px">
+    <section class="card" style="max-width:480px;margin:0 auto">
+      <h2>Admin sign in</h2>
+      <form id="admin-auth">
+        <label class="label">Email</label><input class="input" type="email" required>
+        <label class="label">Password</label><input class="input" type="password" required>
+        <label class="label">Access code</label><input class="input" type="text" required>
+        <div style="margin-top:12px"><button class="btn btn-primary">Sign in</button></div>
+      </form>
+      <p class="muted">Note: 5 failed attempts trigger a 30min lockout (placeholder)</p>
+    </section>
+  </main>
+</body>
 </html>

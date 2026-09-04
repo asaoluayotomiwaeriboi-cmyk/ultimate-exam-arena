@@ -1,0 +1,24 @@
+/* Design tokens (Myschool-inspired) */
+:root{
+  --bg: #f7f9fc; /* light navbar background overall */
+  --surface: #ffffff; /* card background */
+  --surface-contrast: #f3f6fb;
+  --text: #091226; /* dark text */
+  --muted: #6b7892;
+  --primary: #1d4ed8;
+  --primary-bright: #2563eb;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #f87171;
+  --border: rgba(9,18,38,0.06);
+  --shadow-sm: 0 1px 3px rgba(9,18,38,0.06);
+  --shadow-md: 0 6px 20px rgba(9,18,38,0.08);
+
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 24px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+}

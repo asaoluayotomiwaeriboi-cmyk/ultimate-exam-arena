@@ -1,90 +1,38 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ultimate Exam Arena</title>
-    <link rel="stylesheet" href="css/styles.css" />
-<link rel="stylesheet" href="css/sidebar.css" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="color-scheme" content="dark" />
-    <meta name="theme-color" content="#050a1c" />
-    <link rel="apple-touch-icon" href="icons/apple-touch-icon.svg" />
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Dashboard - Ultimate Exam Arena</title>
+  <link rel="stylesheet" href="css/design-tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/grid.css">
+  <link rel="stylesheet" href="css/cards.css">
+  <link rel="stylesheet" href="css/components.css">
 </head>
-  <body>
-    <main class="container">
-      <header class="navbar">
-        <div class="logo">Ultimate Exam Arena</div>
-        <div class="toolbox">
-          <button id="dark-toggle" class="btn btn-secondary">Toggle Dark Mode</button>
-          <button class="btn btn-secondary logout-btn">Logout</button>
-        </div>
-      </header>
+<body>
+  <header class="navbar"><div class="container"><div class="logo">UEA</div><nav class="nav-links"><a href="index.html">Home</a><a href="news.html">News</a></nav><div class="actions"><a class="btn-outline" href="settings.html">Settings</a></div></div></header>
+  <main class="container" style="padding-top:24px">
+    <section class="row">
+      <div class="card" style="flex:1;min-width:240px">
+        <h3>Welcome back, Student</h3>
+        <p class="meta">Quick stats</p>
+        <div class="kv"><div>Score</div><div><strong>860</strong></div></div>
+      </div>
+      <div class="card" style="flex:2;min-width:320px">
+        <h3>Recent activity</h3>
+        <div id="recent-feed"></div>
+      </div>
+    </section>
 
-      <section class="layout-dashboard">
-        <section class="main-panel">
-          <div class="card dashboard-hero">
-            <h2 id="greeting-message">HELLO, Student!</h2>
-            <p>Welcome back to your exam preparation.</p>
-          </div>
-          <div class="header">
-            <div>
-              <h2>Available Exams</h2>
-              <p class="section-title">Select a subject to begin.</p>
-            </div>
-          </div>
-          <div id="subject-list" class="grid grid-2"></div>
-
-          <section class="section">
-            <h2 class="section-title">Features & Tools</h2>
-            <div class="grid grid-2 dashboard-links">
-              <a href="games.html" class="card card-link">
-                <h4>🎮 Educational Games</h4>
-                <p>Test your knowledge with Who Wants to Be a Millionaire and other games.</p>
-              </a>
-              <a href="dictionary.html" class="card card-link">
-                <h4>📚 Dictionary</h4>
-                <p>Look up words, see definitions, examples, and pronunciation.</p>
-              </a>
-              <a href="leaderboard.html" class="card card-link">
-                <h4>🏆 Leaderboard</h4>
-                <p>See your rank and compete with other students globally.</p>
-              </a>
-              <a href="performance.html" class="card card-link">
-                <h4>📊 Performance Analysis</h4>
-                <p>Get detailed analytics on your exam performance.</p>
-              </a>
-              <a href="career.html" class="card card-link">
-                <h4>🎯 Career Guide</h4>
-                <p>Explore careers and professions that match your interests.</p>
-              </a>
-              <a href="syllabus.html" class="card card-link">
-                <h4>📖 Exam Syllabus</h4>
-                <p>View official syllabuses from JAMB, WAEC, and NECO.</p>
-              </a>
-            </div>
-          </section>
-
-          <section class="section">
-            <h2 class="section-title">Exam history</h2>
-            <div class="card">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th>Subject</th>
-                    <th>Score</th>
-                    <th>Status</th>
-                    <th>Date</th>
-                  </tr>
-                </thead>
-                <tbody id="history-list"></tbody>
-              </table>
-            </div>
-          </section>
-        </section>
-      </section>
-    </main>
-      <script src="js/sidebar.js"></script>
-    <script src="js/dashboard.js"></script>
-  </body>
+    <section style="margin-top:20px">
+      <h2>Your subjects</h2>
+      <div class="grid grid-3">
+        <div class="card">Mathematics</div>
+        <div class="card">English</div>
+        <div class="card">Physics</div>
+      </div>
+    </section>
+  </main>
+<script src="js/feed.js"></script>
+</body>
 </html>

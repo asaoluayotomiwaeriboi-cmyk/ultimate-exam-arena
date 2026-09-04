@@ -1,0 +1,5 @@
+@import url('design-tokens.css');
+/* layout for pages with sidebar */
+.layout-with-sidebar{display:grid;grid-template-columns:260px 1fr;gap:24px}
+@media (max-width:900px){.layout-with-sidebar{grid-template-columns:1fr}.sidebar{display:none}.sidebar.open{display:block;position:fixed;left:0;top:0;bottom:0}}
+.main-panel{padding:24px}

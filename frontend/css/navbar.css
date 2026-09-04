@@ -1,0 +1,11 @@
+@import url('design-tokens.css');
+.navbar{width:100%;background:var(--bg);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.navbar .container{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+.navbar .logo{font-weight:800;color:var(--text);font-size:1.05rem}
+.navbar .nav-links{display:flex;gap:14px;align-items:center}
+.navbar .nav-links a{color:var(--text);padding:8px 10px;border-radius:6px}
+.navbar .actions{display:flex;gap:8px;align-items:center}
+.btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary-bright));color:#fff;border:none;padding:10px 18px;border-radius:8px;cursor:pointer}
+.btn-outline{background:transparent;border:1px solid var(--primary);color:var(--primary);padding:10px 16px;border-radius:8px;cursor:pointer}
+.hamburger{display:none;padding:8px;border-radius:8px;background:transparent}
+@media (max-width:800px){.navbar .nav-links{display:none}.hamburger{display:inline-flex}}

@@ -1,114 +1,111 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ultimate Exam Arena</title>
-    <meta name="description" content="A polished JAMB UTME practice platform with timed CBT exams, instant feedback, and performance insights." />
-    <meta name="color-scheme" content="dark" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <link rel="apple-touch-icon" href="icons/apple-touch-icon.svg" />
-    <link rel="stylesheet" href="css/styles.css" />
-  </head>
-  <body class="landing-page">
-    <header class="container navbar">
-      <a class="logo" href="/">Ultimate Exam Arena</a>
-      <nav>
-        <a href="/login.html">Login</a>
-        <a href="/signup.html">Register</a>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Ultimate Exam Arena - Home</title>
+  <link rel="stylesheet" href="css/design-tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/grid.css">
+  <link rel="stylesheet" href="css/cards.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/feed.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="container">
+      <div class="logo">Ultimate Exam Arena</div>
+      <nav class="nav-links">
+        <a href="about.html">About</a>
+        <a href="exam.html">CBT</a>
+        <a href="materials.html">Materials</a>
+        <a href="news.html">News</a>
+        <a href="store.html">Store</a>
       </nav>
-    </header>
+      <div class="actions">
+        <a class="btn-outline" href="login.html">Login</a>
+        <a class="btn-primary" href="signup.html">Sign up</a>
+        <button class="hamburger">☰</button>
+      </div>
+    </div>
+  </header>
 
-    <main class="container landing-shell">
-      <section class="hero hero-landing">
-        <div class="hero-copy">
-          <p class="eyebrow">JAMB UTME practice, reimagined</p>
-          <h1>Train with confidence, one exam at a time.</h1>
-          <p>
-            Ultimate Exam Arena combines timed CBT practice, instant feedback, and performance
-            insights in one calm, focused experience so students can prepare smarter and stay on
-            track.
-          </p>
-          <div class="toolbox">
-            <a class="btn btn-primary" href="/signup.html">Create account</a>
-            <a class="btn btn-secondary" href="/login.html">Continue to login</a>
-          </div>
-          <div class="pill-row">
-            <span class="badge">Timed practice</span>
-            <span class="badge">Instant scores</span>
-            <span class="badge">Focused prep</span>
-          </div>
+  <main class="container" style="padding-top:24px">
+    <section class="card hero hoverable">
+      <div class="row" style="align-items:center">
+        <div style="flex:1">
+          <h1>Master JAMB with confidence</h1>
+          <p class="meta">Practice CBTs, join study groups, and learn with video lessons.</p>
+          <div style="margin-top:12px"><a class="btn-primary" href="exam.html">Take a test</a></div>
         </div>
-
-        <div class="card hero-panel">
-          <h2>Everything students need</h2>
-          <p>
-            From subject-based drills to full exam simulations, the experience is designed to feel
-            familiar, fast, and motivating.
-          </p>
-          <ul>
-            <li>Start, pause, and continue practice sessions effortlessly.</li>
-            <li>Track performance trends and focus on weaker areas.</li>
-            <li>Use a polished, distraction-free experience across desktop and mobile.</li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="section">
-        <div class="section-heading">
-          <p class="eyebrow">Why students choose it</p>
-          <h2>Built for solid exam preparation</h2>
-          <p>Every part of the experience is shaped to help learners stay consistent and improve with clarity.</p>
-        </div>
-        <div class="stats-grid">
-          <div class="feature-card">
-            <h3>Responsive interface</h3>
-            <p>Clear layouts and smooth navigation make every session feel effortless.</p>
-          </div>
-          <div class="feature-card">
-            <h3>Real-time feedback</h3>
-            <p>See results quickly so you can adjust your approach without losing momentum.</p>
-          </div>
-          <div class="feature-card">
-            <h3>Structured practice</h3>
-            <p>Explore subjects, review progress, and build confidence with focused repetition.</p>
+        <div style="width:320px">
+          <div class="card">
+            <h3>Quick CBTs</h3>
+            <p>CBT • JAMB • WAEC • NECO</p>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="section grid grid-2">
-        <div class="card">
-          <h3>Study with direction</h3>
-          <ul class="feature-list">
-            <li>Switch between subjects with ease.</li>
-            <li>Keep practice sessions aligned with your goals.</li>
-            <li>Use the dashboard to monitor your progress at a glance.</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>Stay motivated</h3>
-          <ul class="feature-list">
-            <li>Build momentum through exam-style challenges.</li>
-            <li>Review weak points with a clearer learning path.</li>
-            <li>Enjoy a cleaner experience that feels more like a serious study tool.</li>
-          </ul>
-        </div>
-      </section>
+    <section style="margin-top:20px">
+      <h2>Feed</h2>
+      <div id="feed-list" class="grid"></div>
+    </section>
 
-      <section class="section">
-        <div class="card cta-banner">
-          <h2>Ready to begin your prep journey?</h2>
-          <p>Join students who want a cleaner, more focused way to train for JAMB and beyond.</p>
-          <div class="toolbox">
-            <a class="btn btn-primary" href="/signup.html">Create student account</a>
-            <a class="btn btn-secondary" href="/login.html">I already have an account</a>
-          </div>
-        </div>
-      </section>
-    </main>
+    <section style="margin-top:20px">
+      <h2>Latest News</h2>
+      <div class="grid grid-3">
+        <div class="card hoverable"> <h3>News 1</h3><p class="meta">Short summary</p></div>
+        <div class="card hoverable"> <h3>News 2</h3><p class="meta">Short summary</p></div>
+        <div class="card hoverable"> <h3>News 3</h3><p class="meta">Short summary</p></div>
+      </div>
+    </section>
 
-    <footer class="container footer">
-      <p>Ultimate Exam Arena © 2024 · Built for focused academic preparation.</p>
-    </footer>
-  </body>
+    <section style="margin-top:20px">
+      <h2>Featured Stories</h2>
+      <div class="card">Featured carousel placeholder (Item 1 of 6)</div>
+    </section>
+
+    <section style="margin-top:20px">
+      <h2>Scholarships</h2>
+      <div class="grid grid-3">
+        <div class="card">Scholarship A</div>
+        <div class="card">Scholarship B</div>
+        <div class="card">Scholarship C</div>
+      </div>
+    </section>
+
+    <section style="margin-top:20px">
+      <h2>Store</h2>
+      <div class="grid grid-4">
+        <div class="market-item card">Video Lesson 1</div>
+        <div class="market-item card">Material Pack A</div>
+        <div class="market-item card">CBT App</div>
+        <div class="market-item card">E-book</div>
+      </div>
+    </section>
+
+    <section style="margin-top:20px">
+      <h2>Leaderboard</h2>
+      <div class="card">
+        <table class="table"><thead><tr><th>Rank</th><th>Name</th><th>Score</th></tr></thead>
+        <tbody><tr><td>1</td><td>Ade</td><td>980</td></tr><tr><td>2</td><td>Chi</td><td>960</td></tr></tbody></table>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="container" style="margin-top:40px;padding:20px 0">
+    <div class="row">
+      <div>© Ultimate Exam Arena</div>
+      <div class="h-center">Follow us on social</div>
+      <div class="h-center">Contact</div>
+    </div>
+  </footer>
+
+<script src="js/navbar.js"></script>
+<script src="js/feed.js"></script>
+</body>
 </html>

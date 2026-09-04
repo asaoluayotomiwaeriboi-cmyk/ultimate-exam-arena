@@ -1,0 +1,3 @@
+@import url('design-tokens.css');
+.feed-item{display:flex;gap:12px;padding:12px;border-radius:8px;background:var(--surface-contrast);border:1px solid var(--border)}
+.feed-item .meta{font-size:0.85rem;color:var(--muted)}

@@ -1,0 +1,15 @@
+/* base.css - reset and global styles (mobile-first) */
+@import url('design-tokens.css');
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;font-family:Inter, 'Plus Jakarta Sans', system-ui, -apple-system; background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.container{width:100%;max-width:1200px;margin:0 auto;padding:0 var(--space-lg)}
+img{display:block;max-width:100%;height:auto}
+button{font:inherit}
+/* utility */
+.row{display:flex;gap:var(--space-lg);flex-wrap:wrap}
+.col{flex:1}
+.card{background:var(--surface);border-radius:var(--radius-md);padding:var(--space-lg);box-shadow:var(--shadow-sm);border:1px solid var(--border)}
+.h-center{text-align:center}
+.pill{display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;background:var(--surface-contrast);}

@@ -1,117 +1,36 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ultimate Exam Arena - Sign Up</title>
-    <link rel="stylesheet" href="css/styles.css" />
-    <link rel="stylesheet" href="css/auth.css" />
-    <link rel="stylesheet" href="css/sidebar.css" />
-    <meta name="color-scheme" content="dark" />
-    <link rel="apple-touch-icon" href="icons/apple-touch-icon.svg" />
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Sign up - Ultimate Exam Arena</title>
+  <link rel="stylesheet" href="css/design-tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
 </head>
-  <body class="auth-body">
-    <main class="auth-container">
-      <div class="auth-card">
-        <div class="auth-left">
-          <h1>Create Your Account</h1>
-          <p class="muted">Join thousands of students preparing for success.</p>
-        </div>
-        <div class="auth-right">
-          <form id="auth-form" data-mode="signup" class="auth-form">
-            <h2>Create Account</h2>
-            <div id="auth-message" class="auth-message" aria-live="polite"></div>
-
-            <a href="/api/auth/google" class="btn btn-google full auth-google-btn" role="button">
-              <span aria-hidden="true">🔷</span>
-              <span>Sign up with Google</span>
-            </a>
-
-            <div class="separator"><span>Or continue with</span></div>
-
-            <label class="input-label" for="name">Full name</label>
-            <input type="text" id="name" name="name" required placeholder="John Doe" title="Name" />
-
-            <label class="input-label" for="email">Email</label>
-            <input type="email" id="email" name="email" required placeholder="student@example.com" title="Email" />
-
-            <label class="input-label" for="phone">Phone</label>
-            <input type="tel" id="phone" name="phone" required placeholder="08012345678" title="Phone" />
-
-            <label class="input-label" for="password">Password</label>
-            <div class="password-row">
-              <input type="password" id="password" name="password" required placeholder="Create a strong password" title="Password" />
-              <button type="button" id="toggle-password" class="btn btn-link small">Show</button>
-            </div>
-
-            <div class="pw-strength">
-              <div id="pw-bar" class="pw-bar"></div>
-              <div id="pw-text" class="pw-text">Password strength</div>
-            </div>
-
-            <label class="input-label" for="confirm-password">Confirm password</label>
-            <input type="password" id="confirm-password" name="confirm-password" required placeholder="Confirm password" title="Password" />
-
-            <label class="input-label" for="dob">Date of birth (optional)</label>
-            <input type="date" id="dob" name="dob" title="Dob" />
-
-            <label class="input-label" for="state">State</label>
-            <select id="state" name="state" required title="Select your state">
-              <option value="">Select your state</option>
-              <option>Abia</option>
-              <option>Adamawa</option>
-              <option>Akwa Ibom</option>
-              <option>Anambra</option>
-              <option>Bauchi</option>
-              <option>Bayelsa</option>
-              <option>Benue</option>
-              <option>Borno</option>
-              <option>Cross River</option>
-              <option>Delta</option>
-              <option>Ebonyi</option>
-              <option>Edo</option>
-              <option>Ekiti</option>
-              <option>Enugu</option>
-              <option>FCT</option>
-              <option>Gombe</option>
-              <option>Imo</option>
-              <option>Jigawa</option>
-              <option>Kaduna</option>
-              <option>Kano</option>
-              <option>Katsina</option>
-              <option>Kebbi</option>
-              <option>Kogi</option>
-              <option>Kwara</option>
-              <option>Lagos</option>
-              <option>Nasarawa</option>
-              <option>Niger</option>
-              <option>Ogun</option>
-              <option>Ondo</option>
-              <option>Osun</option>
-              <option>Oyo</option>
-              <option>Plateau</option>
-              <option>Rivers</option>
-              <option>Sokoto</option>
-              <option>Taraba</option>
-              <option>Yobe</option>
-              <option>Zamfara</option>
-            </select>
-
-            <label class="input-label" for="school">School / College (optional)</label>
-            <input type="text" id="school" name="school" placeholder="e.g. Lagos State University" title="School" />
-
-            <label class="checkbox"><input type="checkbox" id="agree" /> I agree to the terms</label>
-
-            <button class="btn btn-primary full" id="submit-btn" type="submit">Create Account</button>
-            <p class="muted center">Already have account? <a href="/login.html">Login</a></p>
-
-            <p class="muted tiny center">We protect your data</p>
-          </form>
-        </div>
-      </div>
-    </main>
-
-    <script src="js/sidebar.js"></script>
-    <script src="js/auth.js"></script>
-  </body>
+<body>
+  <header class="navbar"><div class="container"><div class="logo">UEA</div><div class="actions"><a class="btn-outline" href="index.html">Home</a></div></div></header>
+  <main class="container" style="padding-top:24px">
+    <section class="card" style="max-width:720px;margin:0 auto">
+      <h2>Create Account</h2>
+      <a class="btn-google" href="#">🔷 Sign up with Google</a>
+      <div class="separator h-center" style="margin:12px 0">─── OR ───</div>
+      <form class="auth-form">
+        <label class="label">Full name</label><input class="input" name="name">
+        <label class="label">Email</label><input class="input" type="email">
+        <label class="label">Phone</label><input class="input" type="tel">
+        <label class="label">Password</label><input class="input" type="password">
+        <label class="label">Confirm password</label><input class="input" type="password">
+        <label class="label">Date of birth</label><input class="input" type="date">
+        <label class="label">State</label>
+        <select class="input"><option>Select your state</option><option>Lagos</option></select>
+        <label class="label">School (optional)</label><input class="input">
+        <label class="checkbox"><input type="checkbox"> I agree to the terms</label>
+        <div style="margin-top:12px"><button class="btn btn-primary">Create Account</button></div>
+        <p class="muted">Already have an account? <a href="login.html">Login</a></p>
+      </form>
+    </section>
+  </main>
+<script src="js/auth.js"></script>
+</body>
 </html>

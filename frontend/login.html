@@ -1,57 +1,30 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ultimate Exam Arena - Login</title>
-    <link rel="stylesheet" href="css/styles.css" />
-    <link rel="stylesheet" href="css/auth.css" />
-    <link rel="stylesheet" href="css/sidebar.css" />
-    <meta name="color-scheme" content="dark" />
-    <link rel="apple-touch-icon" href="icons/apple-touch-icon.svg" />
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Login - Ultimate Exam Arena</title>
+  <link rel="stylesheet" href="css/design-tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
 </head>
-  <body class="auth-body">
-    <main class="auth-container">
-      <div class="auth-card">
-        <div class="auth-left">
-          <h1>Welcome Back to Ultimate Exam Arena</h1>
-          <p class="muted">Access practice tests, track progress, and compete with peers.</p>
-        </div>
-        <div class="auth-right">
-          <form id="auth-form" data-mode="login" class="auth-form">
-            <h2>Sign in</h2>
-            <div id="auth-message" class="auth-message" aria-live="polite"></div>
-
-            <a href="/api/auth/google" class="btn btn-google full auth-google-btn" role="button">
-              <span aria-hidden="true">🔷</span>
-              <span>Sign in with Google</span>
-            </a>
-
-            <div class="separator"><span>Or continue with</span></div>
-
-            <label class="input-label" for="email">Email</label>
-            <input type="email" id="email" name="email" required placeholder="student@example.com" title="Email" />
-
-            <label class="input-label" for="password">Password</label>
-            <div class="password-row">
-              <input type="password" id="password" name="password" required placeholder="Enter your password" title="Password" />
-              <button type="button" id="toggle-password" class="btn btn-link small">Show</button>
-            </div>
-
-            <div class="actions">
-              <a href="#" class="muted small">Forgot password?</a>
-            </div>
-
-            <button class="btn btn-primary full" id="submit-btn" type="submit">Login</button>
-            <p class="muted center">Don't have an account? <a href="/signup.html">Sign up</a></p>
-
-            <p class="muted tiny center">By logging in, you agree to our terms</p>
-          </form>
-        </div>
-      </div>
-    </main>
-
-    <script src="js/sidebar.js"></script>
-    <script src="js/auth.js"></script>
-  </body>
+<body>
+  <header class="navbar"><div class="container"><div class="logo">UEA</div><div class="actions"><a class="btn-outline" href="index.html">Home</a></div></div></header>
+  <main class="container" style="padding-top:24px">
+    <section class="card" style="max-width:720px;margin:0 auto">
+      <h2>Sign in</h2>
+      <a class="btn-google" href="#">🔷 Sign in with Google</a>
+      <div class="separator h-center" style="margin:12px 0">─── OR ───</div>
+      <form class="auth-form">
+        <label class="label">Email</label>
+        <input class="input" type="email" placeholder="student@example.com">
+        <label class="label">Password</label>
+        <input class="input" type="password" placeholder="Enter your password">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px"><a href="#">Forgot password?</a><a href="signup.html">Sign up</a></div>
+        <div style="margin-top:12px"><button class="btn btn-primary" type="submit">Login</button></div>
+      </form>
+    </section>
+  </main>
+<script src="js/auth.js"></script>
+</body>
 </html>

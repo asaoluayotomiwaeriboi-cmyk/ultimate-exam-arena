@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Exam Setup</title>
+<link rel="stylesheet" href="css/design-tokens.css"><link rel="stylesheet" href="css/base.css"><link rel="stylesheet" href="css/sidebar.css"><link rel="stylesheet" href="css/layout.css"><link rel="stylesheet" href="css/components.css"></head>
+<body>
+  <div class="layout-with-sidebar">
+    <aside class="sidebar">
+      <div class="brand">UEA</div>
+      <nav class="menu">
+        <a href="index.html">🏠 Home</a>
+        <a href="dashboard.html">📚 Classroom</a>
+        <a href="store.html">🛒 Store</a>
+        <a href="news.html">📰 News</a>
+        <a href="leaderboard.html">🏆 Leaderboard</a>
+        <a href="support.html">📞 Support</a>
+        <a href="about.html">ℹ️ About</a>
+        <a href="login.html">🚪 Logout</a>
+      </nav>
+    </aside>
+    <main class="main-panel">
+      <header class="navbar"><div class="container"><div><button class="hamburger">☰</button></div><div class="logo">Exam Setup</div></div></header>
+      <section class="card">
+        <h2>Select Subjects</h2>
+        <p class="meta">English Language (required)</p>
+        <div><label><input type="checkbox" checked disabled> English Language</label></div>
+        <div style="margin-top:8px"><label><input type="checkbox"> Mathematics</label></div>
+        <div style="margin-top:8px"><label><input type="checkbox"> Physics</label></div>
+        <div style="margin-top:12px">
+          <label class="label">Test mode</label>
+          <select class="input"><option>Practice Mode (35 min)</option><option>Full Test Mode (120 min)</option></select>
+        </div>
+        <div style="margin-top:12px">
+          <label class="label">Exam year</label>
+          <select class="input"><option>2026</option><option>2025</option></select>
+        </div>
+        <div style="margin-top:12px"><button id="proceed-test" class="btn btn-primary">Proceed to Test</button></div>
+      </section>
+    </main>
+  </div>
+<script src="js/sidebar.js"></script>
+<script src="js/exam-setup.js"></script>
+</body>
+</html>
