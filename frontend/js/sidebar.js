@@ -1,11 +1,18 @@
-// sidebar.js - toggle and active state
-document.addEventListener('DOMContentLoaded',()=>{
-  const ham = document.querySelector('.hamburger');
+document.addEventListener('DOMContentLoaded', () => {
+  const toggle = document.querySelector('.nav-toggle');
   const sidebar = document.querySelector('.sidebar');
-  if(ham && sidebar){
-    ham.addEventListener('click',()=> sidebar.classList.toggle('open'))
+  const nav = document.querySelector('.topbar nav');
+
+  if (toggle) {
+    toggle.addEventListener('click', () => {
+      if (sidebar) sidebar.classList.toggle('open');
+      if (nav) nav.classList.toggle('open');
+    });
   }
-  // mark active links
-  const links = document.querySelectorAll('.sidebar a');
-  links.forEach(a=>{ if(a.href === location.href || a.getAttribute('href')===location.pathname.split('/').pop()){ a.classList.add('active') } })
+
+  document.querySelectorAll('.sidebar-nav a').forEach((link) => {
+    if (link.href === window.location.href || link.getAttribute('href') === window.location.pathname.split('/').pop()) {
+      link.classList.add('active');
+    }
+  });
 });

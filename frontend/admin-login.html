@@ -1,24 +1,47 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Admin Login</title>
-  <link rel="stylesheet" href="css/design-tokens.css">
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/components.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login | Ultimate Exam Arena</title>
+  <link rel="stylesheet" href="css/design-tokens.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
 </head>
 <body>
-  <main class="container" style="padding-top:40px">
-    <section class="card" style="max-width:480px;margin:0 auto">
-      <h2>Admin sign in</h2>
-      <form id="admin-auth">
-        <label class="label">Email</label><input class="input" type="email" required>
-        <label class="label">Password</label><input class="input" type="password" required>
-        <label class="label">Access code</label><input class="input" type="text" required>
-        <div style="margin-top:12px"><button class="btn btn-primary">Sign in</button></div>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand"><span class="brand-mark">UEA</span><span>Ultimate Exam Arena</span></div>
+    </div>
+  </header>
+
+  <main class="auth-shell">
+    <div class="auth-card">
+      <div class="brand" style="justify-content:center; margin-bottom:20px;">
+        <span class="brand-mark">UEA</span>
+        <span>Admin Access</span>
+      </div>
+      <form class="form-grid">
+        <div>
+          <label for="admin-email">Email</label>
+          <input class="input" id="admin-email" type="email" placeholder="admin@uea.com" />
+        </div>
+        <div>
+          <label for="admin-password">Password</label>
+          <input class="input" id="admin-password" type="password" placeholder="••••••••" />
+        </div>
+        <div>
+          <label for="admin-code">Access code</label>
+          <input class="input" id="admin-code" type="text" placeholder="Access code" />
+        </div>
+        <div class="muted">Lockout policy: 5 failed attempts = 30 minute lockout</div>
+        <button class="btn btn-primary" style="width:100%;" type="submit">Enter dashboard</button>
       </form>
-      <p class="muted">Note: 5 failed attempts trigger a 30min lockout (placeholder)</p>
-    </section>
+    </div>
   </main>
+
+  <script src="js/auth.js"></script>
 </body>
 </html>

@@ -1,14 +1,54 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>About</title>
-<link rel="stylesheet" href="css/design-tokens.css"><link rel="stylesheet" href="css/base.css"><link rel="stylesheet" href="css/sidebar.css"><link rel="stylesheet" href="css/layout.css"><link rel="stylesheet" href="css/feed.css"></head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About | Ultimate Exam Arena</title>
+  <link rel="stylesheet" href="css/design-tokens.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/sidebar.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
 <body>
-  <div class="layout-with-sidebar">
-    <aside class="sidebar"><div class="brand">UEA</div><nav class="menu"><a href="index.html">🏠 Home</a></nav></aside>
-    <main class="main-panel"><header class="navbar"><div class="container"><button class="hamburger">☰</button><div class="logo">About</div></div></header>
-      <section class="card"><h2>About Ultimate Exam Arena</h2><p>Mission: Helping students master exams with high-quality materials, engaging community, and smart tools.</p></section>
-    </main>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-header brand"><span class="brand-mark">UEA</span><span>Ultimate Exam Arena</span></div>
+      <nav class="sidebar-nav">
+        <a href="index.html"><span class="nav-emoji">🏠</span> Home</a>
+        <a href="dashboard.html"><span class="nav-emoji">📚</span> Classroom</a>
+        <a href="store.html"><span class="nav-emoji">🛒</span> Store</a>
+        <a href="news.html"><span class="nav-emoji">📰</span> News</a>
+        <a href="leaderboard.html"><span class="nav-emoji">🏆</span> Leaderboard</a>
+        <a href="support.html"><span class="nav-emoji">📞</span> Support</a>
+        <a href="about.html" class="active"><span class="nav-emoji">ℹ️</span> About</a>
+      </nav>
+    </aside>
+
+    <div class="main-area">
+      <header class="topbar">
+        <div class="container topbar-inner">
+          <div class="brand"><span class="brand-mark">UEA</span><span>About</span></div>
+          <div class="topbar-actions"><button class="nav-toggle" aria-label="Open menu">☰</button></div>
+        </div>
+      </header>
+
+      <main class="content-panel">
+        <div class="card section-card">
+          <h2>Our mission</h2>
+          <p class="muted">Ultimate Exam Arena helps students prepare smarter, build confidence, and master exam techniques through structured practice and community support.</p>
+          <div class="grid grid-3" style="margin-top:18px;">
+            <div class="card section-card"><h3>Practice</h3><p class="muted">Realistic CBTs and timed reviews.</p></div>
+            <div class="card section-card"><h3>Guidance</h3><p class="muted">AI learning direction and structured revisions.</p></div>
+            <div class="card section-card"><h3>Community</h3><p class="muted">Study groups, leaderboards, and peer motivation.</p></div>
+          </div>
+        </div>
+      </main>
+    </div>
   </div>
-<script src="js/sidebar.js"></script>
+
+  <script src="js/sidebar.js"></script>
 </body>
 </html>

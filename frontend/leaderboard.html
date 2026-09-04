@@ -1,15 +1,62 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Leaderboard</title>
-<link rel="stylesheet" href="css/design-tokens.css"><link rel="stylesheet" href="css/base.css"><link rel="stylesheet" href="css/sidebar.css"><link rel="stylesheet" href="css/layout.css"><link rel="stylesheet" href="css/components.css"></head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leaderboard | Ultimate Exam Arena</title>
+  <link rel="stylesheet" href="css/design-tokens.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/sidebar.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
 <body>
-  <div class="layout-with-sidebar">
-    <aside class="sidebar"><div class="brand">UEA</div><nav class="menu"><a href="index.html">🏠 Home</a><a href="dashboard.html">📚 Classroom</a></nav></aside>
-    <main class="main-panel"><header class="navbar"><div class="container"><button class="hamburger">☰</button><div class="logo">Leaderboard</div></div></header>
-      <section class="card"><h2>Top Rankings</h2><div style="margin-top:12px"><div class="kv"><div>Filter:</div><div><button class="btn btn-sm">National</button><button class="btn btn-sm">State</button></div></div></div>
-      <table class="table"><thead><tr><th>Rank</th><th>Name</th><th>Score</th></tr></thead><tbody><tr><td>1</td><td>Grace</td><td>990</td></tr><tr><td>2</td><td>Bayo</td><td>980</td></tr></tbody></table></section>
-    </main>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-header brand"><span class="brand-mark">UEA</span><span>Ultimate Exam Arena</span></div>
+      <nav class="sidebar-nav">
+        <a href="index.html"><span class="nav-emoji">🏠</span> Home</a>
+        <a href="dashboard.html"><span class="nav-emoji">📚</span> Classroom</a>
+        <a href="store.html"><span class="nav-emoji">🛒</span> Store</a>
+        <a href="news.html"><span class="nav-emoji">📰</span> News</a>
+        <a href="leaderboard.html" class="active"><span class="nav-emoji">🏆</span> Leaderboard</a>
+        <a href="support.html"><span class="nav-emoji">📞</span> Support</a>
+        <a href="about.html"><span class="nav-emoji">ℹ️</span> About</a>
+      </nav>
+    </aside>
+
+    <div class="main-area">
+      <header class="topbar">
+        <div class="container topbar-inner">
+          <div class="brand"><span class="brand-mark">UEA</span><span>Leaderboard</span></div>
+          <div class="topbar-actions"><button class="nav-toggle" aria-label="Open menu">☰</button></div>
+        </div>
+      </header>
+
+      <main class="content-panel">
+        <div class="card section-card">
+          <div class="inline-btns" style="margin-bottom:18px;">
+            <button class="btn btn-primary" type="button">National</button>
+            <button class="btn btn-secondary" type="button">State</button>
+            <button class="btn btn-secondary" type="button">School</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Rank</th><th>Name</th><th>School</th><th>Score</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>Ade</td><td>Grace Academy</td><td>980</td></tr>
+                <tr><td>2</td><td>Chi</td><td>Kingdom College</td><td>960</td></tr>
+                <tr style="background: rgba(29,78,216,0.08);"><td>12</td><td>You</td><td>Dream High</td><td>900</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
   </div>
-<script src="js/sidebar.js"></script>
+
+  <script src="js/sidebar.js"></script>
 </body>
 </html>

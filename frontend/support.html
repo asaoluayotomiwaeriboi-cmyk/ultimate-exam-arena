@@ -1,14 +1,73 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Support</title>
-<link rel="stylesheet" href="css/design-tokens.css"><link rel="stylesheet" href="css/base.css"><link rel="stylesheet" href="css/sidebar.css"><link rel="stylesheet" href="css/layout.css"><link rel="stylesheet" href="css/feed.css"></head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support | Ultimate Exam Arena</title>
+  <link rel="stylesheet" href="css/design-tokens.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/sidebar.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
 <body>
-  <div class="layout-with-sidebar">
-    <aside class="sidebar"><div class="brand">UEA</div><nav class="menu"><a href="index.html">🏠 Home</a></nav></aside>
-    <main class="main-panel"><header class="navbar"><div class="container"><button class="hamburger">☰</button><div class="logo">Support</div></div></header>
-      <section class="card"><h2>Help Center</h2><form class="card"><label>Email</label><input type="email" placeholder="you@example.com"><label>Message</label><textarea placeholder="How can we help?"></textarea><button class="btn">Send</button></form></section>
-    </main>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-header brand"><span class="brand-mark">UEA</span><span>Ultimate Exam Arena</span></div>
+      <nav class="sidebar-nav">
+        <a href="index.html"><span class="nav-emoji">🏠</span> Home</a>
+        <a href="dashboard.html"><span class="nav-emoji">📚</span> Classroom</a>
+        <a href="store.html"><span class="nav-emoji">🛒</span> Store</a>
+        <a href="news.html"><span class="nav-emoji">📰</span> News</a>
+        <a href="leaderboard.html"><span class="nav-emoji">🏆</span> Leaderboard</a>
+        <a href="support.html" class="active"><span class="nav-emoji">📞</span> Support</a>
+        <a href="about.html"><span class="nav-emoji">ℹ️</span> About</a>
+      </nav>
+    </aside>
+
+    <div class="main-area">
+      <header class="topbar">
+        <div class="container topbar-inner">
+          <div class="brand"><span class="brand-mark">UEA</span><span>Support</span></div>
+          <div class="topbar-actions"><button class="nav-toggle" aria-label="Open menu">☰</button></div>
+        </div>
+      </header>
+
+      <main class="content-panel">
+        <div class="page-section">
+          <div class="card section-card">
+            <h2>Help center</h2>
+            <div class="stack">
+              <div>Q: How do I reset my password?</div>
+              <div>Q: Why is my exam timer not moving?</div>
+              <div>Q: Can I retake a practice test?</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="page-section">
+          <div class="card section-card">
+            <h3>Contact support</h3>
+            <form class="form-grid">
+              <div>
+                <label>Email</label>
+                <input class="input" type="email" placeholder="support@ultimateexamarena.com" />
+              </div>
+              <div>
+                <label>Message</label>
+                <textarea placeholder="Tell us what you need help with..."></textarea>
+              </div>
+              <button class="btn btn-primary" type="submit">Send</button>
+            </form>
+          </div>
+        </div>
+      </main>
+    </div>
   </div>
-<script src="js/sidebar.js"></script>
+
+  <script src="js/sidebar.js"></script>
+  <script src="js/auth.js"></script>
 </body>
 </html>

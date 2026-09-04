@@ -1,14 +1,53 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>News</title>
-<link rel="stylesheet" href="css/design-tokens.css"><link rel="stylesheet" href="css/base.css"><link rel="stylesheet" href="css/grid.css"><link rel="stylesheet" href="css/sidebar.css"><link rel="stylesheet" href="css/layout.css"><link rel="stylesheet" href="css/feed.css"></head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>News | Ultimate Exam Arena</title>
+  <link rel="stylesheet" href="css/design-tokens.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/sidebar.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
 <body>
-  <div class="layout-with-sidebar">
-    <aside class="sidebar"><div class="brand">UEA</div><nav class="menu"><a href="index.html">🏠 Home</a></nav></aside>
-    <main class="main-panel"><header class="navbar"><div class="container"><button class="hamburger">☰</button><div class="logo">News</div></div></header>
-      <section class="card"><h2>Latest News</h2><div class="grid grid-3"><div class="card">Article 1</div><div class="card">Article 2</div><div class="card">Article 3</div></div></section>
-    </main>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-header brand"><span class="brand-mark">UEA</span><span>Ultimate Exam Arena</span></div>
+      <nav class="sidebar-nav">
+        <a href="index.html"><span class="nav-emoji">🏠</span> Home</a>
+        <a href="dashboard.html"><span class="nav-emoji">📚</span> Classroom</a>
+        <a href="store.html"><span class="nav-emoji">🛒</span> Store</a>
+        <a href="news.html" class="active"><span class="nav-emoji">📰</span> News</a>
+        <a href="leaderboard.html"><span class="nav-emoji">🏆</span> Leaderboard</a>
+        <a href="support.html"><span class="nav-emoji">📞</span> Support</a>
+        <a href="about.html"><span class="nav-emoji">ℹ️</span> About</a>
+      </nav>
+    </aside>
+
+    <div class="main-area">
+      <header class="topbar">
+        <div class="container topbar-inner">
+          <div class="brand"><span class="brand-mark">UEA</span><span>News</span></div>
+          <div class="topbar-actions"><button class="nav-toggle" aria-label="Open menu">☰</button></div>
+        </div>
+      </header>
+
+      <main class="content-panel">
+        <div class="page-section">
+          <h2 class="page-title">Latest updates</h2>
+          <div class="grid grid-3">
+            <div class="card section-card"><h3>Exam prep tips</h3><p class="muted">Small changes to your revision routine can improve 30% retention.</p></div>
+            <div class="card section-card"><h3>Scholarship week</h3><p class="muted">Application windows open for state bursaries and sponsorships.</p></div>
+            <div class="card section-card"><h3>Study groups</h3><p class="muted">Find a peer group near you and join a weekly challenge.</p></div>
+          </div>
+        </div>
+      </main>
+    </div>
   </div>
-<script src="js/sidebar.js"></script>
+
+  <script src="js/sidebar.js"></script>
 </body>
 </html>

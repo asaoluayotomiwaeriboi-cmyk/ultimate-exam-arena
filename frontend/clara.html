@@ -1,16 +1,61 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Clara - AI Tutor</title>
-<link rel="stylesheet" href="css/design-tokens.css"><link rel="stylesheet" href="css/base.css"><link rel="stylesheet" href="css/components.css"></head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clara AI | Ultimate Exam Arena</title>
+  <link rel="stylesheet" href="css/design-tokens.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/sidebar.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
 <body>
-  <header class="navbar"><div class="container"><div class="logo">UEA</div></div></header>
-  <main class="container" style="padding-top:24px">
-    <section class="card">
-      <h2>Clara AI Tutor</h2>
-      <div id="chat-history" style="display:grid;gap:10px;max-height:400px;overflow:auto"></div>
-      <form id="chat-form" style="margin-top:12px;display:flex;gap:8px"><input type="text" name="q" class="input" placeholder="Ask Clara..."><button class="btn btn-primary">Send</button></form>
-    </section>
-  </main>
-<script src="js/chat.js"></script>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-header brand"><span class="brand-mark">UEA</span><span>Ultimate Exam Arena</span></div>
+      <nav class="sidebar-nav">
+        <a href="index.html"><span class="nav-emoji">🏠</span> Home</a>
+        <a href="dashboard.html"><span class="nav-emoji">📚</span> Classroom</a>
+        <a href="store.html"><span class="nav-emoji">🛒</span> Store</a>
+        <a href="news.html"><span class="nav-emoji">📰</span> News</a>
+        <a href="leaderboard.html"><span class="nav-emoji">🏆</span> Leaderboard</a>
+        <a href="support.html"><span class="nav-emoji">📞</span> Support</a>
+        <a href="about.html"><span class="nav-emoji">ℹ️</span> About</a>
+      </nav>
+    </aside>
+
+    <div class="main-area">
+      <header class="topbar">
+        <div class="container topbar-inner">
+          <div class="brand"><span class="brand-mark">UEA</span><span>Clara AI</span></div>
+          <div class="topbar-actions"><button class="nav-toggle" aria-label="Open menu">☰</button></div>
+        </div>
+      </header>
+      <main class="content-panel">
+        <div class="card section-card">
+          <h2>Ask Clara</h2>
+          <div class="stack" style="margin-top:18px;">
+            <div class="card" style="padding:14px; background:rgba(255,255,255,0.02);"><strong>Clara:</strong> Hello! Ask me about your weak subjects, study plans, or JAMB strategy.</div>
+            <div class="card" style="padding:14px; background:rgba(29,78,216,0.08);"><strong>You:</strong> Help me improve Physics.</div>
+            <div class="card" style="padding:14px; background:rgba(255,255,255,0.02);"><strong>Clara:</strong> Review your force and motion notes, then solve 10 timed questions on equations of motion.</div>
+          </div>
+          <div class="inline-btns" style="margin-top:18px;">
+            <button class="btn btn-secondary" type="button">Practice set</button>
+            <button class="btn btn-secondary" type="button">Revision plan</button>
+            <button class="btn btn-secondary" type="button">Weak subjects</button>
+          </div>
+          <div style="margin-top:18px; display:flex; gap:8px;">
+            <input class="input" type="text" placeholder="Ask Clara anything..." />
+            <button class="btn btn-primary" type="button">Send</button>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="js/sidebar.js"></script>
 </body>
 </html>

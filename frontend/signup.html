@@ -1,36 +1,85 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Sign up - Ultimate Exam Arena</title>
-  <link rel="stylesheet" href="css/design-tokens.css">
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="css/responsive.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up | Ultimate Exam Arena</title>
+  <link rel="stylesheet" href="css/design-tokens.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
 </head>
 <body>
-  <header class="navbar"><div class="container"><div class="logo">UEA</div><div class="actions"><a class="btn-outline" href="index.html">Home</a></div></div></header>
-  <main class="container" style="padding-top:24px">
-    <section class="card" style="max-width:720px;margin:0 auto">
-      <h2>Create Account</h2>
-      <a class="btn-google" href="#">🔷 Sign up with Google</a>
-      <div class="separator h-center" style="margin:12px 0">─── OR ───</div>
-      <form class="auth-form">
-        <label class="label">Full name</label><input class="input" name="name">
-        <label class="label">Email</label><input class="input" type="email">
-        <label class="label">Phone</label><input class="input" type="tel">
-        <label class="label">Password</label><input class="input" type="password">
-        <label class="label">Confirm password</label><input class="input" type="password">
-        <label class="label">Date of birth</label><input class="input" type="date">
-        <label class="label">State</label>
-        <select class="input"><option>Select your state</option><option>Lagos</option></select>
-        <label class="label">School (optional)</label><input class="input">
-        <label class="checkbox"><input type="checkbox"> I agree to the terms</label>
-        <div style="margin-top:12px"><button class="btn btn-primary">Create Account</button></div>
-        <p class="muted">Already have an account? <a href="login.html">Login</a></p>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <span class="brand-mark">UEA</span>
+        <span>Ultimate Exam Arena</span>
+      </div>
+      <div class="topbar-actions">
+        <a class="btn btn-outline" href="index.html">Home</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="auth-shell">
+    <div class="auth-card">
+      <div class="brand" style="justify-content:center; margin-bottom:20px;">
+        <span class="brand-mark">UEA</span>
+        <span>Ultimate Exam Arena</span>
+      </div>
+      <button class="btn btn-secondary" style="width:100%; margin-bottom:18px;">Continue with Google</button>
+      <div style="text-align:center; color:var(--text-muted); margin:10px 0 18px;">──── OR ────</div>
+      <form class="form-grid">
+        <div>
+          <label for="full-name">Full name</label>
+          <input class="input" id="full-name" type="text" placeholder="Your full name" />
+        </div>
+        <div class="form-row">
+          <div>
+            <label for="email">Email</label>
+            <input class="input" id="email" type="email" placeholder="you@example.com" />
+          </div>
+          <div>
+            <label for="phone">Phone</label>
+            <input class="input" id="phone" type="tel" placeholder="0802 000 0000" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div>
+            <label for="password">Password</label>
+            <input class="input" id="password" type="password" placeholder="Create password" />
+          </div>
+          <div>
+            <label for="confirm-password">Confirm password</label>
+            <input class="input" id="confirm-password" type="password" placeholder="Repeat password" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div>
+            <label for="dob">Date of birth</label>
+            <input class="input" id="dob" type="date" />
+          </div>
+          <div>
+            <label for="state">State</label>
+            <select class="select" id="state"><option>Lagos</option><option>Abuja</option><option>Ogun</option></select>
+          </div>
+        </div>
+        <div>
+          <label for="school">School name (optional)</label>
+          <input class="input" id="school" type="text" placeholder="Your school" />
+        </div>
+        <div class="switch-row">
+          <label for="terms">I agree to the terms</label>
+          <input id="terms" type="checkbox" />
+        </div>
+        <button class="btn btn-primary" type="submit" style="width:100%;">Create account</button>
       </form>
-    </section>
+      <p style="text-align:center; margin-top:14px;" class="muted">Already have an account? <a href="login.html">Log in</a></p>
+    </div>
   </main>
-<script src="js/auth.js"></script>
+
+  <script src="js/auth.js"></script>
 </body>
 </html>

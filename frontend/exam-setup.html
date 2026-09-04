@@ -1,43 +1,115 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Exam Setup</title>
-<link rel="stylesheet" href="css/design-tokens.css"><link rel="stylesheet" href="css/base.css"><link rel="stylesheet" href="css/sidebar.css"><link rel="stylesheet" href="css/layout.css"><link rel="stylesheet" href="css/components.css"></head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exam Setup | Ultimate Exam Arena</title>
+  <link rel="stylesheet" href="css/design-tokens.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/sidebar.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
 <body>
-  <div class="layout-with-sidebar">
+  <div class="app-shell">
     <aside class="sidebar">
-      <div class="brand">UEA</div>
-      <nav class="menu">
-        <a href="index.html">🏠 Home</a>
-        <a href="dashboard.html">📚 Classroom</a>
-        <a href="store.html">🛒 Store</a>
-        <a href="news.html">📰 News</a>
-        <a href="leaderboard.html">🏆 Leaderboard</a>
-        <a href="support.html">📞 Support</a>
-        <a href="about.html">ℹ️ About</a>
-        <a href="login.html">🚪 Logout</a>
+      <div class="sidebar-header brand"><span class="brand-mark">UEA</span><span>Ultimate Exam Arena</span></div>
+      <nav class="sidebar-nav">
+        <a href="index.html"><span class="nav-emoji">🏠</span> Home</a>
+        <a href="dashboard.html"><span class="nav-emoji">📚</span> Classroom</a>
+        <a href="store.html"><span class="nav-emoji">🛒</span> Store</a>
+        <a href="news.html"><span class="nav-emoji">📰</span> News</a>
+        <a href="leaderboard.html"><span class="nav-emoji">🏆</span> Leaderboard</a>
+        <a href="support.html"><span class="nav-emoji">📞</span> Support</a>
+        <a href="about.html"><span class="nav-emoji">ℹ️</span> About</a>
       </nav>
     </aside>
-    <main class="main-panel">
-      <header class="navbar"><div class="container"><div><button class="hamburger">☰</button></div><div class="logo">Exam Setup</div></div></header>
-      <section class="card">
-        <h2>Select Subjects</h2>
-        <p class="meta">English Language (required)</p>
-        <div><label><input type="checkbox" checked disabled> English Language</label></div>
-        <div style="margin-top:8px"><label><input type="checkbox"> Mathematics</label></div>
-        <div style="margin-top:8px"><label><input type="checkbox"> Physics</label></div>
-        <div style="margin-top:12px">
-          <label class="label">Test mode</label>
-          <select class="input"><option>Practice Mode (35 min)</option><option>Full Test Mode (120 min)</option></select>
+
+    <div class="main-area">
+      <header class="topbar">
+        <div class="container topbar-inner">
+          <div class="brand"><span class="brand-mark">UEA</span><span>Ultimate Exam Arena</span></div>
+          <nav>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="results.html">Results</a>
+            <a href="support.html">Support</a>
+          </nav>
+          <div class="topbar-actions">
+            <button class="nav-toggle" aria-label="Open menu">☰</button>
+          </div>
         </div>
-        <div style="margin-top:12px">
-          <label class="label">Exam year</label>
-          <select class="input"><option>2026</option><option>2025</option></select>
+      </header>
+
+      <main class="content-panel">
+        <div class="card section-card">
+          <div class="row" style="justify-content:space-between; margin-bottom:18px;">
+            <div>
+              <div class="badge">1 / 4</div>
+              <h1 style="margin:12px 0 0;">Select Subjects</h1>
+            </div>
+            <div class="muted">JAMB Practice</div>
+          </div>
+
+          <div class="form-grid">
+            <div>
+              <label>English Language</label>
+              <div class="subject-card selected">English Language (Required)</div>
+            </div>
+
+            <div>
+              <label>Choose subject 2, 3, 4</label>
+              <div class="grid grid-2">
+                <div class="subject-card">Mathematics</div>
+                <div class="subject-card selected">Physics</div>
+                <div class="subject-card">Chemistry</div>
+                <div class="subject-card">Biology</div>
+              </div>
+            </div>
+
+            <div>
+              <label>Test mode</label>
+              <div class="grid grid-2">
+                <div class="mode-card selected">
+                  <strong>Practice Mode</strong>
+                  <span class="muted">35 minutes</span>
+                </div>
+                <div class="mode-card">
+                  <strong>Full Test Mode</strong>
+                  <span class="muted">120 minutes</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div>
+                <label for="exam-year">Exam year</label>
+                <select class="select" id="exam-year">
+                  <option>2025</option>
+                  <option>2024</option>
+                  <option>2023</option>
+                </select>
+              </div>
+              <div>
+                <label for="subject-type">Subject type</label>
+                <select class="select" id="subject-type">
+                  <option>Science</option>
+                  <option>Arts</option>
+                  <option>Commercial</option>
+                </select>
+              </div>
+            </div>
+
+            <div style="display:flex; justify-content:flex-end;">
+              <a class="btn btn-primary" href="exam.html">Proceed to Test</a>
+            </div>
+          </div>
         </div>
-        <div style="margin-top:12px"><button id="proceed-test" class="btn btn-primary">Proceed to Test</button></div>
-      </section>
-    </main>
+      </main>
+    </div>
   </div>
-<script src="js/sidebar.js"></script>
-<script src="js/exam-setup.js"></script>
+
+  <script src="js/sidebar.js"></script>
 </body>
 </html>

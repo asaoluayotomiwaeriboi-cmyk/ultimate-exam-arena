@@ -1,14 +1,53 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Store</title>
-<link rel="stylesheet" href="css/design-tokens.css"><link rel="stylesheet" href="css/base.css"><link rel="stylesheet" href="css/sidebar.css"><link rel="stylesheet" href="css/layout.css"><link rel="stylesheet" href="css/marketplace.css"></head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Store | Ultimate Exam Arena</title>
+  <link rel="stylesheet" href="css/design-tokens.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/sidebar.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
 <body>
-  <div class="layout-with-sidebar">
-    <aside class="sidebar"><div class="brand">UEA</div><nav class="menu"><a href="index.html">🏠 Home</a></nav></aside>
-    <main class="main-panel"><header class="navbar"><div class="container"><button class="hamburger">☰</button><div class="logo">Store</div></div></header>
-      <section class="card"><h2>Products</h2><div class="grid grid-3"><div class="market-item card">Video Lesson - ₦2000</div><div class="market-item card">Material Pack - ₦1500</div><div class="market-item card">CBT App - ₦4000</div></div></section>
-    </main>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-header brand"><span class="brand-mark">UEA</span><span>Ultimate Exam Arena</span></div>
+      <nav class="sidebar-nav">
+        <a href="index.html"><span class="nav-emoji">🏠</span> Home</a>
+        <a href="dashboard.html"><span class="nav-emoji">📚</span> Classroom</a>
+        <a href="store.html" class="active"><span class="nav-emoji">🛒</span> Store</a>
+        <a href="news.html"><span class="nav-emoji">📰</span> News</a>
+        <a href="leaderboard.html"><span class="nav-emoji">🏆</span> Leaderboard</a>
+        <a href="support.html"><span class="nav-emoji">📞</span> Support</a>
+        <a href="about.html"><span class="nav-emoji">ℹ️</span> About</a>
+      </nav>
+    </aside>
+
+    <div class="main-area">
+      <header class="topbar">
+        <div class="container topbar-inner">
+          <div class="brand"><span class="brand-mark">UEA</span><span>Store</span></div>
+          <div class="topbar-actions"><button class="nav-toggle" aria-label="Open menu">☰</button></div>
+        </div>
+      </header>
+
+      <main class="content-panel">
+        <div class="page-section">
+          <div class="grid grid-4">
+            <div class="card section-card"><h3>Video lesson</h3><p class="muted">₦2,500</p><button class="btn btn-primary">Buy</button></div>
+            <div class="card section-card"><h3>Material pack</h3><p class="muted">₦1,800</p><button class="btn btn-secondary">Buy</button></div>
+            <div class="card section-card"><h3>CBT app</h3><p class="muted">₦4,500</p><button class="btn btn-secondary">Buy</button></div>
+            <div class="card section-card"><h3>Past question set</h3><p class="muted">₦2,000</p><button class="btn btn-secondary">Buy</button></div>
+          </div>
+        </div>
+      </main>
+    </div>
   </div>
-<script src="js/sidebar.js"></script>
+
+  <script src="js/sidebar.js"></script>
 </body>
 </html>

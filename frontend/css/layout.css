@@ -1,5 +1,50 @@
-@import url('design-tokens.css');
-/* layout for pages with sidebar */
-.layout-with-sidebar{display:grid;grid-template-columns:260px 1fr;gap:24px}
-@media (max-width:900px){.layout-with-sidebar{grid-template-columns:1fr}.sidebar{display:none}.sidebar.open{display:block;position:fixed;left:0;top:0;bottom:0}}
-.main-panel{padding:24px}
+.page-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 20px;
+}
+.page-grid .span-3 { grid-column: span 3; }
+.page-grid .span-4 { grid-column: span 4; }
+.page-grid .span-6 { grid-column: span 6; }
+.page-grid .span-8 { grid-column: span 8; }
+.page-grid .span-12 { grid-column: span 12; }
+.section-card {
+  padding: 22px;
+}
+.summary-card {
+  padding: 20px;
+  min-height: 120px;
+}
+.summary-value {
+  font-size: 30px; font-weight: 800; margin-top: 8px;
+}
+.performance-bar {
+  height: 10px; border-radius: 999px; background: rgba(255,255,255,0.05); overflow: hidden; margin-top: 10px;
+}
+.performance-bar > span {
+  display: block; height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-hover)); border-radius: inherit;
+}
+.table-wrap {
+  overflow-x: auto;
+}
+table {
+  width: 100%; border-collapse: collapse; margin-top: 14px;
+}
+th, td {
+  text-align: left; padding: 12px 10px; border-bottom: 1px solid var(--divider);
+}
+th { color: var(--text-secondary); font-weight: 600; }
+.quiz-options {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+}
+.option-btn {
+  width: 100%; text-align: left; background: transparent; border: 1px solid var(--border); border-radius: 12px; color: var(--text-primary); padding: 14px 16px; cursor: pointer;
+}
+.option-btn.selected { background: rgba(29, 78, 216, 0.12); border-color: rgba(29,78,216,0.45); }
+.question-meta { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.progress {
+  height: 8px; background: rgba(255,255,255,0.08); border-radius: 999px; overflow: hidden; margin-top: 8px;
+}
+.progress-bar { display: block; height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-hover)); }

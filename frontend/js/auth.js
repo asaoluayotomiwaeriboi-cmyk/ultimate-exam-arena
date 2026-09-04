@@ -1,10 +1,18 @@
-// auth.js - basic form toggles and placeholders
-document.addEventListener('DOMContentLoaded',()=>{
-  const toggle = document.getElementById('toggle-password');
-  if(toggle){
-    toggle.addEventListener('click',()=>{
-      const pwd = document.querySelector('input[type="password"]');
-      if(pwd){pwd.type = pwd.type === 'password' ? 'text' : 'password'}
-    })
-  }
+document.addEventListener('DOMContentLoaded', () => {
+  const forms = document.querySelectorAll('form');
+  forms.forEach((form) => {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const button = form.querySelector('button[type="submit"]');
+      if (button) {
+        const original = button.textContent;
+        button.textContent = 'Processing...';
+        button.disabled = true;
+        setTimeout(() => {
+          button.textContent = original;
+          button.disabled = false;
+        }, 800);
+      }
+    });
+  });
 });

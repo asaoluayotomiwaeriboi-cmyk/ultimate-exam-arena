@@ -1,16 +1,53 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Games</title>
-<link rel="stylesheet" href="css/design-tokens.css"><link rel="stylesheet" href="css/base.css"><link rel="stylesheet" href="css/grid.css"></head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Games | Ultimate Exam Arena</title>
+  <link rel="stylesheet" href="css/design-tokens.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/sidebar.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
 <body>
-  <header class="navbar"><div class="container"><div class="logo">UEA</div></div></header>
-  <main class="container" style="padding-top:24px">
-    <h2>Games</h2>
-    <div class="grid grid-3">
-      <div class="card">Who Wants to be a Millionaire</div>
-      <div class="card">Quiz Rush</div>
-      <div class="card">Flashcards</div>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-header brand"><span class="brand-mark">UEA</span><span>Ultimate Exam Arena</span></div>
+      <nav class="sidebar-nav">
+        <a href="index.html"><span class="nav-emoji">🏠</span> Home</a>
+        <a href="dashboard.html"><span class="nav-emoji">📚</span> Classroom</a>
+        <a href="store.html"><span class="nav-emoji">🛒</span> Store</a>
+        <a href="news.html"><span class="nav-emoji">📰</span> News</a>
+        <a href="leaderboard.html"><span class="nav-emoji">🏆</span> Leaderboard</a>
+        <a href="support.html"><span class="nav-emoji">📞</span> Support</a>
+        <a href="about.html"><span class="nav-emoji">ℹ️</span> About</a>
+      </nav>
+    </aside>
+
+    <div class="main-area">
+      <header class="topbar">
+        <div class="container topbar-inner">
+          <div class="brand"><span class="brand-mark">UEA</span><span>Games</span></div>
+          <div class="topbar-actions"><button class="nav-toggle" aria-label="Open menu">☰</button></div>
+        </div>
+      </header>
+
+      <main class="content-panel">
+        <div class="page-section">
+          <h2 class="page-title">Brain games</h2>
+          <div class="grid grid-3">
+            <div class="card section-card"><h3>Word Sprint</h3><p class="muted">Quick vocabulary challenge</p><button class="btn btn-primary">Play</button></div>
+            <div class="card section-card"><h3>Math Rush</h3><p class="muted">Beat the timer</p><button class="btn btn-secondary">Play</button></div>
+            <div class="card section-card"><h3>Quiz Blitz</h3><p class="muted">Fast subject recall</p><button class="btn btn-secondary">Play</button></div>
+          </div>
+        </div>
+      </main>
     </div>
-  </main>
+  </div>
+
+  <script src="js/sidebar.js"></script>
 </body>
 </html>

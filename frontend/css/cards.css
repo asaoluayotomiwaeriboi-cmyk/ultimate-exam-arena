@@ -1,7 +1,0 @@
-@import url('design-tokens.css');
-.card-media{border-radius:6px;overflow:hidden}
-.card h3{margin:0 0 8px;font-size:1.05rem}
-.card p{margin:0;color:var(--muted)}
-.card .meta{font-size:0.85rem;color:var(--muted);margin-top:8px}
-.card.hoverable{transition:transform .15s ease,box-shadow .15s ease}
-.card.hoverable:hover{transform:translateY(-6px);box-shadow:var(--shadow-md)}

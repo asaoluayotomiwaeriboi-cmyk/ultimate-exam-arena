@@ -1,111 +1,145 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Ultimate Exam Arena - Home</title>
-  <link rel="stylesheet" href="css/design-tokens.css">
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/navbar.css">
-  <link rel="stylesheet" href="css/grid.css">
-  <link rel="stylesheet" href="css/cards.css">
-  <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="css/feed.css">
-  <link rel="stylesheet" href="css/responsive.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ultimate Exam Arena</title>
+  <link rel="stylesheet" href="css/design-tokens.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/sidebar.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
 </head>
 <body>
-  <header class="navbar">
-    <div class="container">
-      <div class="logo">Ultimate Exam Arena</div>
-      <nav class="nav-links">
-        <a href="about.html">About</a>
-        <a href="exam.html">CBT</a>
-        <a href="materials.html">Materials</a>
-        <a href="news.html">News</a>
-        <a href="store.html">Store</a>
-      </nav>
-      <div class="actions">
-        <a class="btn-outline" href="login.html">Login</a>
-        <a class="btn-primary" href="signup.html">Sign up</a>
-        <button class="hamburger">☰</button>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-header brand">
+        <span class="brand-mark">UEA</span>
+        <span>Ultimate Exam Arena</span>
       </div>
-    </div>
-  </header>
+      <nav class="sidebar-nav">
+        <a href="index.html"><span class="nav-emoji">🏠</span> Home</a>
+        <a href="dashboard.html"><span class="nav-emoji">📚</span> Classroom</a>
+        <a href="store.html"><span class="nav-emoji">🛒</span> Store</a>
+        <a href="news.html"><span class="nav-emoji">📰</span> News</a>
+        <a href="leaderboard.html"><span class="nav-emoji">🏆</span> Leaderboard</a>
+        <a href="support.html"><span class="nav-emoji">📞</span> Support</a>
+        <a href="about.html"><span class="nav-emoji">ℹ️</span> About</a>
+        <a href="login.html"><span class="nav-emoji">🚪</span> Logout</a>
+      </nav>
+    </aside>
 
-  <main class="container" style="padding-top:24px">
-    <section class="card hero hoverable">
-      <div class="row" style="align-items:center">
-        <div style="flex:1">
-          <h1>Master JAMB with confidence</h1>
-          <p class="meta">Practice CBTs, join study groups, and learn with video lessons.</p>
-          <div style="margin-top:12px"><a class="btn-primary" href="exam.html">Take a test</a></div>
-        </div>
-        <div style="width:320px">
-          <div class="card">
-            <h3>Quick CBTs</h3>
-            <p>CBT • JAMB • WAEC • NECO</p>
+    <div class="main-area">
+      <header class="topbar">
+        <div class="container topbar-inner">
+          <div class="brand">
+            <span class="brand-mark">UEA</span>
+            <span>Ultimate Exam Arena</span>
+          </div>
+          <nav>
+            <a href="about.html">About</a>
+            <a href="dashboard.html">Classroom</a>
+            <a href="materials.html">Materials</a>
+            <a href="news.html">News</a>
+            <a href="store.html">Store</a>
+          </nav>
+          <div class="topbar-actions">
+            <a class="btn btn-outline" href="login.html">Login</a>
+            <a class="btn btn-primary" href="signup.html">Sign up</a>
+            <button class="nav-toggle" aria-label="Open menu">☰</button>
           </div>
         </div>
-      </div>
-    </section>
+      </header>
 
-    <section style="margin-top:20px">
-      <h2>Feed</h2>
-      <div id="feed-list" class="grid"></div>
-    </section>
+      <main class="content-panel">
+        <section class="page-section">
+          <div class="hero-panel card">
+            <div class="row" style="justify-content:space-between; flex-wrap:wrap;">
+              <div style="max-width:640px;">
+                <span class="badge">Master JAMB</span>
+                <h1 style="font-size:42px; margin:16px 0 10px; line-height:1.1;">Master JAMB with confidence</h1>
+                <p class="muted" style="max-width:560px; font-size:16px;">Practice CBTs, join study groups, and learn with video lessons built for success.</p>
+                <div class="inline-btns" style="margin-top:18px;">
+                  <a class="btn btn-primary" href="exam-setup.html">Take a test</a>
+                  <a class="btn btn-outline" href="dashboard.html">Dashboard</a>
+                </div>
+              </div>
+              <div class="card" style="padding:18px; min-width:220px; flex:1; max-width:300px;">
+                <h3>Quick CBTs</h3>
+                <p class="muted">CBT • JAMB • WAEC • NECO</p>
+                <div class="stack" style="margin-top:12px;">
+                  <a class="btn btn-secondary" href="exam-setup.html">JAMB</a>
+                  <a class="btn btn-secondary" href="exam-setup.html">WAEC</a>
+                  <a class="btn btn-secondary" href="exam-setup.html">NECO</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-    <section style="margin-top:20px">
-      <h2>Latest News</h2>
-      <div class="grid grid-3">
-        <div class="card hoverable"> <h3>News 1</h3><p class="meta">Short summary</p></div>
-        <div class="card hoverable"> <h3>News 2</h3><p class="meta">Short summary</p></div>
-        <div class="card hoverable"> <h3>News 3</h3><p class="meta">Short summary</p></div>
-      </div>
-    </section>
+        <section class="page-section">
+          <h2 class="page-title">Your Feed</h2>
+          <div class="stack">
+            <div class="card section-card"><strong>Update 1</strong><p class="muted">Short update summary for the feed item 1.</p></div>
+            <div class="card section-card"><strong>Update 2</strong><p class="muted">Short update summary for the feed item 2.</p></div>
+            <div class="card section-card"><strong>Update 3</strong><p class="muted">Short update summary for the feed item 3.</p></div>
+            <div class="card section-card"><strong>Update 4</strong><p class="muted">Short update summary for the feed item 4.</p></div>
+            <div class="card section-card"><strong>Update 5</strong><p class="muted">Short update summary for the feed item 5.</p></div>
+          </div>
+        </section>
 
-    <section style="margin-top:20px">
-      <h2>Featured Stories</h2>
-      <div class="card">Featured carousel placeholder (Item 1 of 6)</div>
-    </section>
+        <section class="page-section">
+          <h2 class="page-title">Latest News</h2>
+          <div class="grid grid-3">
+            <div class="card section-card"><h3>News 1</h3><p class="muted">How to sharpen your JAMB reading speed.</p></div>
+            <div class="card section-card"><h3>News 2</h3><p class="muted">Contest results and scholarship alerts.</p></div>
+            <div class="card section-card"><h3>News 3</h3><p class="muted">Study smarter with practice-first routines.</p></div>
+          </div>
+        </section>
 
-    <section style="margin-top:20px">
-      <h2>Scholarships</h2>
-      <div class="grid grid-3">
-        <div class="card">Scholarship A</div>
-        <div class="card">Scholarship B</div>
-        <div class="card">Scholarship C</div>
-      </div>
-    </section>
+        <section class="page-section">
+          <h2 class="page-title">Featured Stories</h2>
+          <div class="card section-card">Featured carousel placeholder (Item 1 of 6)</div>
+        </section>
 
-    <section style="margin-top:20px">
-      <h2>Store</h2>
-      <div class="grid grid-4">
-        <div class="market-item card">Video Lesson 1</div>
-        <div class="market-item card">Material Pack A</div>
-        <div class="market-item card">CBT App</div>
-        <div class="market-item card">E-book</div>
-      </div>
-    </section>
+        <section class="page-section">
+          <h2 class="page-title">Scholarships</h2>
+          <div class="grid grid-3">
+            <div class="card section-card">Scholarship A</div>
+            <div class="card section-card">Scholarship B</div>
+            <div class="card section-card">Scholarship C</div>
+          </div>
+        </section>
 
-    <section style="margin-top:20px">
-      <h2>Leaderboard</h2>
-      <div class="card">
-        <table class="table"><thead><tr><th>Rank</th><th>Name</th><th>Score</th></tr></thead>
-        <tbody><tr><td>1</td><td>Ade</td><td>980</td></tr><tr><td>2</td><td>Chi</td><td>960</td></tr></tbody></table>
-      </div>
-    </section>
+        <section class="page-section">
+          <h2 class="page-title">Store</h2>
+          <div class="grid grid-4">
+            <div class="card section-card">Video Lesson 1</div>
+            <div class="card section-card">Material Pack A</div>
+            <div class="card section-card">CBT App</div>
+            <div class="card section-card">E-book</div>
+          </div>
+        </section>
 
-  </main>
-
-  <footer class="container" style="margin-top:40px;padding:20px 0">
-    <div class="row">
-      <div>© Ultimate Exam Arena</div>
-      <div class="h-center">Follow us on social</div>
-      <div class="h-center">Contact</div>
+        <section class="page-section">
+          <h2 class="page-title">Leaderboard</h2>
+          <div class="card table-wrap section-card">
+            <table>
+              <thead><tr><th>Rank</th><th>Name</th><th>Score</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>Ade</td><td>980</td></tr>
+                <tr><td>2</td><td>Chi</td><td>960</td></tr>
+                <tr><td>3</td><td>You</td><td>900</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </main>
     </div>
-  </footer>
+  </div>
 
-<script src="js/navbar.js"></script>
-<script src="js/feed.js"></script>
+  <script src="js/sidebar.js"></script>
 </body>
 </html>

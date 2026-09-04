@@ -1,3 +1,0 @@
-@import url('design-tokens.css');
-.market-item{border-radius:8px;overflow:hidden;border:1px solid var(--border);background:var(--surface)}
-.market-item .price{font-weight:700;color:var(--primary)}

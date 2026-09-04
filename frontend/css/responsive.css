@@ -1,4 +1,24 @@
-@import url('design-tokens.css');
-/* responsive tweaks */
-@media (max-width:480px){.container{padding:0 var(--space-md)}.card{padding:var(--space-md)}.navbar .container{padding:10px}}
-@media (min-width:1200px){.container{max-width:1200px}}
+@media (max-width: 940px) {
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.2s ease;
+    z-index: 30;
+    width: 260px;
+  }
+  .sidebar.open { transform: translateX(0); }
+  .main-area { margin-left: 0; width: 100%; }
+  .nav-toggle { display: inline-grid; place-items: center; }
+  .topbar nav { display: none; }
+  .topbar nav.open { display: flex; position: absolute; top: 72px; left: 16px; right: 16px; flex-direction: column; align-items: flex-start; background: rgba(5,10,28,0.98); border: 1px solid var(--border); padding: 16px; border-radius: 12px; }
+}
+@media (max-width: 760px) {
+  .grid-2, .grid-3, .grid-4, .form-row { grid-template-columns: 1fr; }
+  .exam-shell { grid-template-columns: 1fr; }
+  .question-sidebar { border-right: 0; border-bottom: 1px solid var(--divider); }
+  .summary-value { font-size: 24px; }
+  .auth-card { padding: 22px; }
+  .topbar-inner { height: 64px; }
+}
+@media (min-width: 941px) {
+  .nav-toggle { display: none !important; }
+}

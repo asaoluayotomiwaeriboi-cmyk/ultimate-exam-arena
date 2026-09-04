@@ -1,38 +1,80 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Dashboard - Ultimate Exam Arena</title>
-  <link rel="stylesheet" href="css/design-tokens.css">
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/grid.css">
-  <link rel="stylesheet" href="css/cards.css">
-  <link rel="stylesheet" href="css/components.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard | Ultimate Exam Arena</title>
+  <link rel="stylesheet" href="css/design-tokens.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/sidebar.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
 </head>
 <body>
-  <header class="navbar"><div class="container"><div class="logo">UEA</div><nav class="nav-links"><a href="index.html">Home</a><a href="news.html">News</a></nav><div class="actions"><a class="btn-outline" href="settings.html">Settings</a></div></div></header>
-  <main class="container" style="padding-top:24px">
-    <section class="row">
-      <div class="card" style="flex:1;min-width:240px">
-        <h3>Welcome back, Student</h3>
-        <p class="meta">Quick stats</p>
-        <div class="kv"><div>Score</div><div><strong>860</strong></div></div>
-      </div>
-      <div class="card" style="flex:2;min-width:320px">
-        <h3>Recent activity</h3>
-        <div id="recent-feed"></div>
-      </div>
-    </section>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-header brand"><span class="brand-mark">UEA</span><span>Ultimate Exam Arena</span></div>
+      <nav class="sidebar-nav">
+        <a href="index.html"><span class="nav-emoji">🏠</span> Home</a>
+        <a href="dashboard.html" class="active"><span class="nav-emoji">📚</span> Classroom</a>
+        <a href="store.html"><span class="nav-emoji">🛒</span> Store</a>
+        <a href="news.html"><span class="nav-emoji">📰</span> News</a>
+        <a href="leaderboard.html"><span class="nav-emoji">🏆</span> Leaderboard</a>
+        <a href="support.html"><span class="nav-emoji">📞</span> Support</a>
+        <a href="about.html"><span class="nav-emoji">ℹ️</span> About</a>
+      </nav>
+    </aside>
 
-    <section style="margin-top:20px">
-      <h2>Your subjects</h2>
-      <div class="grid grid-3">
-        <div class="card">Mathematics</div>
-        <div class="card">English</div>
-        <div class="card">Physics</div>
-      </div>
-    </section>
-  </main>
-<script src="js/feed.js"></script>
+    <div class="main-area">
+      <header class="topbar">
+        <div class="container topbar-inner">
+          <div class="brand"><span class="brand-mark">UEA</span><span>Dashboard</span></div>
+          <nav>
+            <a href="exam-setup.html">CBT</a>
+            <a href="performance.html">Performance</a>
+            <a href="materials.html">Materials</a>
+          </nav>
+          <div class="topbar-actions"><button class="nav-toggle" aria-label="Open menu">☰</button></div>
+        </div>
+      </header>
+
+      <main class="content-panel">
+        <section class="page-section">
+          <h1 style="margin-bottom: 12px;">Welcome back, Ada</h1>
+          <p class="muted">You are 7 days away from your next exam target.</p>
+          <div class="grid grid-4" style="margin-top:18px;">
+            <div class="card summary-card"><div class="muted">Score</div><div class="summary-value">320</div></div>
+            <div class="card summary-card"><div class="muted">Streak</div><div class="summary-value">12 days</div></div>
+            <div class="card summary-card"><div class="muted">Achievements</div><div class="summary-value">18</div></div>
+            <div class="card summary-card"><div class="muted">Goal</div><div class="summary-value">86%</div></div>
+          </div>
+        </section>
+
+        <section class="page-section">
+          <h2 class="page-title">Take a test</h2>
+          <div class="grid grid-3">
+            <div class="card section-card"><h3>JAMB</h3><p class="muted">Full paper practice</p><a class="btn btn-primary" href="exam-setup.html">Start</a></div>
+            <div class="card section-card"><h3>WAEC</h3><p class="muted">Timed test</p><a class="btn btn-secondary" href="exam-setup.html">Start</a></div>
+            <div class="card section-card"><h3>NECO</h3><p class="muted">Question review</p><a class="btn btn-secondary" href="exam-setup.html">Start</a></div>
+          </div>
+        </section>
+
+        <section class="page-section">
+          <h2 class="page-title">Recent activity</h2>
+          <div class="card section-card">
+            <div class="stack">
+              <div>• Completed 25 Mathematics questions</div>
+              <div>• Joined Physics Group challenge</div>
+              <div>• New scholarship alert shared</div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="js/sidebar.js"></script>
 </body>
 </html>
