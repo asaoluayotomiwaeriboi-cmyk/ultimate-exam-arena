@@ -14,100 +14,115 @@
 </head>
 <body>
   <div class="app-shell">
-    <aside class="sidebar">
-      <div class="sidebar-header brand"><span class="brand-mark">UEA</span><span>Ultimate Exam Arena</span></div>
-      <nav class="sidebar-nav">
-        <a href="index.html"><span class="nav-emoji">🏠</span> Home</a>
-        <a href="dashboard.html"><span class="nav-emoji">📚</span> Classroom</a>
-        <a href="store.html"><span class="nav-emoji">🛒</span> Store</a>
-        <a href="news.html"><span class="nav-emoji">📰</span> News</a>
-        <a href="leaderboard.html"><span class="nav-emoji">🏆</span> Leaderboard</a>
-        <a href="support.html"><span class="nav-emoji">📞</span> Support</a>
-        <a href="about.html"><span class="nav-emoji">ℹ️</span> About</a>
-      </nav>
-    </aside>
+   <aside class="sidebar">
+     <div class="sidebar-header brand"><span class="brand-mark">UEA</span><span>Ultimate Exam Arena</span></div>
+     <nav class="sidebar-nav">
+       <a href="index.html"><span class="nav-emoji">🏠</span> Home</a>
+       <a href="dashboard.html"><span class="nav-emoji">📚</span> Classroom</a>
+       <a href="store.html"><span class="nav-emoji">🛒</span> Store</a>
+       <a href="news.html"><span class="nav-emoji">📰</span> News</a>
+       <a href="leaderboard.html"><span class="nav-emoji">🏆</span> Leaderboard</a>
+       <a href="support.html"><span class="nav-emoji">📞</span> Support</a>
+       <a href="about.html"><span class="nav-emoji">ℹ️</span> About</a>
+     </nav>
+   </aside>
 
-    <div class="main-area">
-      <header class="topbar">
-        <div class="container topbar-inner">
-          <div class="brand"><span class="brand-mark">UEA</span><span>Ultimate Exam Arena</span></div>
-          <nav>
-            <a href="dashboard.html">Dashboard</a>
-            <a href="results.html">Results</a>
-            <a href="support.html">Support</a>
-          </nav>
-          <div class="topbar-actions">
-            <button class="nav-toggle" aria-label="Open menu">☰</button>
-          </div>
-        </div>
-      </header>
+   <div class="main-area">
+     <header class="topbar">
+       <div class="container topbar-inner">
+         <div class="brand"><span class="brand-mark">UEA</span><span>Ultimate Exam Arena</span></div>
+         <nav>
+           <a href="dashboard.html">Dashboard</a>
+           <a href="results.html">Results</a>
+           <a href="support.html">Support</a>
+         </nav>
+         <div class="topbar-actions">
+           <button class="nav-toggle" aria-label="Open menu">☰</button>
+         </div>
+       </div>
+     </header>
 
-      <main class="content-panel">
-        <div class="card section-card">
-          <div class="row" style="justify-content:space-between; margin-bottom:18px;">
-            <div>
-              <div class="badge">1 / 4</div>
-              <h1 style="margin:12px 0 0;">Select Subjects</h1>
-            </div>
-            <div class="muted">JAMB Practice</div>
-          </div>
+     <main class="content-panel">
+       <div class="card section-card">
+         <div class="row" style="justify-content:space-between; margin-bottom:18px; flex-wrap:wrap;">
+           <div>
+             <div class="badge">1 / 4</div>
+             <h1 style="margin:12px 0 0;">Select your paper</h1>
+           </div>
+           <div class="muted">JAMB 2025 exam setup</div>
+         </div>
 
-          <div class="form-grid">
-            <div>
-              <label>English Language</label>
-              <div class="subject-card selected">English Language (Required)</div>
-            </div>
+         <div class="form-grid" style="gap:20px;">
+           <div>
+             <label>Required subject</label>
+             <div class="subject-option selected">
+               <strong>English Language</strong>
+               <span class="muted">Required for all candidates</span>
+             </div>
+           </div>
 
-            <div>
-              <label>Choose subject 2, 3, 4</label>
-              <div class="grid grid-2">
-                <div class="subject-card">Mathematics</div>
-                <div class="subject-card selected">Physics</div>
-                <div class="subject-card">Chemistry</div>
-                <div class="subject-card">Biology</div>
-              </div>
-            </div>
+           <div>
+             <label>Choose subject 2, 3, and 4</label>
+             <div class="grid grid-2">
+               <div class="subject-option selected"><strong>Mathematics</strong><span class="muted">Core</span></div>
+               <div class="subject-option"><strong>Physics</strong><span class="muted">Science</span></div>
+               <div class="subject-option"><strong>Chemistry</strong><span class="muted">Science</span></div>
+               <div class="subject-option"><strong>Biology</strong><span class="muted">Science</span></div>
+             </div>
+           </div>
 
-            <div>
-              <label>Test mode</label>
-              <div class="grid grid-2">
-                <div class="mode-card selected">
-                  <strong>Practice Mode</strong>
-                  <span class="muted">35 minutes</span>
-                </div>
-                <div class="mode-card">
-                  <strong>Full Test Mode</strong>
-                  <span class="muted">120 minutes</span>
-                </div>
-              </div>
-            </div>
+           <div>
+             <label>Test mode</label>
+             <div class="grid grid-2">
+               <div class="mode-option selected">
+                 <strong>Practice Mode</strong>
+                 <span class="muted">35 minutes • 20 questions</span>
+               </div>
+               <div class="mode-option">
+                 <strong>Full Test Mode</strong>
+                 <span class="muted">120 minutes • 180 questions</span>
+               </div>
+             </div>
+           </div>
 
-            <div class="form-row">
-              <div>
-                <label for="exam-year">Exam year</label>
-                <select class="select" id="exam-year">
-                  <option>2025</option>
-                  <option>2024</option>
-                  <option>2023</option>
-                </select>
-              </div>
-              <div>
-                <label for="subject-type">Subject type</label>
-                <select class="select" id="subject-type">
-                  <option>Science</option>
-                  <option>Arts</option>
-                  <option>Commercial</option>
-                </select>
-              </div>
-            </div>
+           <div class="form-row">
+             <div>
+               <label for="exam-year">Exam year</label>
+               <select class="select" id="exam-year">
+                 <option>2025</option>
+                 <option>2024</option>
+                 <option>2023</option>
+                 <option>2022</option>
+               </select>
+             </div>
+             <div>
+               <label for="subject-type">Subject stream</label>
+               <select class="select" id="subject-type">
+                 <option>Science</option>
+                 <option>Arts</option>
+                 <option>Commercial</option>
+               </select>
+             </div>
+           </div>
 
-            <div style="display:flex; justify-content:flex-end;">
-              <a class="btn btn-primary" href="exam.html">Proceed to Test</a>
-            </div>
-          </div>
-        </div>
-      </main>
-    </div>
+           <div class="summary-stack">
+             <div class="summary-box">
+               <span class="muted">Exam duration</span>
+               <strong>35 min</strong>
+             </div>
+             <div class="summary-box">
+               <span class="muted">Selected subjects</span>
+               <strong>4</strong>
+             </div>
+           </div>
+
+           <div style="display:flex; justify-content:flex-end;">
+             <a class="btn btn-primary" href="exam.html">Proceed to Test</a>
+           </div>
+         </div>
+       </div>
+     </main>
+   </div>
   </div>
 
   <script src="js/sidebar.js"></script>
